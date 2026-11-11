@@ -110,14 +110,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // 4. Interactive Quiz Player Modal (Preview Free Quiz)
+    // 4. Interactive Quiz Player Modal (Preview Field-Specific Quizzes)
     // ----------------------------------------------------
-    window.openQuizModal = function(categoryTitle = 'G.K. Safari') {
+    let activeQuestions = [];
+    let currentQIndex = 0;
+    let userScore = 0;
+
+    window.openQuizModal = function(categoryKey = 'science-explorer', categoryTitle = '') {
         const modal = document.getElementById('quizModal');
         if (modal) {
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
-            initQuizRunner(categoryTitle);
+            initQuizRunner(categoryKey, categoryTitle);
         }
     };
 
@@ -129,36 +133,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Quiz Questions Dataset (Injected from PHP or fallback array)
-    const questions = window.quizWizSampleQuestions || [
-        {
-            q: "Which is the highest civilian award in India?",
-            options: ["Padma Vibhushan", "Bharat Ratna", "Param Vir Chakra", "Padma Bhushan"],
-            correct: 1,
-            exp: "Bharat Ratna is the highest civilian award of the Republic of India."
-        },
-        {
-            q: "Which planet is known as the 'Red Planet'?",
-            options: ["Venus", "Jupiter", "Mars", "Mercury"],
-            correct: 2,
-            exp: "Mars is known as the Red Planet due to iron oxide on its surface."
-        },
-        {
-            q: "What is the sum of interior angles in any triangle?",
-            options: ["90°", "180°", "270°", "360°"],
-            correct: 1,
-            exp: "The interior angles of any triangle always equal 180°."
-        }
-    ];
-
-    let currentQIndex = 0;
-    let userScore = 0;
-
-    function initQuizRunner(title) {
+    function initQuizRunner(categoryKey, title) {
         currentQIndex = 0;
         userScore = 0;
+
+        const qBank = window.quizWizCategoryQuestions || {};
+        if (qBank[categoryKey] && Array.isArray(qBank[categoryKey]) && qBank[categoryKey].length > 0) {
+            activeQuestions = qBank[categoryKey];
+        } else {
+            // Fallback general questions
+            activeQuestions = [
+                {
+                    q: "Which is the highest civilian award in India?",
+                    options: ["Padma Vibhushan", "Bharat Ratna", "Param Vir Chakra", "Padma Bhushan"],
+                    correct: 1,
+                    exp: "Bharat Ratna is the highest civilian award of the Republic of India."
+                },
+                {
+                    q: "Which planet is known as the 'Red Planet'?",
+                    options: ["Venus", "Jupiter", "Mars", "Mercury"],
+                    correct: 2,
+                    exp: "Mars is known as the Red Planet due to iron oxide on its surface."
+                },
+                {
+                    q: "What is the sum of interior angles in any triangle?",
+                    options: ["90°", "180°", "270°", "360°"],
+                    correct: 1,
+                    exp: "The interior angles of any triangle always equal 180°."
+                }
+            ];
+        }
+
         const titleEl = document.getElementById('modalQuizTitle');
-        if (titleEl) titleEl.textContent = title + ' - Quick Practice';
+        if (titleEl) {
+            titleEl.textContent = (title ? title + ' - Field Test' : 'Quick Practice Quiz');
+        }
         renderQuestion();
     }
 
@@ -166,14 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('quizQuestionContainer');
         if (!container) return;
 
-        if (currentQIndex >= questions.length) {
+        if (currentQIndex >= activeQuestions.length) {
             // Render Result
             container.innerHTML = `
                 <div style="text-align: center; padding: 24px 0;">
                     <div style="font-size: 3rem; margin-bottom: 12px;">🏆</div>
                     <h3 style="color: var(--primary); margin-bottom: 8px;">Quiz Completed!</h3>
                     <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 24px;">
-                        You scored <strong>${userScore} out of ${questions.length}</strong>!
+                        You scored <strong>${userScore} out of ${activeQuestions.length}</strong>!
                     </p>
                     <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px;">
                         Want to compete with thousands of students across India and win awards?
@@ -187,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const q = questions[currentQIndex];
+        const q = activeQuestions[currentQIndex];
         let optionsHtml = '';
 
         q.options.forEach((opt, idx) => {
@@ -201,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 0.85rem; color: var(--text-muted);">
-                <span>Question ${currentQIndex + 1} of ${questions.length}</span>
+                <span>Question ${currentQIndex + 1} of ${activeQuestions.length}</span>
                 <span style="color: var(--secondary); font-weight: 600;">Score: ${userScore}</span>
             </div>
             <h4 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 20px; line-height: 1.4;">

@@ -139,6 +139,12 @@ require_once __DIR__ . '/config.php';
     </div>
 
     <!-- Scripts -->
+    <?php
+    require_once __DIR__ . '/../data/quizzes.php';
+    ?>
+    <script>
+        window.quizWizCategoryQuestions = <?php echo json_encode($category_questions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+    </script>
     <script src="/assets/js/main.js"></script>
 </body>
 </html>

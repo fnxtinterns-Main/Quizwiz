@@ -626,6 +626,7 @@ p.lead {
 
 .hero-visual {
   position: relative;
+  margin-top: 36px;
 }
 
 .hero-card {
@@ -653,8 +654,9 @@ p.lead {
 }
 
 .hero-badge-top {
-  top: -15px;
-  right: -10px;
+  top: -30px;
+  right: 16px;
+  z-index: 10;
 }
 
 .hero-badge-bottom {
@@ -862,6 +864,22 @@ p.lead {
 @media (min-width: 768px) {
   .steps-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+}
+
+/* Symmetrical 2-Column Grid for Championship Divisions */
+.divisions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .divisions-grid {
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-8);
   }
 }
@@ -1596,5 +1614,16 @@ p.lead {
     font-size: 0.92rem !important;
     padding: 12px 16px !important;
     min-height: 48px !important;
+  }
+
+  /* 7. Hero Visual & Floating Badge Mobile Positioning */
+  .hero-visual {
+    margin-top: 28px !important;
+  }
+  .hero-badge-top {
+    top: -22px !important;
+    right: 10px !important;
+    padding: 8px 12px !important;
+    font-size: 0.78rem !important;
   }
 }

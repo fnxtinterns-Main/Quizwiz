@@ -43,8 +43,8 @@ require_once __DIR__ . '/includes/header.php';
                     </div>
                 </div>
             </div>
-            <div>
-                <img src="assets/images/ab2.jpg" alt="Students in Quiz Championship" style="border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); width: 100%;">
+            <div style="text-align: center;">
+                <img src="/assets/images/ab2.jpg" alt="All India Quiz Championships Poster" style="max-width: 340px; width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); display: inline-block;">
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@ require_once __DIR__ . '/includes/header.php';
             <p>Our syllabus and question models are calibrated into two distinct age groups to ensure fair, stimulating competition.</p>
         </div>
 
-        <div class="steps-grid">
+        <div class="divisions-grid">
             <div class="form-card" style="border-top: 4px solid var(--secondary);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <span class="quiz-difficulty-badge" style="position: static; background: var(--secondary-surface); color: var(--secondary);">Group A</span>

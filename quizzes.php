@@ -54,7 +54,7 @@ require_once __DIR__ . '/data/quizzes.php';
                         </div>
 
                         <div style="display: flex; gap: 8px;">
-                            <button onclick="openQuizModal('<?php echo htmlspecialchars(addslashes($quiz['title'])); ?>')" class="btn btn-primary" style="flex: 1;">
+                            <button onclick="openQuizModal('<?php echo htmlspecialchars($quiz['id']); ?>', '<?php echo htmlspecialchars(addslashes($quiz['title'])); ?>')" class="btn btn-primary" style="flex: 1;">
                                 <i class="fa-solid fa-play"></i> Practice Free
                             </button>
                             <a href="<?php echo PLAYSTORE_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-outline-navy" title="Unlock full series in App">

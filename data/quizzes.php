@@ -1,13 +1,13 @@
 <?php
 /**
- * Quiz categories, Daily Quizzes, Leaderboards, and Rewards
+ * Quiz categories, Field-Specific Questions, Leaderboards, and Rewards
  */
 
 $live_ticker_items = [
-    ['icon' => '🔥', 'text' => 'Aarav S. from DPS Delhi scored 100% in Daily Science Sprint!'],
-    ['icon' => '⚡', 'text' => 'Rohan K. achieved a 7-Day Quiz Streak!'],
+    ['icon' => '🔬', 'text' => 'Aarav S. from DPS Delhi scored 100% in Science Explorer!'],
+    ['icon' => '⚡', 'text' => 'Rohan K. achieved 100% Accuracy in Mathematics Mastermind!'],
     ['icon' => '🏆', 'text' => 'National Championship Prelims Registration: 85% Slots Booked!'],
-    ['icon' => '🌟', 'text' => 'Ananya M. from Mumbai won the Junior Brainiac Badge!'],
+    ['icon' => '🌟', 'text' => 'Ananya M. from Mumbai won the Junior Brainiac Award!'],
     ['icon' => '🎁', 'text' => '₹5,00,000+ in Gadgets & Scholarships up for grabs this season!']
 ];
 
@@ -19,7 +19,7 @@ $top_champions = [
         'school' => 'Delhi Public School, R.K. Puram',
         'city' => 'New Delhi',
         'score' => 2940,
-        'streak' => 14,
+        'accuracy' => '99% Accuracy',
         'badge' => 'Grandmaster'
     ],
     [
@@ -29,7 +29,7 @@ $top_champions = [
         'school' => 'National Public School, Indiranagar',
         'city' => 'Bengaluru',
         'score' => 2880,
-        'streak' => 12,
+        'accuracy' => '98% Accuracy',
         'badge' => 'Quiz Prodigy'
     ],
     [
@@ -39,7 +39,7 @@ $top_champions = [
         'school' => 'South Point High School',
         'city' => 'Kolkata',
         'score' => 2810,
-        'streak' => 11,
+        'accuracy' => '97% Accuracy',
         'badge' => 'Olympiad Ace'
     ],
     [
@@ -49,7 +49,7 @@ $top_champions = [
         'school' => 'Loyola High School',
         'city' => 'Pune',
         'score' => 2750,
-        'streak' => 9,
+        'accuracy' => '96% Accuracy',
         'badge' => 'Junior Master'
     ],
     [
@@ -59,7 +59,7 @@ $top_champions = [
         'school' => 'St. Xavier\'s School',
         'city' => 'Ranchi',
         'score' => 2710,
-        'streak' => 8,
+        'accuracy' => '95% Accuracy',
         'badge' => 'Speed Genius'
     ]
 ];
@@ -104,9 +104,9 @@ $quiz_categories = [
         'badge_color' => 'emerald',
         'questions_count' => 15,
         'duration' => '10 Mins',
-        'image' => 'assets/images/science1.jpg',
+        'image' => '/assets/images/science1.jpg',
         'icon' => 'fa-flask',
-        'description' => 'Explore the wonders of biology, space, and everyday physical science through fun and curious questions.',
+        'description' => 'Explore the wonders of biology, space, the solar system, and everyday physical science through engaging questions.',
         'accent' => '#0ea5e9'
     ],
     [
@@ -117,9 +117,9 @@ $quiz_categories = [
         'badge_color' => 'amber',
         'questions_count' => 20,
         'duration' => '15 Mins',
-        'image' => 'assets/images/gk1.jpg',
+        'image' => '/assets/images/gk1.jpg',
         'icon' => 'fa-globe-asia',
-        'description' => 'Test your general knowledge on Indian geography, wildlife, national symbols, world capitals, and current events.',
+        'description' => 'Test your general knowledge on Indian geography, wildlife sanctuaries, national emblems, capitals, and current events.',
         'accent' => '#f59e0b'
     ],
     [
@@ -130,9 +130,9 @@ $quiz_categories = [
         'badge_color' => 'rose',
         'questions_count' => 15,
         'duration' => '12 Mins',
-        'image' => 'assets/images/history1.jpg',
+        'image' => '/assets/images/history1.jpg',
         'icon' => 'fa-landmark',
-        'description' => 'Embark on an epic journey across ancient Indian dynasties, independence struggles, and transformative world events.',
+        'description' => 'Embark on an epic journey across ancient Indian dynasties, independence leaders, freedom struggles, and world history.',
         'accent' => '#ef4444'
     ],
     [
@@ -143,9 +143,9 @@ $quiz_categories = [
         'badge_color' => 'indigo',
         'questions_count' => 12,
         'duration' => '10 Mins',
-        'image' => 'assets/images/brain1.jpg',
+        'image' => '/assets/images/brain1.jpg',
         'icon' => 'fa-brain',
-        'description' => 'Navigate logical reasoning, pattern recognition, and lateral thinking riddles designed to test sharpness.',
+        'description' => 'Navigate logical reasoning, pattern recognition, spatial puzzles, and lateral thinking riddles designed to test sharpness.',
         'accent' => '#6366f1'
     ],
     [
@@ -156,9 +156,9 @@ $quiz_categories = [
         'badge_color' => 'cyan',
         'questions_count' => 20,
         'duration' => '15 Mins',
-        'image' => 'assets/images/science2.jpg',
+        'image' => '/assets/images/science2.jpg',
         'icon' => 'fa-atom',
-        'description' => 'Deep dive into fundamental physics, chemical reactions, environmental ecosystems, and cutting-edge innovations.',
+        'description' => 'Deep dive into fundamental physics, chemical formulas, cellular biology, environmental ecosystems, and space science.',
         'accent' => '#06b6d4'
     ],
     [
@@ -169,53 +169,133 @@ $quiz_categories = [
         'badge_color' => 'violet',
         'questions_count' => 15,
         'duration' => '15 Mins',
-        'image' => 'assets/images/maths2.jpg',
+        'image' => '/assets/images/maths2.jpg',
         'icon' => 'fa-calculator',
-        'description' => 'Sharpen numerical agility with rapid mental arithmetic, geometrical puzzles, fractions, and logical sequences.',
+        'description' => 'Sharpen numerical speed with mental arithmetic, percentage calculations, geometrical formulas, and logic sequences.',
         'accent' => '#8b5cf6'
     ]
 ];
 
-// Rich question banks for interactive student engagement
-$sample_quiz_questions = [
-    [
-        'id' => 1,
-        'category' => 'G.K. Safari',
-        'question' => 'Which is the highest civilian award in the Republic of India?',
-        'options' => ['Padma Vibhushan', 'Bharat Ratna', 'Param Vir Chakra', 'Padma Bhushan'],
-        'correct' => 1,
-        'explanation' => 'The Bharat Ratna is India’s highest civilian award, instituted on 2 January 1954.'
+// 6 Dedicated Field-Specific Question Banks
+$category_questions = [
+    'science-explorer' => [
+        [
+            'q' => 'Which gas do green plants absorb from the atmosphere during photosynthesis?',
+            'options' => ['Oxygen', 'Carbon Dioxide', 'Nitrogen', 'Argon'],
+            'correct' => 1,
+            'exp' => 'Plants absorb Carbon Dioxide (CO2) from the air and release Oxygen using sunlight and chlorophyll.'
+        ],
+        [
+            'q' => 'Which is the largest organ in the human body?',
+            'options' => ['Liver', 'Brain', 'Skin', 'Heart'],
+            'correct' => 2,
+            'exp' => 'The skin is the largest organ of the human body, acting as a protective barrier.'
+        ],
+        [
+            'q' => 'What natural force pulls all objects towards the center of the Earth?',
+            'options' => ['Magnetism', 'Gravity', 'Friction', 'Static Electric Force'],
+            'correct' => 1,
+            'exp' => 'Gravity is the universal attractive force that pulls objects towards the Earth.'
+        ]
     ],
-    [
-        'id' => 2,
-        'category' => 'Science Explorer',
-        'question' => 'Which planet in our solar system has the most prominent ring system?',
-        'options' => ['Jupiter', 'Saturn', 'Uranus', 'Neptune'],
-        'correct' => 1,
-        'explanation' => 'Saturn is world-renowned for its magnificent and extensive ring system composed of ice and rock particles.'
+    'gk-safari' => [
+        [
+            'q' => 'Which is the highest civilian award in the Republic of India?',
+            'options' => ['Padma Vibhushan', 'Bharat Ratna', 'Param Vir Chakra', 'Padma Bhushan'],
+            'correct' => 1,
+            'exp' => 'The Bharat Ratna is India’s highest civilian award, instituted in 1954.'
+        ],
+        [
+            'q' => 'Which Indian state has the longest coastline?',
+            'options' => ['Maharashtra', 'Tamil Nadu', 'Gujarat', 'Andhra Pradesh'],
+            'correct' => 2,
+            'exp' => 'Gujarat has the longest mainland coastline in India, spanning over 1,600 km.'
+        ],
+        [
+            'q' => 'What is the national aquatic animal of India?',
+            'options' => ['Ganges River Dolphin', 'Gharial Crocodile', 'Olive Ridley Turtle', 'Blue Whale'],
+            'correct' => 0,
+            'exp' => 'The South Asian River Dolphin (Ganges River Dolphin) is India\'s official national aquatic animal.'
+        ]
     ],
-    [
-        'id' => 3,
-        'category' => 'Math Mastermind',
-        'question' => 'What is the value of 15% of 240?',
-        'options' => ['32', '36', '42', '24'],
-        'correct' => 1,
-        'explanation' => '10% of 240 is 24, and 5% is 12. Therefore, 15% = 24 + 12 = 36.'
+    'history-trek' => [
+        [
+            'q' => 'In which year did India adopt its Constitution and become a sovereign Republic?',
+            'options' => ['1947', '1948', '1950', '1952'],
+            'correct' => 2,
+            'exp' => 'The Constitution of India came into effect on 26 January 1950, celebrated nationwide as Republic Day.'
+        ],
+        [
+            'q' => 'Who was revered as the "Iron Man of India" for uniting the princely states?',
+            'options' => ['Subhas Chandra Bose', 'Bhagat Singh', 'Sardar Vallabhbhai Patel', 'Bal Gangadhar Tilak'],
+            'correct' => 2,
+            'exp' => 'Sardar Vallabhbhai Patel united over 560 princely states into the Indian Union.'
+        ],
+        [
+            'q' => 'Which Mughal emperor commissioned the construction of the Taj Mahal in Agra?',
+            'options' => ['Akbar', 'Jahangir', 'Shah Jahan', 'Aurangzeb'],
+            'correct' => 2,
+            'exp' => 'Shah Jahan built the Taj Mahal in Agra in memory of his beloved wife Mumtaz Mahal.'
+        ]
     ],
-    [
-        'id' => 4,
-        'category' => 'History Trek',
-        'question' => 'In which year did India launch its historic Constitution, becoming a sovereign Republic?',
-        'options' => ['1947', '1948', '1950', '1952'],
-        'correct' => 2,
-        'explanation' => 'The Constitution of India came into effect on 26 January 1950, celebrated nationwide as Republic Day.'
+    'brainy-explorer' => [
+        [
+            'q' => 'Look at this sequence: 2, 6, 12, 20, 30, ... What is the next number?',
+            'options' => ['40', '42', '44', '46'],
+            'correct' => 1,
+            'exp' => 'Differences increase: +4, +6, +8, +10, so next is +12. 30 + 12 = 42.'
+        ],
+        [
+            'q' => 'If a plane crashes exactly on the border of India and Nepal, where do they bury the survivors?',
+            'options' => ['In India', 'In Nepal', 'In the neutral buffer zone', 'Survivors are not buried'],
+            'correct' => 3,
+            'exp' => 'Survivors are still alive, so you do not bury them!'
+        ],
+        [
+            'q' => 'If DAY is coded as 4125 (D=4, A=1, Y=25), how is CAT coded?',
+            'options' => ['3120', '3220', '3119', '3219'],
+            'correct' => 0,
+            'exp' => 'C=3, A=1, T=20, giving 3120.'
+        ]
     ],
-    [
-        'id' => 5,
-        'category' => 'Brainy Explorer',
-        'question' => 'Look at this sequence: 2, 6, 12, 20, 30, ... What is the next number?',
-        'options' => ['40', '42', '44', '46'],
-        'correct' => 1,
-        'explanation' => 'Differences are +4, +6, +8, +10, so next difference is +12. 30 + 12 = 42.'
+    'scientific-odyssey' => [
+        [
+            'q' => 'What is the SI unit of electrical resistance?',
+            'options' => ['Volt', 'Ampere', 'Ohm', 'Watt'],
+            'correct' => 2,
+            'exp' => 'The Ohm (symbol: Ω) is the official SI unit of electrical resistance.'
+        ],
+        [
+            'q' => 'Which cellular organelle is known as the "Powerhouse of the Cell"?',
+            'options' => ['Ribosome', 'Mitochondrion', 'Golgi apparatus', 'Lysosome'],
+            'correct' => 1,
+            'exp' => 'Mitochondria generate most of the cell\'s chemical energy in the form of ATP.'
+        ],
+        [
+            'q' => 'Can sound waves travel through a complete vacuum (like outer space)?',
+            'options' => ['Yes, at the speed of light', 'Yes, but very slowly', 'No, sound requires a medium', 'Only in high temperatures'],
+            'correct' => 2,
+            'exp' => 'Sound is a mechanical wave and requires a physical medium (gas, liquid, or solid) to propagate.'
+        ]
+    ],
+    'math-mastermind' => [
+        [
+            'q' => 'What is the sum of interior angles in any triangle in Euclidean geometry?',
+            'options' => ['90 degrees', '180 degrees', '270 degrees', '360 degrees'],
+            'correct' => 1,
+            'exp' => 'The interior angles of any triangle always add up to exactly 180 degrees.'
+        ],
+        [
+            'q' => 'What is 15% of 240?',
+            'options' => ['32', '36', '42', '24'],
+            'correct' => 1,
+            'exp' => '10% of 240 = 24, and 5% = 12. Therefore, 15% = 24 + 12 = 36.'
+        ],
+        [
+            'q' => 'If a square has a perimeter of 48 cm, what is the length of each side?',
+            'options' => ['10 cm', '12 cm', '14 cm', '16 cm'],
+            'correct' => 1,
+            'exp' => 'Perimeter = 4 × side. Side = 48 ÷ 4 = 12 cm.'
+        ]
     ]
 ];

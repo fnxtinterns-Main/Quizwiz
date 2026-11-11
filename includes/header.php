@@ -108,7 +108,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
             <li><a href="/" class="mobile-nav-link <?php echo is_active_page('home', $current_page); ?>">Home</a></li>
             <li>
                 <a href="/daily-quiz" class="mobile-nav-link <?php echo is_active_page('daily-quiz', $current_page); ?>" style="color: var(--secondary);">
-                    🔥 Daily Free Quiz (Win Streaks)
+                    🔥 Daily Free Quiz (Classes 1–12)
                 </a>
             </li>
             <li><a href="/about" class="mobile-nav-link <?php echo is_active_page('about', $current_page); ?>">About Championships</a></li>

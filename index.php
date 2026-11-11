@@ -41,7 +41,7 @@ require_once __DIR__ . '/data/quizzes.php';
                     Learn Daily. <span class="highlight">Win Big.</span> Rule the Quiz Arena.
                 </h1>
                 <p class="hero-subtext">
-                    Join over 7,200+ school students from Classes 1 to 12. Take <strong>free daily quizzes</strong> across Science, Math, G.K., and History, maintain your winning streak, and compete for <strong>laptops, tablets, and national scholarships</strong>.
+                    Join over 7,200+ school students from Classes 1 to 12. Take <strong>free daily quizzes</strong> across Science, Math, G.K., and History, boost your academic speed, and compete for <strong>laptops, tablets, and national scholarships</strong>.
                 </p>
 
                 <!-- Dual CTA Action Group -->
@@ -168,7 +168,7 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="section-eyebrow" style="background: rgba(255, 107, 0, 0.25); color: #FFA366; border-color: rgba(255, 107, 0, 0.4);">
                     <i class="fa-solid fa-fire text-orange"></i> Fresh Every 24 Hours
                 </div>
-                <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 12px;">Daily Free Quizzes: Build Your Streak!</h2>
+                <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 12px;">Daily Free Quizzes: Sharpen Your Mind Every Day!</h2>
                 <p style="color: #CBD5E1; font-size: 1.05rem; margin-bottom: 24px;">
                     We upload brand new quiz questions every single morning across Science, Space, Indian History, Mental Math, and General Knowledge. Completely free, no credit card or account needed!
                 </p>
@@ -183,9 +183,9 @@ require_once __DIR__ . '/data/quizzes.php';
             </div>
             <div style="text-align: center;">
                 <div style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius-xl); padding: 24px; max-width: 280px; margin: 0 auto; backdrop-filter: blur(10px);">
-                    <div style="font-size: 3rem; margin-bottom: 8px;">🔥</div>
-                    <div style="font-size: 1.25rem; font-weight: 700; color: #FFFFFF; margin-bottom: 4px;">Daily Streak Rewards</div>
-                    <p style="font-size: 0.85rem; color: #CBD5E1; margin: 0;">Play 7 consecutive days to unlock the National Bronze Champion Badge!</p>
+                    <div style="font-size: 3rem; margin-bottom: 8px;">🎯</div>
+                    <div style="font-size: 1.25rem; font-weight: 700; color: #FFFFFF; margin-bottom: 4px;">Daily Practice Rewards</div>
+                    <p style="font-size: 0.85rem; color: #CBD5E1; margin: 0;">Score 100% accuracy in daily rounds to unlock national certificates &amp; badges!</p>
                 </div>
             </div>
         </div>
@@ -230,7 +230,7 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="section-eyebrow"><i class="fa-solid fa-trophy"></i> Hall of Fame</div>
                 <h2 style="margin-bottom: 16px;">This Week’s National Champions</h2>
                 <p>
-                    Top performers across India who led their schools in accuracy, speed, and daily quiz streaks. Will your name be here next?
+                    Top performers across India who led their schools in accuracy, speed, and academic excellence. Will your name be here next?
                 </p>
                 <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
                     <div style="display: flex; align-items: center; gap: 12px;">
@@ -279,7 +279,7 @@ require_once __DIR__ . '/data/quizzes.php';
                                     <?php echo number_format($champ['score']); ?> pts
                                 </div>
                                 <span style="font-size: 0.75rem; color: #10B981; font-weight: 600;">
-                                    🔥 <?php echo $champ['streak']; ?>d streak
+                                    <i class="fa-solid fa-bullseye"></i> <?php echo htmlspecialchars($champ['accuracy'] ?? '98% Accuracy'); ?>
                                 </span>
                             </div>
                         </div>
@@ -322,7 +322,7 @@ require_once __DIR__ . '/data/quizzes.php';
                         </div>
 
                         <div style="display: flex; gap: 8px;">
-                            <button onclick="openQuizModal('<?php echo htmlspecialchars(addslashes($quiz['title'])); ?>')" class="btn btn-primary" style="flex: 1;">
+                            <button onclick="openQuizModal('<?php echo htmlspecialchars($quiz['id']); ?>', '<?php echo htmlspecialchars(addslashes($quiz['title'])); ?>')" class="btn btn-primary" style="flex: 1;">
                                 <i class="fa-solid fa-play"></i> Take Quiz
                             </button>
                             <a href="/enroll" class="btn btn-outline-navy" title="Enroll in this category">

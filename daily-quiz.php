@@ -1,7 +1,7 @@
 <?php
 $current_page = 'daily-quiz';
 $page_title = 'Free Daily Quiz Challenge | QuizWiz';
-$page_desc = 'Play QuizWiz Free Daily Quiz! New questions uploaded every day for Classes 1 to 12. Build daily learning streaks, earn badges, and win rewards.';
+$page_desc = 'Play QuizWiz Free Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn badges, and win rewards.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';
@@ -17,16 +17,16 @@ require_once __DIR__ . '/data/quizzes.php';
             Today's <span style="color: var(--secondary);">Daily Free Quiz</span>
         </h1>
         <p style="color: #CBD5E1; max-width: 680px; margin: 0 auto 32px; font-size: 1.15rem;">
-            A new 5-minute brain sprint every single day! Complete today’s challenge to build your learning streak, climb the daily leaderboard, and win achievement badges.
+            A new 5-minute brain sprint every single day! Complete today’s challenge to boost your knowledge, climb the daily leaderboard, and win achievement badges.
         </p>
 
-        <!-- Streak & XP Gamification Banner -->
+        <!-- Accuracy & XP Gamification Banner -->
         <div style="display: inline-flex; align-items: center; gap: 24px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 12px 28px; border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.15);">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 1.5rem;">🔥</span>
+                <span style="font-size: 1.5rem;">🎯</span>
                 <div style="text-align: left;">
-                    <div style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Your Daily Streak</div>
-                    <div id="userStreakDisplay" style="font-size: 1.1rem; font-weight: 700; color: #FFA366;">1 Day</div>
+                    <div style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Today's Target</div>
+                    <div id="userTargetDisplay" style="font-size: 1.1rem; font-weight: 700; color: #FFA366;">100% Accuracy</div>
                 </div>
             </div>
             <div style="width: 1px; height: 32px; background: rgba(255, 255, 255, 0.15);"></div>
@@ -85,7 +85,7 @@ require_once __DIR__ . '/data/quizzes.php';
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">🏅</div>
                 <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Earn Badges</h4>
-                <p style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">Unlock streak badges &amp; certificates.</p>
+                <p style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">Unlock merit badges &amp; certificates.</p>
             </div>
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">📱</div>
@@ -99,11 +99,6 @@ require_once __DIR__ . '/data/quizzes.php';
 <!-- SCRIPT FOR DAILY QUIZ RUNNER -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Streak logic in LocalStorage
-    let streak = parseInt(localStorage.getItem('quizwiz_streak') || '1', 10);
-    const streakDisplay = document.getElementById('userStreakDisplay');
-    if (streakDisplay) streakDisplay.textContent = streak + (streak === 1 ? ' Day' : ' Days');
-
     let currentGroup = 'a';
     let currentIndex = 0;
     let score = 0;
@@ -203,17 +198,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentIndex >= dataset.length) {
             clearInterval(timerInterval);
-            // Increment streak
-            streak++;
-            localStorage.setItem('quizwiz_streak', streak);
-            if (streakDisplay) streakDisplay.textContent = streak + ' Days';
+            const accuracyPct = Math.round((score / dataset.length) * 100);
 
             area.innerHTML = `
                 <div style="text-align: center; padding: 32px 0;">
                     <div style="font-size: 3.5rem; margin-bottom: 12px;">🎉</div>
                     <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 8px;">Daily Quiz Completed!</h3>
                     <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 16px;">
-                        You scored <strong>${score} out of ${dataset.length}</strong>! 🔥 Streak updated to <strong>${streak} Days</strong>.
+                        You scored <strong>${score} out of ${dataset.length}</strong> (${accuracyPct}% Accuracy)!
                     </p>
                     <div style="background: var(--primary-surface); padding: 16px; border-radius: var(--radius-lg); margin: 0 auto 24px; max-width: 480px;">
                         <h4 style="font-size: 1rem; color: var(--primary); margin-bottom: 4px;">🏆 Share with Friends on WhatsApp</h4>

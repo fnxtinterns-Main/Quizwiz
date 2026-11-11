@@ -20,22 +20,12 @@ require_once __DIR__ . '/data/quizzes.php';
             A new 5-minute brain sprint every single day! Complete today’s challenge to boost your knowledge, climb the daily leaderboard, and win national awards.
         </p>
 
-        <!-- Accuracy & XP Gamification Banner -->
-        <div style="display: inline-flex; align-items: center; gap: 24px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 12px 28px; border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.15);">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 1.5rem;">🎯</span>
-                <div style="text-align: left;">
-                    <div style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Today's Target</div>
-                    <div id="userTargetDisplay" style="font-size: 1.1rem; font-weight: 700; color: #FFA366;">100% Accuracy</div>
-                </div>
-            </div>
-            <div style="width: 1px; height: 32px; background: rgba(255, 255, 255, 0.15);"></div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 1.5rem;">⚡</span>
-                <div style="text-align: left;">
-                    <div style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Today's Reward</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #38BDF8;">+100 Quiz XP</div>
-                </div>
+        <!-- Target Banner -->
+        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 12px 28px; border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.15);">
+            <span style="font-size: 1.5rem;">🎯</span>
+            <div style="text-align: left;">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Today's Target</div>
+                <div id="userTargetDisplay" style="font-size: 1.1rem; font-weight: 700; color: #FFA366;">100% Accuracy</div>
             </div>
         </div>
     </div>

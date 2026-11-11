@@ -79,7 +79,7 @@ require_once __DIR__ . '/data/quizzes.php';
                             <i class="fa-solid fa-bolt"></i> Quick Brain Sprint
                         </span>
                         <span style="font-size: 0.8rem; font-weight: 700; color: #10B981; background: #ECFDF5; padding: 2px 8px; border-radius: 4px;">
-                            +50 XP
+                            Free Practice
                         </span>
                     </div>
 
@@ -450,7 +450,7 @@ function handleHeroAnswer(btn, isCorrect) {
         feedback.style.display = 'block';
         feedback.style.background = '#ECFDF5';
         feedback.style.color = '#065F46';
-        feedback.innerHTML = '<strong>Brilliant! 🌟 The Sun is the closest star (approx. 150 million km).</strong> You earned +50 XP! <a href="/daily-quiz" style="color: #065F46; font-weight: 700; text-decoration: underline;">Play more questions &rarr;</a>';
+        feedback.innerHTML = '<strong>Brilliant! 🌟 The Sun is the closest star (approx. 150 million km).</strong> <a href="/daily-quiz" style="color: #065F46; font-weight: 700; text-decoration: underline;">Play more questions &rarr;</a>';
     } else {
         btn.classList.add('wrong');
         allBtns[1].classList.add('correct'); // Highlight Sun

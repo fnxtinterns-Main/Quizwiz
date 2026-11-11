@@ -42,27 +42,6 @@ $current_page = isset($current_page) ? $current_page : 'home';
 </head>
 <body>
 
-    <!-- Top Announcement & Helpline Bar -->
-    <div class="topbar">
-        <div class="container">
-            <div class="topbar-contact">
-                <a href="tel:<?php echo PHONE_RAW; ?>">
-                    <i class="fa-solid fa-phone"></i> <?php echo PHONE_DISPLAY; ?>
-                </a>
-                <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-whatsapp text-orange"></i> WhatsApp
-                </a>
-                <a href="mailto:<?php echo EMAIL_CONTACT; ?>" class="d-none-mobile">
-                    <i class="fa-regular fa-envelope"></i> <?php echo EMAIL_CONTACT; ?>
-                </a>
-            </div>
-            <div class="topbar-announcement">
-                <span class="topbar-badge">🔥 Free Daily Quiz</span>
-                <span>Today's Challenge is Live! Play free &amp; earn XP.</span>
-            </div>
-        </div>
-    </div>
-
     <!-- Sticky Main Navigation Header -->
     <header class="site-header">
         <div class="container">

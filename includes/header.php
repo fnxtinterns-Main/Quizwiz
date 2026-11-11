@@ -41,15 +41,15 @@ $current_page = isset($current_page) ? $current_page : 'home';
                     <i class="fa-solid fa-phone"></i> <?php echo PHONE_DISPLAY; ?>
                 </a>
                 <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer">
-                    <i class="fa-brands fa-whatsapp text-orange"></i> WhatsApp Support
+                    <i class="fa-brands fa-whatsapp text-orange"></i> WhatsApp
                 </a>
-                <a href="mailto:<?php echo EMAIL_CONTACT; ?>" class="d-none d-md-inline">
+                <a href="mailto:<?php echo EMAIL_CONTACT; ?>" class="d-none-mobile">
                     <i class="fa-regular fa-envelope"></i> <?php echo EMAIL_CONTACT; ?>
                 </a>
             </div>
             <div class="topbar-announcement">
                 <span class="topbar-badge">🔥 Free Daily Quiz</span>
-                <span>Today's Daily Challenge is Live! Play free &amp; earn XP.</span>
+                <span>Today's Challenge is Live! Play free &amp; earn XP.</span>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <header class="site-header">
         <div class="container">
             <nav class="navbar">
-                <!-- Brand Logo -->
+                <!-- Brand Logo (High Contrast White Container for Crisp Readability on Dark/Light Screens) -->
                 <a href="/" class="brand-logo" aria-label="QuizWiz Home">
                     <img src="/assets/images/logo.png" alt="QuizWiz Logo">
                 </a>
@@ -77,12 +77,12 @@ $current_page = isset($current_page) ? $current_page : 'home';
                     <li><a href="/contact" class="nav-link <?php echo is_active_page('contact', $current_page); ?>">Contact</a></li>
                 </ul>
 
-                <!-- Primary Action Buttons -->
+                <!-- Action Buttons: Optimized for Desktop and Mobile -->
                 <div class="nav-actions">
-                    <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm d-none d-sm-inline-flex" title="Chat on WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i> Chat
+                    <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm nav-action-chat" title="Chat on WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i> <span class="d-none-mobile">Chat</span>
                     </a>
-                    <a href="/daily-quiz" class="btn btn-primary btn-sm">
+                    <a href="/daily-quiz" class="btn btn-primary btn-sm nav-action-quiz">
                         <i class="fa-solid fa-play"></i> Play Free Quiz
                     </a>
                     <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open Navigation Menu">
@@ -97,7 +97,9 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <div id="drawerBackdrop" class="drawer-backdrop"></div>
     <aside id="mobileDrawer" class="mobile-drawer" aria-label="Mobile Navigation">
         <div class="mobile-drawer-header">
-            <img src="/assets/images/logo.png" alt="QuizWiz Logo" style="height: 38px;">
+            <div style="background: #FFFFFF; padding: 4px 8px; border-radius: 8px;">
+                <img src="/assets/images/logo.png" alt="QuizWiz Logo" style="height: 34px;">
+            </div>
             <button id="closeDrawerBtn" class="mobile-menu-btn" style="border: none;" aria-label="Close Navigation Menu">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -114,9 +116,12 @@ $current_page = isset($current_page) ? $current_page : 'home';
             <li><a href="/enroll" class="mobile-nav-link <?php echo is_active_page('enroll', $current_page); ?>">Student Registration</a></li>
             <li><a href="/contact" class="mobile-nav-link <?php echo is_active_page('contact', $current_page); ?>">Contact &amp; Helpline</a></li>
         </ul>
-        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-light);">
             <a href="/daily-quiz" class="btn btn-primary btn-lg" style="width: 100%;">
                 <i class="fa-solid fa-play"></i> Play Today's Quiz
+            </a>
+            <a href="/enroll" class="btn btn-outline-navy" style="width: 100%;">
+                <i class="fa-solid fa-trophy"></i> Enroll for Championship
             </a>
             <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="width: 100%;">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp: <?php echo PHONE_DISPLAY; ?>

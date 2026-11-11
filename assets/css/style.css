@@ -1441,3 +1441,121 @@ p.lead {
   70% { box-shadow: 0 0 0 14px rgba(255, 107, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
 }
+
+
+/* ==========================================================================
+   Mobile-First Optimization (Fixes for Screens <= 768px & Samsung/Chrome Mobile)
+   ========================================================================== */
+.brand-logo {
+  background: #FFFFFF;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  /* 1. Sleek, clean topbar with no horizontal overflow */
+  .topbar {
+    padding: 6px 0;
+    font-size: 0.78rem;
+  }
+  .topbar .container {
+    justify-content: center;
+  }
+  .topbar-announcement {
+    display: none !important;
+  }
+  .topbar-contact {
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+  }
+  .topbar-contact a {
+    font-size: 0.78rem;
+  }
+  .d-none-mobile {
+    display: none !important;
+  }
+
+  /* 2. Uncluttered Navbar on Mobile */
+  .navbar {
+    height: 62px;
+  }
+  .brand-logo {
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+  .brand-logo img {
+    height: 32px;
+    max-width: 115px;
+  }
+  .nav-actions {
+    gap: 6px;
+  }
+  .nav-action-quiz {
+    display: none !important; /* Sits cleanly inside mobile drawer */
+  }
+  .nav-action-chat {
+    padding: 6px 10px;
+    min-height: 38px;
+  }
+  .mobile-menu-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.15rem;
+  }
+
+  /* 3. Hero Section Mobile Proportions */
+  .hero {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-10);
+  }
+  .hero-headline {
+    font-size: 1.85rem;
+    line-height: 1.25;
+  }
+  .hero-subtext {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+  .hero-trust {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: var(--space-4);
+  }
+
+  /* 4. Live Activity Ticker on Mobile */
+  .live-ticker-wrap {
+    padding: 6px 0;
+  }
+  .live-ticker-label {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+  .live-ticker-content {
+    gap: 20px;
+    font-size: 0.8rem;
+  }
+
+  /* 5. Floating WhatsApp Button */
+  .floating-whatsapp {
+    bottom: 16px;
+    right: 16px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  }
+}

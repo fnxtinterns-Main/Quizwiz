@@ -10,7 +10,7 @@ require_once __DIR__ . '/config.php';
                 <!-- Col 1: Brand & Purpose -->
                 <div class="footer-brand">
                     <div style="display: inline-flex; background: #FFFFFF; padding: 6px 12px; border-radius: var(--radius-md); box-shadow: 0 2px 6px rgba(0,0,0,0.15); margin-bottom: 8px;">
-                        <img src="/assets/images/logo.png" alt="QuizWiz Logo" style="height: 38px; width: auto; object-fit: contain;">
+                        <img src="/assets/images/logo.png" alt="QuizWiz Logo" loading="lazy" decoding="async" style="height: 38px; width: auto; object-fit: contain;">
                     </div>
                     <p>
                         QuizWiz is India's leading online quiz championship platform designed to nurture curiosity, foster intellectual agility, and celebrate young academic achievers across the country.

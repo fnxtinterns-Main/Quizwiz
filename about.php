@@ -44,7 +44,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
             <div style="text-align: center;">
-                <img src="/assets/images/ab2.jpg" alt="All India Quiz Championships Poster" style="max-width: 340px; width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); display: inline-block;">
+                <img src="/assets/images/ab2.jpg" alt="All India Quiz Championships Poster" loading="lazy" decoding="async" style="max-width: 340px; width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); display: inline-block;">
             </div>
         </div>
     </div>

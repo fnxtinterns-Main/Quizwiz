@@ -305,7 +305,7 @@ require_once __DIR__ . '/data/quizzes.php';
             <?php foreach ($quiz_categories as $quiz): ?>
                 <div class="quiz-card">
                     <div class="quiz-card-image">
-                        <img src="<?php echo htmlspecialchars($quiz['image']); ?>" alt="<?php echo htmlspecialchars($quiz['title']); ?>">
+                        <img src="<?php echo htmlspecialchars($quiz['image']); ?>" alt="<?php echo htmlspecialchars($quiz['title']); ?>" loading="lazy" decoding="async">
                         <span class="quiz-difficulty-badge"><?php echo htmlspecialchars($quiz['difficulty']); ?></span>
                         <span class="quiz-group-pill"><?php echo htmlspecialchars($quiz['group']); ?></span>
                     </div>

@@ -66,6 +66,7 @@ RewriteRule ^ / [R=301,L]
 
 # Specific Clean Aliases
 RewriteRule ^dpdp-compliance/?$ dpdp.php [L,QSA]
+RewriteRule ^campus-ambassador/?$ ambassador.php [L,QSA]
 
 # Internally rewrite clean URLs to .php files
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -59,7 +59,17 @@ $current_page = isset($current_page) ? $current_page : 'home';
                             <i class="fa-solid fa-fire text-orange"></i> Daily Quiz
                         </a>
                     </li>
-                    <li><a href="/about" class="nav-link <?php echo is_active_page('about', $current_page); ?>">About Us</a></li>
+                    <li>
+                        <a href="/puzzles" class="nav-link <?php echo is_active_page('puzzles', $current_page); ?>">
+                            <i class="fa-solid fa-puzzle-piece text-orange"></i> Puzzles
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/ambassador" class="nav-link <?php echo is_active_page('ambassador', $current_page); ?>" style="font-weight: 700;">
+                            <i class="fa-solid fa-crown text-orange"></i> Ambassador
+                        </a>
+                    </li>
+                    <li><a href="/about" class="nav-link <?php echo is_active_page('about', $current_page); ?>">About</a></li>
                     <li><a href="/quizzes" class="nav-link <?php echo is_active_page('quizzes', $current_page); ?>">Explore Quizzes</a></li>
                     <li><a href="/enroll" class="nav-link <?php echo is_active_page('enroll', $current_page); ?>">Enroll Now</a></li>
                     <li><a href="/contact" class="nav-link <?php echo is_active_page('contact', $current_page); ?>">Contact</a></li>
@@ -97,6 +107,16 @@ $current_page = isset($current_page) ? $current_page : 'home';
             <li>
                 <a href="/daily-quiz" class="mobile-nav-link <?php echo is_active_page('daily-quiz', $current_page); ?>" style="color: var(--secondary);">
                     🔥 Daily Free Quiz (Classes 1–12)
+                </a>
+            </li>
+            <li>
+                <a href="/puzzles" class="mobile-nav-link <?php echo is_active_page('puzzles', $current_page); ?>">
+                    🧩 Brain Puzzles &amp; Riddles
+                </a>
+            </li>
+            <li>
+                <a href="/ambassador" class="mobile-nav-link <?php echo is_active_page('ambassador', $current_page); ?>" style="color: var(--secondary); font-weight: 700;">
+                    👑 Campus Ambassador (Become Quiz Master)
                 </a>
             </li>
             <li><a href="/about" class="mobile-nav-link <?php echo is_active_page('about', $current_page); ?>">About Championships</a></li>

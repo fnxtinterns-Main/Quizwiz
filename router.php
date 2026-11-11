@@ -29,6 +29,10 @@ if ($trimmedUri === 'dpdp-compliance') {
     require_once __DIR__ . '/dpdp.php';
     return true;
 }
+if ($trimmedUri === 'campus-ambassador') {
+    require_once __DIR__ . '/ambassador.php';
+    return true;
+}
 $phpFile = __DIR__ . '/' . $trimmedUri . '.php';
 
 if (file_exists($phpFile)) {

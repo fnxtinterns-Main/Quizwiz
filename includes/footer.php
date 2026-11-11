@@ -31,6 +31,8 @@ require_once __DIR__ . '/config.php';
                     <ul class="footer-links">
                         <li><a href="/"><i class="fa-solid fa-angle-right text-orange"></i> Home</a></li>
                         <li><a href="/daily-quiz"><i class="fa-solid fa-fire text-orange"></i> Free Daily Quiz</a></li>
+                        <li><a href="/puzzles"><i class="fa-solid fa-puzzle-piece text-orange"></i> Brain Puzzles</a></li>
+                        <li><a href="/ambassador"><i class="fa-solid fa-crown text-orange"></i> Campus Ambassador</a></li>
                         <li><a href="/about"><i class="fa-solid fa-angle-right text-orange"></i> About Championships</a></li>
                         <li><a href="/quizzes"><i class="fa-solid fa-angle-right text-orange"></i> Quiz Categories</a></li>
                         <li><a href="/enroll"><i class="fa-solid fa-angle-right text-orange"></i> Student Enrollment</a></li>

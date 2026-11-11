@@ -626,7 +626,7 @@ p.lead {
 
 .hero-visual {
   position: relative;
-  margin-top: 36px;
+  padding-top: 54px;
 }
 
 .hero-card {
@@ -650,13 +650,20 @@ p.lead {
   gap: var(--space-3);
   font-size: 0.85rem;
   font-weight: 600;
-  z-index: 2;
+  z-index: 10;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  cursor: pointer;
 }
 
 .hero-badge-top {
-  top: -30px;
+  top: 0px;
   right: 16px;
-  z-index: 10;
+}
+
+.hero-badge-top:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 20px 35px -5px rgba(27, 37, 89, 0.22);
+  border-color: var(--secondary);
 }
 
 .hero-badge-bottom {
@@ -1618,12 +1625,13 @@ p.lead {
 
   /* 7. Hero Visual & Floating Badge Mobile Positioning */
   .hero-visual {
-    margin-top: 28px !important;
+    margin-top: 16px !important;
+    padding-top: 50px !important;
   }
   .hero-badge-top {
-    top: -22px !important;
-    right: 10px !important;
-    padding: 8px 12px !important;
+    top: 0px !important;
+    right: 12px !important;
+    padding: 8px 14px !important;
     font-size: 0.78rem !important;
   }
 }

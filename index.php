@@ -73,6 +73,15 @@ require_once __DIR__ . '/data/quizzes.php';
 
             <!-- Hero Interactive Mini-Quiz Teaser -->
             <div class="hero-visual">
+                <!-- Top National Prize Pill (Positioned completely at top of the block, moves on hover) -->
+                <div class="hero-badge-float hero-badge-top" title="Compete for Top National Prize: HP Laptop + ₹50,000 Scholarship">
+                    <span style="font-size: 1.35rem;">💻</span>
+                    <div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Top National Prize</div>
+                        <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">HP Laptop + ₹50,000</div>
+                    </div>
+                </div>
+
                 <div class="hero-quiz-teaser">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <span class="teaser-badge">
@@ -108,15 +117,6 @@ require_once __DIR__ . '/data/quizzes.php';
                         <a href="/daily-quiz" style="font-size: 0.85rem; font-weight: 700; color: var(--secondary);">
                             Play Full Quiz &rarr;
                         </a>
-                    </div>
-                </div>
-
-                <!-- Floating Achievement Pills -->
-                <div class="hero-badge-float hero-badge-top">
-                    <span style="font-size: 1.3rem;">💻</span>
-                    <div>
-                        <div style="font-size: 0.7rem; color: var(--text-muted);">Top National Prize</div>
-                        <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">HP Laptop + ₹50,000</div>
                     </div>
                 </div>
             </div>

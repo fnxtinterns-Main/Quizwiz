@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ----------------------------------------------------
-    // 2. Animated Stats Counters with IntersectionObserver
+    // 2. High-Speed Animated Stats Counters (Starts at 0)
     // ----------------------------------------------------
     const counterElements = document.querySelectorAll('[data-target-count]');
 
@@ -47,31 +47,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const target = parseInt(el.getAttribute('data-target-count'), 10);
-                    animateCounter(el, target);
+                    animateHighSpeedCounter(el, target);
                     observer.unobserve(el);
                 }
             });
-        }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px 50px 0px' });
 
         counterElements.forEach(el => counterObserver.observe(el));
+    } else {
+        counterElements.forEach(el => {
+            animateHighSpeedCounter(el, parseInt(el.getAttribute('data-target-count'), 10));
+        });
     }
 
-    function animateCounter(el, target) {
-        let current = Math.floor(target * 0.75); // Start close to the target for instant visual response
-        const duration = 350; // Ultra snappy 350ms duration (down from 2000ms)
-        const stepTime = 20;
-        const totalSteps = duration / stepTime;
-        const increment = (target - current) / totalSteps;
+    function animateHighSpeedCounter(el, target) {
+        const duration = 750; // Ultra high-speed 750ms count-up
+        const startTime = performance.now();
 
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                el.textContent = target.toLocaleString('en-IN') + '+';
-                clearInterval(timer);
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Cubic ease-out: rockets from 0 with high velocity, then locks onto the target
+            const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+            const currentVal = Math.floor(easeOutProgress * target);
+
+            el.textContent = currentVal.toLocaleString('en-IN') + '+';
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
             } else {
-                el.textContent = Math.floor(current).toLocaleString('en-IN') + '+';
+                el.textContent = target.toLocaleString('en-IN') + '+';
             }
-        }, stepTime);
+        }
+
+        requestAnimationFrame(update);
     }
 
     // ----------------------------------------------------

@@ -132,28 +132,28 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="stat-icon" style="background-color: #ECFDF5; color: #10B981;">
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
-                <div class="stat-number" data-target-count="289">289+</div>
+                <div class="stat-number" data-target-count="289">0</div>
                 <div class="stat-label">Curated Test Series</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon" style="background-color: #FFF7ED; color: #FF6B00;">
                     <i class="fa-solid fa-users"></i>
                 </div>
-                <div class="stat-number" data-target-count="7286">7,286+</div>
+                <div class="stat-number" data-target-count="7286">0</div>
                 <div class="stat-label">Students Enrolled</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon" style="background-color: #EEF2FF; color: #4F46E5;">
                     <i class="fa-solid fa-clipboard-check"></i>
                 </div>
-                <div class="stat-number" data-target-count="598">598+</div>
+                <div class="stat-number" data-target-count="598">0</div>
                 <div class="stat-label">Championships Held</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon" style="background-color: #F0FDF4; color: #16A34A;">
                     <i class="fa-solid fa-school"></i>
                 </div>
-                <div class="stat-number" data-target-count="52">52+</div>
+                <div class="stat-number" data-target-count="52">0</div>
                 <div class="stat-label">Schools Partnered</div>
             </div>
         </div>

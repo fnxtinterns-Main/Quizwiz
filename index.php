@@ -185,7 +185,7 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius-xl); padding: 24px; max-width: 280px; margin: 0 auto; backdrop-filter: blur(10px);">
                     <div style="font-size: 3rem; margin-bottom: 8px;">🎯</div>
                     <div style="font-size: 1.25rem; font-weight: 700; color: #FFFFFF; margin-bottom: 4px;">Daily Practice Rewards</div>
-                    <p style="font-size: 0.85rem; color: #CBD5E1; margin: 0;">Score 100% accuracy in daily rounds to unlock national certificates &amp; badges!</p>
+                    <p style="font-size: 0.85rem; color: #CBD5E1; margin: 0;">Score 100% accuracy in daily rounds to unlock national certificates &amp; awards!</p>
                 </div>
             </div>
         </div>
@@ -210,7 +210,7 @@ require_once __DIR__ . '/data/quizzes.php';
                         <i class="fa-solid <?php echo $prize['icon']; ?>"></i>
                     </div>
                     <span style="display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: <?php echo $prize['color']; ?>; background: rgba(0,0,0,0.04); padding: 4px 10px; border-radius: 9999px; margin-bottom: 12px;">
-                        <?php echo htmlspecialchars($prize['badge']); ?>
+                        <?php echo htmlspecialchars($prize['tier'] ?? $prize['badge'] ?? 'National Honor'); ?>
                     </span>
                     <h3 style="font-size: 1.15rem; margin-bottom: 8px;"><?php echo htmlspecialchars($prize['title']); ?></h3>
                     <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0; font-weight: 600;">

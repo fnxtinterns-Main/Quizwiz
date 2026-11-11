@@ -1,7 +1,7 @@
 <?php
 $current_page = 'daily-quiz';
 $page_title = 'Free Daily Quiz Challenge | QuizWiz';
-$page_desc = 'Play QuizWiz Free Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn badges, and win rewards.';
+$page_desc = 'Play QuizWiz Free Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn certificates, and win rewards.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';
@@ -17,7 +17,7 @@ require_once __DIR__ . '/data/quizzes.php';
             Today's <span style="color: var(--secondary);">Daily Free Quiz</span>
         </h1>
         <p style="color: #CBD5E1; max-width: 680px; margin: 0 auto 32px; font-size: 1.15rem;">
-            A new 5-minute brain sprint every single day! Complete today’s challenge to boost your knowledge, climb the daily leaderboard, and win achievement badges.
+            A new 5-minute brain sprint every single day! Complete today’s challenge to boost your knowledge, climb the daily leaderboard, and win national awards.
         </p>
 
         <!-- Accuracy & XP Gamification Banner -->
@@ -84,8 +84,8 @@ require_once __DIR__ . '/data/quizzes.php';
             </div>
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">🏅</div>
-                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Earn Badges</h4>
-                <p style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">Unlock merit badges &amp; certificates.</p>
+                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Merit Certificates</h4>
+                <p style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">Unlock verified merit certificates &amp; awards.</p>
             </div>
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">📱</div>

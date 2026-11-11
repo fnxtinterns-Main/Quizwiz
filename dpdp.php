@@ -123,7 +123,7 @@ require_once __DIR__ . '/includes/header.php';
 
             <div style="background: var(--surface-light); border: 1.5px solid var(--border-light); border-radius: var(--radius-lg); padding: 24px; margin-top: 16px;">
                 <h4 style="color: var(--primary); font-size: 1.1rem; margin-bottom: 12px;">
-                    <i class="fa-solid fa-id-badge text-orange"></i> QuizWiz Grievance &amp; Data Protection Cell
+                    <i class="fa-solid fa-building-shield text-orange"></i> QuizWiz Grievance &amp; Data Protection Cell
                 </h4>
                 <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 0.95rem;">
                     <div><strong>Entity:</strong> QuizWiz (Operated by Futurenxt)</div>

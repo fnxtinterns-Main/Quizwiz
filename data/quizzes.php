@@ -20,7 +20,7 @@ $top_champions = [
         'city' => 'New Delhi',
         'score' => 2940,
         'accuracy' => '99% Accuracy',
-        'badge' => 'Grandmaster'
+        'title' => 'National Rank 1'
     ],
     [
         'rank' => 2,
@@ -30,7 +30,7 @@ $top_champions = [
         'city' => 'Bengaluru',
         'score' => 2880,
         'accuracy' => '98% Accuracy',
-        'badge' => 'Quiz Prodigy'
+        'title' => 'National Rank 2'
     ],
     [
         'rank' => 3,
@@ -40,7 +40,7 @@ $top_champions = [
         'city' => 'Kolkata',
         'score' => 2810,
         'accuracy' => '97% Accuracy',
-        'badge' => 'Olympiad Ace'
+        'title' => 'National Rank 3'
     ],
     [
         'rank' => 4,
@@ -50,7 +50,7 @@ $top_champions = [
         'city' => 'Pune',
         'score' => 2750,
         'accuracy' => '96% Accuracy',
-        'badge' => 'Junior Master'
+        'title' => 'National Rank 4'
     ],
     [
         'rank' => 5,
@@ -60,7 +60,7 @@ $top_champions = [
         'city' => 'Ranchi',
         'score' => 2710,
         'accuracy' => '95% Accuracy',
-        'badge' => 'Speed Genius'
+        'title' => 'National Rank 5'
     ]
 ];
 
@@ -68,28 +68,28 @@ $championship_prizes = [
     [
         'title' => '1st National Rank',
         'reward' => 'Brand New Laptop + ₹50,000 Scholarship',
-        'badge' => 'Gold Champion',
+        'tier' => 'National 1st Prize',
         'icon' => 'fa-laptop',
         'color' => '#F59E0B'
     ],
     [
         'title' => '2nd & 3rd National Ranks',
         'reward' => 'Apple iPad / Tablet + ₹25,000 Scholarship',
-        'badge' => 'Silver Achiever',
+        'tier' => 'National 2nd & 3rd Prize',
         'icon' => 'fa-tablet-screen-button',
         'color' => '#3B82F6'
     ],
     [
         'title' => 'Top 10 State Rankers',
         'reward' => 'Smart Watches + STEM Science Kits',
-        'badge' => 'State Topper',
+        'tier' => 'State Honors',
         'icon' => 'fa-microchip',
         'color' => '#10B981'
     ],
     [
         'title' => 'All Qualifying Participants',
         'reward' => 'National Merit Certificate + Detailed Score Report',
-        'badge' => 'Certificate',
+        'tier' => 'Merit Recognition',
         'icon' => 'fa-certificate',
         'color' => '#8B5CF6'
     ]

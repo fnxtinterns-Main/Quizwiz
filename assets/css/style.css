@@ -1558,4 +1558,43 @@ p.lead {
     font-size: 0.85rem;
     box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
   }
+
+  /* 6. App Banner Mobile Fixes */
+  .app-banner {
+    padding: 24px 18px !important;
+    gap: var(--space-6) !important;
+    border-radius: var(--radius-lg) !important;
+    overflow: hidden !important;
+  }
+  .app-banner h2 {
+    font-size: 1.45rem !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+    margin-bottom: 8px !important;
+  }
+  .app-banner p {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 16px !important;
+  }
+  .app-store-badges {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .app-store-badges .playstore-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 16px !important;
+  }
+  .app-store-badges .btn-whatsapp {
+    width: 100% !important;
+    justify-content: center !important;
+    white-space: normal !important;
+    text-align: center !important;
+    font-size: 0.92rem !important;
+    padding: 12px 16px !important;
+    min-height: 48px !important;
+  }
 }

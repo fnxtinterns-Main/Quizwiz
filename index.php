@@ -418,12 +418,21 @@ require_once __DIR__ . '/data/quizzes.php';
                         </div>
                     </a>
                     <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
-                        <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp (<?php echo PHONE_DISPLAY; ?>)
+                        <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
                     </a>
                 </div>
             </div>
             <div style="text-align: center;">
-                <img src="assets/images/gp.png" alt="QuizWiz on Google Play" style="max-width: 240px; margin: 0 auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));">
+                <div style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-xl); padding: 24px 20px; backdrop-filter: blur(10px); max-width: 320px; margin: 0 auto;">
+                    <div style="font-size: 2.8rem; margin-bottom: 8px;">📱</div>
+                    <h3 style="color: #FFFFFF; font-size: 1.15rem; margin-bottom: 6px;">Android App Live</h3>
+                    <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 16px;">
+                        Access 250+ timed papers, national rankings &amp; instant answer solutions.
+                    </p>
+                    <a href="<?php echo PLAYSTORE_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                        <i class="fa-solid fa-arrow-down-to-bracket"></i> Install from Play Store
+                    </a>
+                </div>
             </div>
         </div>
     </div>

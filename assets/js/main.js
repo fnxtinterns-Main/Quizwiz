@@ -51,21 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     observer.unobserve(el);
                 }
             });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
 
         counterElements.forEach(el => counterObserver.observe(el));
-    } else {
-        counterElements.forEach(el => {
-            el.textContent = el.getAttribute('data-target-count') + '+';
-        });
     }
 
     function animateCounter(el, target) {
-        let current = 0;
-        const duration = 2000;
-        const stepTime = 25;
+        let current = Math.floor(target * 0.75); // Start close to the target for instant visual response
+        const duration = 350; // Ultra snappy 350ms duration (down from 2000ms)
+        const stepTime = 20;
         const totalSteps = duration / stepTime;
-        const increment = target / totalSteps;
+        const increment = (target - current) / totalSteps;
 
         const timer = setInterval(() => {
             current += increment;

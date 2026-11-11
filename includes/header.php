@@ -54,24 +54,11 @@ $current_page = isset($current_page) ? $current_page : 'home';
                 <!-- Desktop Navigation Links -->
                 <ul class="nav-menu">
                     <li><a href="/" class="nav-link <?php echo is_active_page('home', $current_page); ?>">Home</a></li>
-                    <li>
-                        <a href="/daily-quiz" class="nav-link <?php echo is_active_page('daily-quiz', $current_page); ?>" style="color: var(--secondary);">
-                            <i class="fa-solid fa-fire text-orange"></i> Daily Quiz
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/puzzles" class="nav-link <?php echo is_active_page('puzzles', $current_page); ?>">
-                            <i class="fa-solid fa-puzzle-piece text-orange"></i> Puzzles
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/ambassador" class="nav-link <?php echo is_active_page('ambassador', $current_page); ?>" style="font-weight: 700;">
-                            <i class="fa-solid fa-crown text-orange"></i> Ambassador
-                        </a>
-                    </li>
+                    <li><a href="/daily-quiz" class="nav-link <?php echo is_active_page('daily-quiz', $current_page); ?>">Daily Quiz</a></li>
+                    <li><a href="/puzzles" class="nav-link <?php echo is_active_page('puzzles', $current_page); ?>">Puzzles</a></li>
+                    <li><a href="/ambassador" class="nav-link <?php echo is_active_page('ambassador', $current_page); ?>">Ambassador</a></li>
+                    <li><a href="/quizzes" class="nav-link <?php echo is_active_page('quizzes', $current_page); ?>">Quizzes</a></li>
                     <li><a href="/about" class="nav-link <?php echo is_active_page('about', $current_page); ?>">About</a></li>
-                    <li><a href="/quizzes" class="nav-link <?php echo is_active_page('quizzes', $current_page); ?>">Explore Quizzes</a></li>
-                    <li><a href="/enroll" class="nav-link <?php echo is_active_page('enroll', $current_page); ?>">Enroll Now</a></li>
                     <li><a href="/contact" class="nav-link <?php echo is_active_page('contact', $current_page); ?>">Contact</a></li>
                 </ul>
 
@@ -80,8 +67,8 @@ $current_page = isset($current_page) ? $current_page : 'home';
                     <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm nav-action-chat" title="Chat on WhatsApp">
                         <i class="fa-brands fa-whatsapp"></i> <span class="d-none-mobile">Chat</span>
                     </a>
-                    <a href="/daily-quiz" class="btn btn-primary btn-sm nav-action-quiz">
-                        <i class="fa-solid fa-play"></i> Play Free Quiz
+                    <a href="/enroll" class="btn btn-primary btn-sm nav-action-quiz">
+                        <i class="fa-solid fa-trophy"></i> Enroll Now
                     </a>
                     <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open Navigation Menu">
                         <i class="fa-solid fa-bars"></i>

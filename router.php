@@ -25,6 +25,10 @@ if ($uri === '/' || $uri === '') {
 
 // 3. Clean URL mapping: check if [uri].php exists
 $trimmedUri = trim($uri, '/');
+if ($trimmedUri === 'dpdp-compliance') {
+    require_once __DIR__ . '/dpdp.php';
+    return true;
+}
 $phpFile = __DIR__ . '/' . $trimmedUri . '.php';
 
 if (file_exists($phpFile)) {

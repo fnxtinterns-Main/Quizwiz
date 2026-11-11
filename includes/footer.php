@@ -15,10 +15,13 @@ require_once __DIR__ . '/config.php';
                     <p>
                         QuizWiz is India's leading online quiz championship platform designed to nurture curiosity, foster intellectual agility, and celebrate young academic achievers across the country.
                     </p>
-                    <div style="margin-top: 20px;">
+                    <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
                         <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.825rem; color: #E2E8F0; background: rgba(255,255,255,0.06); padding: 6px 12px; border-radius: 6px;">
                             <i class="fa-solid fa-shield-halved text-orange"></i> Verified National Quiz Initiative
                         </span>
+                        <a href="/dpdp" style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.825rem; color: #34D399; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); padding: 6px 12px; border-radius: 6px; text-decoration: none;">
+                            <i class="fa-solid fa-user-shield"></i> DPDP Act 2023 Compliant
+                        </a>
                     </div>
                 </div>
 
@@ -39,6 +42,7 @@ require_once __DIR__ . '/config.php';
                 <div>
                     <h4 class="footer-title">Trust &amp; Policies</h4>
                     <ul class="footer-links">
+                        <li><a href="/dpdp"><i class="fa-solid fa-shield-halved text-orange"></i> DPDP Act Compliance</a></li>
                         <li><a href="/privacy-policy"><i class="fa-solid fa-lock text-orange"></i> Privacy Policy</a></li>
                         <li><a href="/terms"><i class="fa-solid fa-file-contract text-orange"></i> Terms of Participation</a></li>
                         <li><a href="/refund-policy"><i class="fa-solid fa-rotate-left text-orange"></i> Refund &amp; Cancellation</a></li>
@@ -96,6 +100,7 @@ require_once __DIR__ . '/config.php';
                         &copy; <?php echo date('Y'); ?> <strong>QuizWiz</strong>. All Rights Reserved. Empowering future leaders.
                     </p>
                     <div style="margin-top: 6px; font-size: 0.8rem; color: #64748B;">
+                        <a href="/dpdp" style="color: #34D399; font-weight: 600; text-decoration: underline;">DPDP Act 2023</a> &bull; 
                         <a href="/privacy-policy" style="color: #94A3B8; text-decoration: underline;">Privacy Policy</a> &bull; 
                         <a href="/terms" style="color: #94A3B8; text-decoration: underline;">Terms &amp; Conditions</a> &bull; 
                         <a href="/refund-policy" style="color: #94A3B8; text-decoration: underline;">Refund Policy</a>

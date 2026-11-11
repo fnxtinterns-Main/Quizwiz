@@ -119,6 +119,15 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
                             <span class="form-text">Choose the group matching your student's current school grade.</span>
                         </div>
 
+                        <div class="form-group" style="background: rgba(248, 250, 252, 0.95); border: 1.5px solid var(--border-light); padding: 14px 16px; border-radius: var(--radius-md); margin-top: 14px;">
+                            <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; line-height: 1.5;">
+                                <input type="checkbox" name="dpdp_parental_consent" value="1" required style="margin-top: 4px; accent-color: var(--secondary);">
+                                <span>
+                                    <strong>Parental / Guardian Consent (DPDP Act, 2023):</strong> I confirm that I am the parent/legal guardian, or am registering with verifiable parental consent. In compliance with <strong>Section 9 of the Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>, I consent to the collection and processing of basic student academic data strictly for competition administration, score tabulations, and certificate issuance. QuizWiz does not engage in behavioral tracking or targeted advertising to minors. Read our <a href="/dpdp" target="_blank" style="color: var(--secondary); font-weight: 600; text-decoration: underline;">DPDP Charter</a>.
+                                </span>
+                            </label>
+                        </div>
+
                         <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 12px;">
                             <i class="fa-solid fa-paper-plane"></i> Submit Registration
                         </button>
@@ -150,6 +159,15 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
                             <span>All registered participants receive official digital participation certificates and performance scorecards.</span>
                         </li>
                     </ul>
+                </div>
+
+                <div class="form-card" style="margin-bottom: 24px; background: #F0FDF4; border: 1.5px solid #86EFAC;">
+                    <h4 style="color: #166534; font-size: 1rem; margin-bottom: 8px;">
+                        <i class="fa-solid fa-shield-halved"></i> DPDP Act 2023 Protection
+                    </h4>
+                    <p style="font-size: 0.85rem; color: #15803D; margin: 0; line-height: 1.5;">
+                        QuizWiz operates under India's Digital Personal Data Protection Act, 2023. We collect only minimal academic details, never track online behaviors, and never sell student data. <a href="/dpdp" target="_blank" style="color: #166534; font-weight: 700; text-decoration: underline;">Read DPDP Charter &rarr;</a>
+                    </p>
                 </div>
 
                 <div class="form-card" style="background: var(--primary-surface); border: 1.5px solid rgba(27, 37, 89, 0.15);">

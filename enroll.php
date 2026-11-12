@@ -91,16 +91,18 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
 
                         <div style="display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 16px;">
                             <div class="form-group">
-                                <label class="form-label" for="school">School Name &amp; City <span class="text-orange">*</span></label>
-                                <input type="text" id="school" name="school" class="form-control" placeholder="e.g. Delhi Public School, Ranchi" required>
+                                <label class="form-label" for="school">School / College / Institution Name &amp; City <span class="text-orange">*</span></label>
+                                <input type="text" id="school" name="school" class="form-control" placeholder="e.g. Delhi Public School / St. Xavier's College" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-label" for="student_class">Class / Grade <span class="text-orange">*</span></label>
+                                <label class="form-label" for="student_class">Class / Academic Level <span class="text-orange">*</span></label>
                                 <select id="student_class" name="student_class" class="form-control" required>
-                                    <option value="">Select Class</option>
+                                    <option value="">Select Level</option>
                                     <?php for ($c = 1; $c <= 12; $c++): ?>
                                         <option value="Class <?php echo $c; ?>">Class <?php echo $c; ?></option>
                                     <?php endfor; ?>
+                                    <option value="Undergraduate / Degree College">Undergraduate / Degree College</option>
+                                    <option value="Graduate / Competitive Aspirant">Graduate / Civil Services Aspirant</option>
                                 </select>
                             </div>
                         </div>
@@ -115,8 +117,11 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
                                 <option value="Group B (Class 7 to 12)" <?php echo ($preselected_group === 'group-b') ? 'selected' : ''; ?>>
                                     Group B: Classes 7 to 12 (Senior Scholar)
                                 </option>
+                                <option value="Group C (Graduates &amp; Civil Services Aspirants)" <?php echo ($preselected_group === 'group-c') ? 'selected' : ''; ?>>
+                                    Group C: Graduates &amp; Aspirants (Civil Services, UPSC, SSC, Banking &amp; Defence Track)
+                                </option>
                             </select>
-                            <span class="form-text">Choose the group matching your student's current school grade.</span>
+                            <span class="form-text">Choose the group matching your current grade or competitive examination track.</span>
                         </div>
 
                         <div class="form-group" style="background: rgba(248, 250, 252, 0.95); border: 1.5px solid var(--border-light); padding: 14px 16px; border-radius: var(--radius-md); margin-top: 14px;">
@@ -144,7 +149,7 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 0.9rem; color: var(--text-secondary);">
                         <li style="display: flex; gap: 10px;">
                             <i class="fa-solid fa-check text-orange" style="margin-top: 3px;"></i>
-                            <span>The championship is exclusively open to bonafide school students in Classes 1 through 12 across India.</span>
+                            <span>The championship and practice programs are open to school students (Classes 1–12), college students, and civil services aspirants across India.</span>
                         </li>
                         <li style="display: flex; gap: 10px;">
                             <i class="fa-solid fa-check text-orange" style="margin-top: 3px;"></i>
@@ -156,7 +161,11 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
                         </li>
                         <li style="display: flex; gap: 10px;">
                             <i class="fa-solid fa-check text-orange" style="margin-top: 3px;"></i>
-                            <span>All registered participants receive official digital participation certificates and performance scorecards.</span>
+                            <span><strong>Group C:</strong> Designed for Graduates &amp; Aspirants (UPSC CSE, State PSCs, SSC CGL, Defence, Banking, Railways &amp; CUET).</span>
+                        </li>
+                        <li style="display: flex; gap: 10px;">
+                            <i class="fa-solid fa-check text-orange" style="margin-top: 3px;"></i>
+                            <span>All registered participants receive official digital merit/participation certificates and national scorecards.</span>
                         </li>
                     </ul>
                 </div>

@@ -29,13 +29,23 @@ require_once __DIR__ . '/data/quizzes.php';
     </div>
 </div>
 
+<!-- ========================================== -->
+<!-- NEW SECTION: PROMO BANNER -->
+<!-- ========================================== -->
+<section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0;">
+    <div class="container" style="display: flex; justify-content: center;">
+        <img src="assets/images/Banner.jpeg" alt="QuizWiz Championship Banner" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" loading="lazy">
+    </div>
+</section>
+<!-- ========================================== -->
+
 <!-- 2. HIGH-ACTION HERO SECTION -->
 <section class="hero">
     <div class="container">
         <div class="hero-grid">
             <div class="hero-content">
                 <div class="section-eyebrow">
-                    <i class="fa-solid fa-fire text-orange"></i> Free Daily Quizzes &bull; All India Championships
+                    <i class="fa-solid fa-fire text-orange"></i> Daily Quizzes &bull; All India Championships
                 </div>
                 <h1 class="hero-headline">
                     Learn Daily. <span class="highlight">Win Big.</span> Rule the Quiz Arena.

@@ -3,7 +3,7 @@ require_once __DIR__ . '/config.php';
 
 // Default page metadata if not defined
 $page_title = isset($page_title) ? $page_title . ' | ' . SITE_NAME : SITE_NAME . ' | ' . SITE_TAGLINE;
-$page_desc = isset($page_desc) ? $page_desc : 'Join QuizWiz, India\'s premier online quiz competition for school students (Classes 1–12). Free daily quizzes, live championships, and national scholarships.';
+$page_desc = isset($page_desc) ? $page_desc : 'Join QuizWiz, India\'s premier online quiz competition for school students (Classes 1–12).  daily quizzes, live championships, and national scholarships.';
 $current_page = isset($current_page) ? $current_page : 'home';
 ?>
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
             <li><a href="/" class="mobile-nav-link <?php echo is_active_page('home', $current_page); ?>">Home</a></li>
             <li>
                 <a href="/daily-quiz" class="mobile-nav-link <?php echo is_active_page('daily-quiz', $current_page); ?>" style="color: var(--secondary);">
-                    🔥 Daily Free Quiz (Classes 1–12)
+                    🔥 Daily  Quiz (Classes 1–12)
                 </a>
             </li>
             <li>

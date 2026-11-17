@@ -132,7 +132,7 @@ $quiz_categories = [
         'duration' => '12 Mins',
         'image' => '/assets/images/history1.jpg',
         'icon' => 'fa-landmark',
-        'description' => 'Embark on an epic journey across ancient Indian dynasties, independence leaders, freedom struggles, and world history.',
+        'description' => 'Embark on an epic journey across ancient Indian dynasties, independence leaders, dom struggles, and world history.',
         'accent' => '#ef4444'
     ],
     [

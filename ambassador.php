@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
             <a href="#applyForm" class="btn btn-primary btn-lg pulse-glow">
-                <i class="fa-solid fa-paper-plane"></i> Apply for Ambassador (Free)
+                <i class="fa-solid fa-paper-plane"></i> Apply for Ambassador ()
             </a>
             <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
                 <i class="fa-brands fa-whatsapp"></i> Chat with Program Lead
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <i class="fa-solid fa-gift text-orange"></i> Ambassador Hoodie &amp; Swag Kit
             </span>
             <span style="display: inline-flex; align-items: center; gap: 8px; color: #E2E8F0; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: var(--radius-full);">
-                <i class="fa-solid fa-graduation-cap text-orange"></i> Free Access to All Quiz Papers
+                <i class="fa-solid fa-graduation-cap text-orange"></i>  Access to All Quiz Papers
             </span>
         </div>
     </div>
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div>
                     <h3 style="font-size: 1.15rem; margin-bottom: 6px;">Spread the Knowledge Buzz</h3>
                     <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.6;">
-                        Introduce QuizWiz free daily quizzes to your classmates, class groups, and teachers. Share daily questions and challenge friends to beat your scores.
+                        Introduce QuizWiz  daily quizzes to your classmates, class groups, and teachers. Share daily questions and challenge friends to beat your scores.
                     </p>
                 </div>
             </div>
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <?php else: ?>
                 <div class="text-center" style="margin-bottom: 32px;">
                     <span class="quiz-difficulty-badge" style="position: static; background: var(--secondary-surface); color: var(--secondary); margin-bottom: 12px;">
-                        Free Application • Classes 6 to 12
+                         Application • Classes 6 to 12
                     </span>
                     <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 8px;">
                         Campus Ambassador Application
@@ -295,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     Is there any application fee or registration charge?
                 </h4>
                 <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0; line-height: 1.6;">
-                    No. Applying and serving as a QuizWiz Campus Ambassador is <strong>100% free</strong>. You will never be asked for any payment.
+                    No. Applying and serving as a QuizWiz Campus Ambassador is <strong>100% </strong>. You will never be asked for any payment.
                 </p>
             </div>
 

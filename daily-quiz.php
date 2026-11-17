@@ -1,7 +1,7 @@
 <?php
 $current_page = 'daily-quiz';
-$page_title = 'Free Daily Quiz Challenge | QuizWiz';
-$page_desc = 'Play QuizWiz Free Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn certificates, and win rewards.';
+$page_title = ' Daily Quiz Challenge | QuizWiz';
+$page_desc = 'Play QuizWiz  Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn certificates, and win rewards.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';
@@ -14,7 +14,7 @@ require_once __DIR__ . '/data/quizzes.php';
             <i class="fa-solid fa-fire text-orange"></i> Fresh Daily Challenge Active
         </div>
         <h1 style="color: #FFFFFF; font-size: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: 16px;">
-            Today's <span style="color: var(--secondary);">Daily Free Quiz</span>
+            Today's <span style="color: var(--secondary);">Daily  Quiz</span>
         </h1>
         <p style="color: #CBD5E1; max-width: 680px; margin: 0 auto 32px; font-size: 1.15rem;">
             A new 5-minute brain sprint every single day! Complete today’s challenge to boost your knowledge, climb the daily leaderboard, and win national awards.
@@ -69,7 +69,7 @@ require_once __DIR__ . '/data/quizzes.php';
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px;">
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">🎯</div>
-                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Daily 100% Free</h4>
+                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Daily 100% </h4>
                 <p style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">No login or card required for daily practice.</p>
             </div>
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="background: var(--primary-surface); padding: 16px; border-radius: var(--radius-lg); margin: 0 auto 24px; max-width: 480px;">
                         <h4 style="font-size: 1rem; color: var(--primary); margin-bottom: 4px;">🏆 Share with Friends on WhatsApp</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">Challenge your school classmates to beat your score!</p>
-                        <a href="https://wa.me/?text=I%20just%20scored%20${score}%2F${dataset.length}%20in%20today's%20QuizWiz%20Daily%20Quiz!%20Can%20you%20beat%20my%20score%3F%20Play%20free%20here%3A%20https%3A%2F%2Fwww.quizwiz.co.in%2Fdaily-quiz" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm">
+                        <a href="https://wa.me/?text=I%20just%20scored%20${score}%2F${dataset.length}%20in%20today's%20QuizWiz%20Daily%20Quiz!%20Can%20you%20beat%20my%20score%3F%20Play%20%20here%3A%20https%3A%2F%2Fwww.quizwiz.co.in%2Fdaily-quiz" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm">
                             <i class="fa-brands fa-whatsapp"></i> Share on WhatsApp
                         </a>
                     </div>

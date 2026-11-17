@@ -1,4 +1,4 @@
-# QuizWiz — Online Quiz Competition & Free Daily Quizzes Platform
+# QuizWiz — Online Quiz Competition &  Daily Quizzes Platform
 
 [![PHP Version](https://img.shields.io/badge/PHP-8.0%2B-blue.svg)](https://www.php.net/)
 [![License](https://img.shields.io/badge/License-Proprietary-orange.svg)]()
@@ -12,7 +12,7 @@
 
 * **3-Color Brand System:** Deep Indigo Blue (`#1B2559`), Action Vibrant Orange (`#FF6B00`), and Crisp White (`#FFFFFF`).
 * **Clean URLs:** Full support for pretty, extensionless URLs (`/`, `/about`, `/quizzes`, `/daily-quiz`, `/enroll`, `/contact`, `/privacy-policy`, `/refund-policy`, `/terms`).
-* **Free Daily Quizzes:** Daily 5-minute challenges with automated streak tracking (🔥 Days), XP points, and WhatsApp score sharing.
+* ** Daily Quizzes:** Daily 5-minute challenges with automated streak tracking (🔥 Days), XP points, and WhatsApp score sharing.
 * **Championship Segregation:**
   * **Group A (Classes 1–6):** Junior Explorer Division (curiosity, basics, visual questions).
   * **Group B (Classes 7–12):** Senior Scholar Division (Olympiad & NTSE level reasoning, current affairs, science).
@@ -31,11 +31,11 @@ QUIZWIZ/
 ├── index.php                 # Homepage (Hero, Live Mini-Quiz, Stats, Prizes, Leaderboard, Testimonials)
 ├── about.php                 # About Us & Championship Divisions breakdown
 ├── quizzes.php               # Quiz categories with interactive difficulty filter tabs
-├── daily-quiz.php            # Free Daily Challenge runner with streak counters & timer
+├── daily-quiz.php            #  Daily Challenge runner with streak counters & timer
 ├── enroll.php                # Student registration form (Group A / Group B validated)
 ├── contact.php               # Verified contact channels, direct WhatsApp button & inquiry form
 ├── privacy-policy.php        # Student data protection & parental consent policy
-├── refund-policy.php         # 100% free daily quizzes & 72-hour refund policy
+├── refund-policy.php         # 100%  daily quizzes & 72-hour refund policy
 ├── terms.php                 # Official championship competition rules & fair-play terms
 ├── includes/
 │   ├── config.php            # Site constants (phone numbers, WhatsApp URL, site name)

@@ -1,7 +1,7 @@
 <?php
 $current_page = 'home';
 $page_title = 'Online Quiz Competition | All India Championships';
-$page_desc = 'QuizWiz conducts premier online quiz championships and free daily quizzes for school students in India. Compete, sharpen your intellect, and win laptops, tablets, and scholarships.';
+$page_desc = 'QuizWiz conducts premier online quiz championships and  daily quizzes for school students in India. Compete, sharpen your intellect, and win laptops, tablets, and scholarships.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';
@@ -51,13 +51,13 @@ require_once __DIR__ . '/data/quizzes.php';
                     Learn Daily. <span class="highlight">Win Big.</span> Rule the Quiz Arena.
                 </h1>
                 <p class="hero-subtext">
-                    Join over 7,200+ school students from Classes 1 to 12. Take <strong>free daily quizzes</strong> across Science, Math, G.K., and History, boost your academic speed, and compete for <strong>laptops, tablets, and national scholarships</strong>.
+                    Join over 7,200+ school students from Classes 1 to 12. Take <strong> daily quizzes</strong> across Science, Math, G.K., and History, boost your academic speed, and compete for <strong>laptops, tablets, and national scholarships</strong>.
                 </p>
 
                 <!-- Dual CTA Action Group -->
                 <div class="hero-cta-group">
                     <a href="/daily-quiz" class="btn btn-primary btn-lg pulse-glow">
-                        <i class="fa-solid fa-play"></i> Play Today's Free Quiz
+                        <i class="fa-solid fa-play"></i> Play Today's  Quiz
                     </a>
                     <a href="/enroll" class="btn btn-outline-navy btn-lg">
                         <i class="fa-solid fa-trophy"></i> Enroll for Championship
@@ -68,7 +68,7 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="hero-trust">
                     <div class="trust-item">
                         <i class="fa-solid fa-circle-check"></i>
-                        <span>100% Free Daily Practice</span>
+                        <span>100%  Daily Practice</span>
                     </div>
                     <div class="trust-item">
                         <i class="fa-solid fa-circle-check"></i>
@@ -98,7 +98,7 @@ require_once __DIR__ . '/data/quizzes.php';
                             <i class="fa-solid fa-bolt"></i> Quick Brain Sprint
                         </span>
                         <span style="font-size: 0.8rem; font-weight: 700; color: #10B981; background: #ECFDF5; padding: 2px 8px; border-radius: 4px;">
-                            Free Practice
+                             Practice
                         </span>
                     </div>
 
@@ -178,13 +178,13 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="section-eyebrow" style="background: rgba(255, 107, 0, 0.25); color: #FFA366; border-color: rgba(255, 107, 0, 0.4);">
                     <i class="fa-solid fa-fire text-orange"></i> Fresh Every 24 Hours
                 </div>
-                <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 12px;">Daily Free Quizzes: Sharpen Your Mind Every Day!</h2>
+                <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 12px;">Daily  Quizzes: Sharpen Your Mind Every Day!</h2>
                 <p style="color: #CBD5E1; font-size: 1.05rem; margin-bottom: 24px;">
-                    We upload brand new quiz questions every single morning across Science, Space, Indian History, Mental Math, and General Knowledge. Completely free, no credit card or account needed!
+                    We upload brand new quiz questions every single morning across Science, Space, Indian History, Mental Math, and General Knowledge. Completely , no credit card or account needed!
                 </p>
                 <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
                     <a href="/daily-quiz" class="btn btn-primary btn-lg">
-                        <i class="fa-solid fa-bolt"></i> Play Today's Free Quiz
+                        <i class="fa-solid fa-bolt"></i> Play Today's  Quiz
                     </a>
                     <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
                         <i class="fa-brands fa-whatsapp"></i> Get Daily Quiz on WhatsApp

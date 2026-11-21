@@ -50,21 +50,104 @@ require_once __DIR__ . '/data/quizzes.php';
             </div>
 
             <!-- Carousel Controls -->
-            <button class="banner-carousel-arrow prev" id="bannerPrevBtn" aria-label="Previous Slide">
+            <button class="banner-carousel-arrow prev" id="bannerPrevBtn" type="button" onclick="quizWizPrevSlide(event)" aria-label="Previous Slide">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <button class="banner-carousel-arrow next" id="bannerNextBtn" aria-label="Next Slide">
+            <button class="banner-carousel-arrow next" id="bannerNextBtn" type="button" onclick="quizWizNextSlide(event)" aria-label="Next Slide">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
 
             <!-- Carousel Indicators -->
             <div class="banner-carousel-dots" id="bannerDots">
-                <button class="banner-carousel-dot active" data-index="0" aria-label="Slide 1"></button>
-                <button class="banner-carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                <button class="banner-carousel-dot active" data-index="0" type="button" onclick="quizWizGoToSlide(0, event)" aria-label="Slide 1"></button>
+                <button class="banner-carousel-dot" data-index="1" type="button" onclick="quizWizGoToSlide(1, event)" aria-label="Slide 2"></button>
             </div>
         </div>
     </div>
 </section>
+<script>
+(function() {
+    let currentIdx = 0;
+    const carousel = document.getElementById('homeBannerCarousel');
+    if (!carousel) return;
+    const slides = carousel.querySelectorAll('.banner-carousel-slide');
+    const dots = carousel.querySelectorAll('.banner-carousel-dot');
+
+    function updateCarousel(idx) {
+        if (!slides.length) return;
+        currentIdx = (idx + slides.length) % slides.length;
+        slides.forEach(function(s, i) {
+            if (i === currentIdx) {
+                s.style.opacity = '1';
+                s.style.visibility = 'visible';
+                s.style.pointerEvents = 'auto';
+                s.classList.add('active');
+            } else {
+                s.style.opacity = '0';
+                s.style.visibility = 'hidden';
+                s.style.pointerEvents = 'none';
+                s.classList.remove('active');
+            }
+        });
+        dots.forEach(function(d, i) {
+            if (i === currentIdx) {
+                d.classList.add('active');
+                d.style.background = '#FF6B00';
+                d.style.width = '26px';
+            } else {
+                d.classList.remove('active');
+                d.style.background = 'rgba(255, 255, 255, 0.55)';
+                d.style.width = '10px';
+            }
+        });
+    }
+
+    window.quizWizNextSlide = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        updateCarousel(currentIdx + 1);
+        resetTimer();
+    };
+
+    window.quizWizPrevSlide = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        updateCarousel(currentIdx - 1);
+        resetTimer();
+    };
+
+    window.quizWizGoToSlide = function(idx, e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        updateCarousel(idx);
+        resetTimer();
+    };
+
+    let timer = setInterval(function() {
+        updateCarousel(currentIdx + 1);
+    }, 5000);
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function() {
+            updateCarousel(currentIdx + 1);
+        }, 5000);
+    }
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    carousel.addEventListener('touchend', function(e) {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 40) {
+            if (diff < 0) {
+                window.quizWizNextSlide();
+            } else {
+                window.quizWizPrevSlide();
+            }
+        }
+    }, { passive: true });
+})();
+</script>
 <!-- ========================================== -->
 
 <!-- 2. HIGH-ACTION HERO SECTION -->

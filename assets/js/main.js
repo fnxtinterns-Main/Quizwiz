@@ -267,10 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // 5. Homepage Promo Banner Carousel (5s Rotation)
+    // 5. Homepage Promo Banner Carousel (Fallback Controller)
     // ----------------------------------------------------
     const bannerCarousel = document.getElementById('homeBannerCarousel');
-    if (bannerCarousel) {
+    if (bannerCarousel && typeof window.quizWizNextSlide !== 'function') {
         const slides = bannerCarousel.querySelectorAll('.banner-carousel-slide');
         const dots = bannerCarousel.querySelectorAll('.banner-carousel-dot');
         const prevBtn = document.getElementById('bannerPrevBtn');

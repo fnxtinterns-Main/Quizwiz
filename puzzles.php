@@ -10,7 +10,7 @@ require_once __DIR__ . '/includes/header.php';
 <section style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #0F172A 100%); padding: 64px 0 72px; color: #FFFFFF; position: relative; overflow: hidden;">
     <div class="container text-center" style="position: relative; z-index: 2;">
         <div class="section-eyebrow" style="background: rgba(255, 107, 0, 0.2); color: #FFA366; border-color: rgba(255, 107, 0, 0.4);">
-            <i class="fa-solid fa-puzzle-piece text-orange"></i> Daily Brain Gym •  Logic Challenges
+            <i class="fa-solid fa-puzzle-piece text-orange"></i> Daily Brain Gym • Logic Challenges
         </div>
         <h1 style="color: #FFFFFF; font-size: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: 16px;">
             Crack the Code. <span style="color: var(--secondary);">Master the Puzzles.</span>

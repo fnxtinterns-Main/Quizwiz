@@ -1,40 +1,40 @@
 <?php
 $current_page = 'daily-quiz';
-$page_title = ' Daily Quiz Challenge | QuizWiz';
-$page_desc = 'Play QuizWiz  Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn certificates, and win rewards.';
+$page_title = 'Daily Quiz Challenge | QuizWiz';
+$page_desc = 'Play QuizWiz Daily Quiz! New questions uploaded every day for Classes 1 to 12. Boost daily learning, earn certificates, and win rewards.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';
 ?>
 
 <!-- DAILY QUIZ HERO -->
-<section style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #1E293B 100%); padding: 64px 0 80px; color: #FFFFFF; position: relative; overflow: hidden;">
-    <div class="container text-center" style="position: relative; z-index: 2;">
+<section style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #1E293B 100%); padding: 56px 0; color: #FFFFFF; position: relative;">
+    <div class="container text-center">
         <div class="section-eyebrow" style="background: rgba(255, 107, 0, 0.2); color: #FF9E54; border-color: rgba(255, 107, 0, 0.4);">
             <i class="fa-solid fa-fire text-orange"></i> Fresh Daily Challenge Active
         </div>
         <h1 style="color: #FFFFFF; font-size: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: 16px;">
-            Today's <span style="color: var(--secondary);">Daily  Quiz</span>
+            Today's <span style="color: var(--secondary);">Daily Quiz</span>
         </h1>
-        <p style="color: #CBD5E1; max-width: 680px; margin: 0 auto 32px; font-size: 1.15rem;">
+        <p style="color: #CBD5E1; max-width: 680px; margin: 0 auto 28px; font-size: 1.15rem; line-height: 1.6;">
             A new 5-minute brain sprint every single day! Complete today’s challenge to boost your knowledge, climb the daily leaderboard, and win national awards.
         </p>
 
         <!-- Target Banner -->
-        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 12px 28px; border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.15);">
-            <span style="font-size: 1.5rem;">🎯</span>
+        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(8px); padding: 10px 24px; border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.15);">
+            <span style="font-size: 1.4rem;">🎯</span>
             <div style="text-align: left;">
-                <div style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Today's Target</div>
-                <div id="userTargetDisplay" style="font-size: 1.1rem; font-weight: 700; color: #FFA366;">100% Accuracy</div>
+                <div style="font-size: 0.72rem; text-transform: uppercase; color: #94A3B8; letter-spacing: 0.05em;">Today's Target</div>
+                <div id="userTargetDisplay" style="font-size: 1.05rem; font-weight: 700; color: #FFA366;">100% Accuracy</div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- MAIN QUIZ INTERACTIVE ARENA -->
-<section class="section" style="margin-top: -40px; padding-top: 0;">
+<section class="section" style="padding-top: 40px; padding-bottom: 60px;">
     <div class="container" style="max-width: 800px;">
-        <div class="form-card" style="box-shadow: var(--shadow-xl); border: 1.5px solid rgba(27, 37, 89, 0.12);">
+        <div class="form-card" style="box-shadow: var(--shadow-lg); border: 1.5px solid rgba(27, 37, 89, 0.12); padding: 32px;">
             <!-- Division Selector Tabs -->
             <div style="display: flex; gap: 12px; margin-bottom: 28px; border-bottom: 1.5px solid var(--border-light); padding-bottom: 16px;">
                 <button id="groupABtn" onclick="switchDailyGroup('a')" class="btn btn-primary" style="flex: 1;">
@@ -69,7 +69,7 @@ require_once __DIR__ . '/data/quizzes.php';
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px;">
             <div class="form-card" style="text-align: center; padding: 20px 16px;">
                 <div style="font-size: 2rem; margin-bottom: 8px;">🎯</div>
-                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Daily 100% </h4>
+                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Daily Open Access</h4>
                 <p style="font-size: 0.8rem; margin: 0; color: var(--text-muted);">No login or card required for daily practice.</p>
             </div>
             <div class="form-card" style="text-align: center; padding: 20px 16px;">

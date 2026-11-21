@@ -8,7 +8,20 @@ require_once __DIR__ . '/includes/header.php';
 $feedback = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_inquiry') {
     $sender_name = trim($_POST['name'] ?? '');
-    $feedback = "Thank you, {$sender_name}. Your message has been received! Our support coordinator will get in touch with you shortly on WhatsApp/Phone.";
+    $sender_email = trim($_POST['email'] ?? '');
+    $sender_phone = trim($_POST['phone'] ?? '');
+    $sender_msg = trim($_POST['message'] ?? '');
+
+    record_quizwiz_lead('general_inquiry', [
+        'name' => $sender_name,
+        'email' => $sender_email,
+        'phone' => $sender_phone,
+        'detail1' => mb_substr($sender_msg, 0, 150),
+        'detail2' => ''
+    ]);
+
+    $safe_sender = htmlspecialchars($sender_name, ENT_QUOTES, 'UTF-8');
+    $feedback = "Thank you, {$safe_sender}. Your message has been received! Our support coordinator will get in touch with you shortly on WhatsApp/Phone.";
 }
 ?>
 

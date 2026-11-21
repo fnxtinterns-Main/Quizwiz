@@ -29,3 +29,31 @@ $social_links = [
 function is_active_page($page_name, $current_page) {
     return ($page_name === $current_page) ? 'active' : '';
 }
+
+// Secure lightweight lead recorder (guarantees student registrations & inquiries are never lost)
+function record_quizwiz_lead($type, array $data) {
+    $dir = __DIR__ . '/../data';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+    $file = $dir . '/leads.csv';
+    $is_new = !file_exists($file);
+    $fp = @fopen($file, 'a');
+    if ($fp) {
+        if ($is_new) {
+            fputcsv($fp, ['timestamp', 'type', 'name', 'email', 'phone', 'detail1', 'detail2', 'ip']);
+        }
+        $row = [
+            date('Y-m-d H:i:s'),
+            $type,
+            $data['name'] ?? '',
+            $data['email'] ?? '',
+            $data['phone'] ?? '',
+            $data['detail1'] ?? '',
+            $data['detail2'] ?? '',
+            $_SERVER['REMOTE_ADDR'] ?? ''
+        ];
+        fputcsv($fp, $row);
+        fclose($fp);
+    }
+}

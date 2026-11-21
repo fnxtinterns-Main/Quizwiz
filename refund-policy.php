@@ -21,9 +21,9 @@ require_once __DIR__ . '/includes/header.php';
 <section class="section">
     <div class="container" style="max-width: 860px;">
         <div class="form-card" style="line-height: 1.8; color: var(--text-secondary);">
-            <h2 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 16px;">1.  Daily Quizzes</h2>
+            <h2 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 16px;">1. Daily Practice Quizzes</h2>
             <p>
-                All daily practice quizzes, category sample tests, and preliminary practice rounds hosted on <strong>QuizWiz</strong> are completely <strong></strong>. No payment or billing details are required to participate in daily web quizzes.
+                All daily practice quizzes, category sample tests, and preliminary practice rounds hosted on <strong>QuizWiz</strong> are completely <strong>complimentary</strong>. No payment or billing details are required to participate in daily web quizzes.
             </p>
 
             <h2 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 16px;">2. National Championship Registration Fees</h2>

@@ -27,7 +27,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     
-    <link rel="preload" href="/assets/css/style.css?v=2.2" as="style">
+    <link rel="preload" href="/assets/css/style.css?v=2.3" as="style">
     <link rel="preload" href="/assets/images/logo.png" as="image">
 
     <!-- Fonts -->
@@ -38,7 +38,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- QuizWiz Modern Design System -->
-    <link rel="stylesheet" href="/assets/css/style.css?v=2.2">
+    <link rel="stylesheet" href="/assets/css/style.css?v=2.3">
 </head>
 <body>
 
@@ -58,6 +58,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
                     <li><a href="/puzzles" class="nav-link <?php echo is_active_page('puzzles', $current_page); ?>">Puzzles</a></li>
                     <li><a href="/ambassador" class="nav-link <?php echo is_active_page('ambassador', $current_page); ?>">Ambassador</a></li>
                     <li><a href="/quizzes" class="nav-link <?php echo is_active_page('quizzes', $current_page); ?>">Quizzes</a></li>
+                    <li><a href="/rewards" class="nav-link <?php echo is_active_page('rewards', $current_page); ?>">Rewards</a></li>
                     <li><a href="/about" class="nav-link <?php echo is_active_page('about', $current_page); ?>">About</a></li>
                     <li><a href="/contact" class="nav-link <?php echo is_active_page('contact', $current_page); ?>">Contact</a></li>
                 </ul>
@@ -93,7 +94,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
             <li><a href="/" class="mobile-nav-link <?php echo is_active_page('home', $current_page); ?>">Home</a></li>
             <li>
                 <a href="/daily-quiz" class="mobile-nav-link <?php echo is_active_page('daily-quiz', $current_page); ?>" style="color: var(--secondary);">
-                    🔥 Daily  Quiz (Classes 1–12)
+                    🔥 Daily Quiz (Classes 1–12)
                 </a>
             </li>
             <li>
@@ -106,8 +107,13 @@ $current_page = isset($current_page) ? $current_page : 'home';
                     👑 Campus Ambassador (Become Quiz Master)
                 </a>
             </li>
-            <li><a href="/about" class="mobile-nav-link <?php echo is_active_page('about', $current_page); ?>">About Championships</a></li>
             <li><a href="/quizzes" class="mobile-nav-link <?php echo is_active_page('quizzes', $current_page); ?>">All Quiz Categories</a></li>
+            <li>
+                <a href="/rewards" class="mobile-nav-link <?php echo is_active_page('rewards', $current_page); ?>" style="color: var(--secondary); font-weight: 700;">
+                    🏆 Prizes, Scholarships &amp; Honors
+                </a>
+            </li>
+            <li><a href="/about" class="mobile-nav-link <?php echo is_active_page('about', $current_page); ?>">About Championships</a></li>
             <li><a href="/enroll" class="mobile-nav-link <?php echo is_active_page('enroll', $current_page); ?>">Student Registration</a></li>
             <li><a href="/contact" class="mobile-nav-link <?php echo is_active_page('contact', $current_page); ?>">Contact &amp; Helpline</a></li>
         </ul>

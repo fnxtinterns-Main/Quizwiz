@@ -23,8 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = 'Please provide a valid email address.';
     } else {
-        // Success handling
-        $success_message = "Thank you, {$name}! Your enrollment for {$group} has been successfully recorded. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$phone}.";
+        // Record lead securely
+        record_quizwiz_lead('championship_enrollment', [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'detail1' => $school,
+            'detail2' => "Class: {$class} | Group: {$group}"
+        ]);
+
+        $safe_name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+        $safe_group = htmlspecialchars($group, ENT_QUOTES, 'UTF-8');
+        $safe_phone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
+        $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$safe_phone}.";
     }
 }
 

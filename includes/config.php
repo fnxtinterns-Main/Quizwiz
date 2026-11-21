@@ -3,6 +3,23 @@
  * QuizWiz Global Configuration
  */
 
+// 1. Lightweight .env Loader (keeps sensitive passwords outside version control)
+$envFile = __DIR__ . '/../.env';
+if (file_exists($envFile)) {
+    $envLines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($envLines as $line) {
+        $line = trim($line);
+        if ($line === '' || strpos($line, '#') === 0) continue;
+        if (strpos($line, '=') !== false) {
+            list($envKey, $envVal) = explode('=', $line, 2);
+            $envKey = trim($envKey);
+            $envVal = trim($envVal, " \t\n\r\0\x0B\"'");
+            $_ENV[$envKey] = $envVal;
+            putenv("{$envKey}={$envVal}");
+        }
+    }
+}
+
 // Site identity
 define('SITE_NAME', 'QuizWiz');
 define('SITE_TAGLINE', 'All India Online Quiz Championship for School Students');
@@ -13,15 +30,16 @@ define('PHONE_DISPLAY', '+91 98015 06511');
 define('PHONE_RAW', '+919801506511');
 define('WHATSAPP_NUMBER', '919801506511');
 define('WHATSAPP_URL', 'https://wa.me/919801506511?text=' . urlencode('Hello QuizWiz! I want to inquire about the All India Quiz Championship.'));
-// Active Official Mailboxes on Hostinger
-define('EMAIL_CONNECT', 'connect@quizwiz.co.in');   // Dedicated for Campus Ambassadors & School Partnerships
-define('EMAIL_SUPPORT', 'support@quizwiz.co.in');   // Dedicated for Student Enrollment, Queries & Support
-define('EMAIL_CONTACT', EMAIL_SUPPORT);             // Default public inquiry address
 
-// Hostinger Authenticated SMTP Credentials
-define('SMTP_HOST', 'smtp.hostinger.com');
-define('SMTP_PORT', 465);
-define('SMTP_PASS', 'Quizwiz@99');
+// Active Official Mailboxes on Hostinger
+define('EMAIL_CONNECT', getenv('SMTP_USER_CONNECT') ?: ($_ENV['SMTP_USER_CONNECT'] ?? 'connect@quizwiz.co.in'));
+define('EMAIL_SUPPORT', getenv('SMTP_USER_SUPPORT') ?: ($_ENV['SMTP_USER_SUPPORT'] ?? 'support@quizwiz.co.in'));
+define('EMAIL_CONTACT', EMAIL_SUPPORT);
+
+// Hostinger Authenticated SMTP Settings (Loaded securely from .env)
+define('SMTP_HOST', getenv('SMTP_HOST') ?: ($_ENV['SMTP_HOST'] ?? 'smtp.hostinger.com'));
+define('SMTP_PORT', (int)(getenv('SMTP_PORT') ?: ($_ENV['SMTP_PORT'] ?? 465)));
+define('SMTP_PASS', getenv('SMTP_PASS') ?: ($_ENV['SMTP_PASS'] ?? ''));
 
 define('ADDRESS_CITY', 'Ranchi, Jharkhand, India');
 define('PLAYSTORE_URL', 'https://play.google.com/store/apps/details?id=co.learnol.denlh');

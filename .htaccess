@@ -53,7 +53,7 @@
 # ----------------------------------------------------------------------
 # 4. Clean Pretty URLs & Data Protection (.htaccess)
 # ----------------------------------------------------------------------
-<FilesMatch "\.(csv|json|log)$">
+<FilesMatch "^\.env|(\.(csv|json|log|env))$">
     Require all denied
 </FilesMatch>
 

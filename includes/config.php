@@ -17,6 +17,12 @@ define('WHATSAPP_URL', 'https://wa.me/919801506511?text=' . urlencode('Hello Qui
 define('EMAIL_CONNECT', 'connect@quizwiz.co.in');   // Dedicated for Campus Ambassadors & School Partnerships
 define('EMAIL_SUPPORT', 'support@quizwiz.co.in');   // Dedicated for Student Enrollment, Queries & Support
 define('EMAIL_CONTACT', EMAIL_SUPPORT);             // Default public inquiry address
+
+// Hostinger Authenticated SMTP Credentials
+define('SMTP_HOST', 'smtp.hostinger.com');
+define('SMTP_PORT', 465);
+define('SMTP_PASS', 'Quizwiz@99');
+
 define('ADDRESS_CITY', 'Ranchi, Jharkhand, India');
 define('PLAYSTORE_URL', 'https://play.google.com/store/apps/details?id=co.learnol.denlh');
 
@@ -33,19 +39,11 @@ function is_active_page($page_name, $current_page) {
     return ($page_name === $current_page) ? 'active' : '';
 }
 
-// Lightweight HTML mail dispatcher using standard PHP mail()
+// Authenticated SMTP mail dispatcher via Hostinger (with native fallback)
 function send_quizwiz_mail($to, $subject, $messageHtml, $fromEmail = EMAIL_SUPPORT, $fromName = 'QuizWiz') {
     if (empty($to) || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
         return false;
     }
-
-    $headers = [
-        'MIME-Version: 1.0',
-        'Content-type: text/html; charset=UTF-8',
-        'From: ' . $fromName . ' <' . $fromEmail . '>',
-        'Reply-To: ' . $fromEmail,
-        'X-Mailer: PHP/' . phpversion()
-    ];
 
     $wrappedHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' . htmlspecialchars($subject) . '</title></head>'
         . '<body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;color:#1E293B;">'
@@ -61,7 +59,72 @@ function send_quizwiz_mail($to, $subject, $messageHtml, $fromEmail = EMAIL_SUPPO
         . '</div>'
         . '</div></body></html>';
 
-    return @mail($to, $subject, $wrappedHtml, implode("\r\n", $headers));
+    // 1. Authenticated Direct SMTP Socket via Hostinger (smtp.hostinger.com:465 SSL)
+    $host = 'ssl://' . SMTP_HOST . ':' . SMTP_PORT;
+    $socket = @stream_socket_client($host, $errno, $errstr, 5);
+    if ($socket) {
+        stream_set_timeout($socket, 5);
+        $read = function() use ($socket) {
+            $data = '';
+            while ($line = fgets($socket)) {
+                $data .= $line;
+                if (substr($line, 3, 1) === ' ') break;
+            }
+            return $data;
+        };
+        $send = function($cmd) use ($socket) {
+            fputs($socket, $cmd . "\r\n");
+        };
+
+        $read();
+        $send("EHLO " . SMTP_HOST);
+        $read();
+        $send("AUTH LOGIN");
+        $read();
+        $send(base64_encode($fromEmail));
+        $read();
+        $send(base64_encode(SMTP_PASS));
+        $authRes = $read();
+
+        if (strpos($authRes, '235') !== false) {
+            $send("MAIL FROM:<{$fromEmail}>");
+            $read();
+            $send("RCPT TO:<{$to}>");
+            $read();
+            $send("DATA");
+            $read();
+
+            $headers = "MIME-Version: 1.0\r\n"
+                     . "Content-Type: text/html; charset=UTF-8\r\n"
+                     . "From: =?UTF-8?B?" . base64_encode($fromName) . "?= <{$fromEmail}>\r\n"
+                     . "To: <{$to}>\r\n"
+                     . "Reply-To: <{$fromEmail}>\r\n"
+                     . "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n"
+                     . "Date: " . date('r') . "\r\n"
+                     . "X-Mailer: QuizWiz-SMTP/1.0\r\n";
+
+            $send($headers . "\r\n" . $wrappedHtml . "\r\n.");
+            $dataRes = $read();
+            $send("QUIT");
+            fclose($socket);
+
+            if (strpos($dataRes, '250') !== false) {
+                return true;
+            }
+        } else {
+            fclose($socket);
+        }
+    }
+
+    // 2. Fallback to native PHP mail() if external socket is blocked
+    $fallbackHeaders = [
+        'MIME-Version: 1.0',
+        'Content-type: text/html; charset=UTF-8',
+        'From: ' . $fromName . ' <' . $fromEmail . '>',
+        'Reply-To: ' . $fromEmail,
+        'X-Mailer: PHP/' . phpversion()
+    ];
+    return @mail($to, $subject, $wrappedHtml, implode("\r\n", $fallbackHeaders));
 }
 
 // Secure lightweight lead recorder (guarantees student registrations & inquiries are never lost)

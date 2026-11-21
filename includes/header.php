@@ -14,20 +14,43 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <title><?php echo htmlspecialchars($page_title); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($page_desc); ?>">
     
-    <!-- Open Graph / Meta -->
+    <!-- Open Graph / WhatsApp Social Sharing Meta -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="QuizWiz">
     <meta property="og:title" content="<?php echo htmlspecialchars($page_title); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($page_desc); ?>">
-    <meta property="og:image" content="/assets/images/logo.png">
+    <meta property="og:url" content="https://quizwiz.co.in<?php echo htmlspecialchars($_SERVER['REQUEST_URI'] ?? '/'); ?>">
+    <meta property="og:image" content="https://quizwiz.co.in/assets/images/Banner.jpeg">
+    <meta property="og:image:secure_url" content="https://quizwiz.co.in/assets/images/Banner.jpeg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720">
+
+    <!-- Twitter Card Meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($page_title); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($page_desc); ?>">
+    <meta name="twitter:image" content="https://quizwiz.co.in/assets/images/Banner.jpeg">
 
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
+
+    <!-- Google Analytics 4 (Only renders when GA_MEASUREMENT_ID is configured in .env) -->
+    <?php if (defined('GA_MEASUREMENT_ID') && !empty(GA_MEASUREMENT_ID)): ?>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo htmlspecialchars(GA_MEASUREMENT_ID); ?>"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '<?php echo htmlspecialchars(GA_MEASUREMENT_ID); ?>');
+        </script>
+    <?php endif; ?>
 
     <!-- Performance Preloads & Preconnects -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     
-    <link rel="preload" href="/assets/css/style.css?v=2.7" as="style">
+    <link rel="preload" href="/assets/css/style.css?v=2.8" as="style">
     <link rel="preload" href="/assets/images/logo.png" as="image">
 
     <!-- Fonts -->
@@ -38,7 +61,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- QuizWiz Modern Design System -->
-    <link rel="stylesheet" href="/assets/css/style.css?v=2.7">
+    <link rel="stylesheet" href="/assets/css/style.css?v=2.8">
 </head>
 <body>
 

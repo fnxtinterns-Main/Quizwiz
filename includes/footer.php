@@ -92,6 +92,23 @@ require_once __DIR__ . '/config.php';
                                 <span><?php echo ADDRESS_CITY; ?></span>
                             </div>
                         </li>
+                        <li style="margin-top: 14px;">
+                            <strong style="display: block; color: #FFFFFF; font-size: 0.85rem; margin-bottom: 8px;">Official Social Handles:</strong>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <a href="<?php echo $social_links['facebook']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #1877F2;" title="QuizWiz on Facebook" aria-label="Facebook">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <a href="<?php echo $social_links['instagram']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF);" title="QuizWiz on Instagram" aria-label="Instagram">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a href="<?php echo $social_links['linkedin']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #0A66C2;" title="QuizWiz on LinkedIn" aria-label="LinkedIn">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </a>
+                                <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #25D366;" title="Chat on WhatsApp" aria-label="WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -110,17 +127,17 @@ require_once __DIR__ . '/config.php';
                     </div>
                 </div>
                 <div class="footer-social-icons">
-                    <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #25D366;" aria-label="WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="<?php echo $social_links['facebook']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="Facebook">
+                    <a href="<?php echo $social_links['facebook']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #1877F2;" aria-label="Facebook">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
-                    <a href="<?php echo $social_links['instagram']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="Instagram">
+                    <a href="<?php echo $social_links['instagram']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF);" aria-label="Instagram">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                    <a href="<?php echo $social_links['linkedin']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" aria-label="LinkedIn">
+                    <a href="<?php echo $social_links['linkedin']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #0A66C2;" aria-label="LinkedIn">
                         <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #25D366;" aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </a>
                 </div>
             </div>
@@ -153,6 +170,6 @@ require_once __DIR__ . '/config.php';
     <script>
         window.quizWizCategoryQuestions = <?php echo json_encode($category_questions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     </script>
-    <script src="/assets/js/main.js?v=2.7"></script>
+    <script src="/assets/js/main.js?v=2.8"></script>
 </body>
 </html>

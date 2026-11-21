@@ -1332,6 +1332,14 @@ p.lead {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  margin-right: 170px; /* Leaves clear space so fixed floating WhatsApp button never overlaps */
+}
+
+@media (max-width: 991px) {
+  .footer-social-icons {
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
 }
 
 .social-circle-btn {

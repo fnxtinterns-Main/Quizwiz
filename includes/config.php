@@ -44,6 +44,10 @@ define('SMTP_PASS', getenv('SMTP_PASS') ?: ($_ENV['SMTP_PASS'] ?? ''));
 define('ADDRESS_CITY', 'Ranchi, Jharkhand, India');
 define('PLAYSTORE_URL', 'https://play.google.com/store/apps/details?id=co.learnol.denlh');
 
+// Optional Analytics & Administration (Loaded from .env)
+define('GA_MEASUREMENT_ID', getenv('GA_MEASUREMENT_ID') ?: ($_ENV['GA_MEASUREMENT_ID'] ?? ''));
+define('ADMIN_EXPORT_KEY', getenv('ADMIN_EXPORT_KEY') ?: ($_ENV['ADMIN_EXPORT_KEY'] ?? 'QuizwizAdmin2026'));
+
 // Social Links
 $social_links = [
     'facebook' => 'https://www.facebook.com/Quizwiz24/',

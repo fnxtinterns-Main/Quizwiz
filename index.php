@@ -30,11 +30,39 @@ require_once __DIR__ . '/data/quizzes.php';
 </div>
 
 <!-- ========================================== -->
-<!-- NEW SECTION: PROMO BANNER -->
+<!-- PROMO BANNER CAROUSEL (5s Auto-Rotation) -->
 <!-- ========================================== -->
-<section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0;">
+<section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0 10px;">
     <div class="container" style="display: flex; justify-content: center;">
-        <img src="/assets/images/Banner.jpeg" alt="QuizWiz Championship Banner" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" loading="lazy">
+        <div class="banner-carousel-wrapper" id="homeBannerCarousel">
+            <!-- Slide 1: All India Quiz Championship -->
+            <div class="banner-carousel-slide active" data-slide="0">
+                <a href="/enroll" title="Enroll in All India Quiz Championship">
+                    <img src="/assets/images/Banner.jpeg" alt="All India Quiz Championship - Compete. Learn. Win!" loading="eager" width="1280" height="720">
+                </a>
+            </div>
+
+            <!-- Slide 2: Har Student. Har Sapna. Har Exam. -->
+            <div class="banner-carousel-slide" data-slide="1">
+                <a href="/quizzes" title="Explore Practice Quizzes for All Exams">
+                    <img src="/assets/images/banner-exams.jpg" alt="QuizWiz - Har Student. Har Sapna. Har Exam." loading="lazy" width="1024" height="576">
+                </a>
+            </div>
+
+            <!-- Carousel Controls -->
+            <button class="banner-carousel-arrow prev" id="bannerPrevBtn" aria-label="Previous Slide">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="banner-carousel-arrow next" id="bannerNextBtn" aria-label="Next Slide">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- Carousel Indicators -->
+            <div class="banner-carousel-dots" id="bannerDots">
+                <button class="banner-carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                <button class="banner-carousel-dot" data-index="1" aria-label="Slide 2"></button>
+            </div>
+        </div>
     </div>
 </section>
 <!-- ========================================== -->

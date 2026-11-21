@@ -79,9 +79,9 @@ function send_quizwiz_mail($to, $subject, $messageHtml, $fromEmail = EMAIL_SUPPO
 
     // 1. Authenticated Direct SMTP Socket via Hostinger (smtp.hostinger.com:465 SSL)
     $host = 'ssl://' . SMTP_HOST . ':' . SMTP_PORT;
-    $socket = @stream_socket_client($host, $errno, $errstr, 5);
+    $socket = @stream_socket_client($host, $errno, $errstr, 3);
     if ($socket) {
-        stream_set_timeout($socket, 5);
+        stream_set_timeout($socket, 3);
         $read = function() use ($socket) {
             $data = '';
             while ($line = fgets($socket)) {
@@ -155,20 +155,26 @@ function record_quizwiz_lead($type, array $data) {
     $is_new = !file_exists($file);
     $fp = @fopen($file, 'a');
     if ($fp) {
+        // shortcut: file-based queue, upgrade to SQLite/MySQL if write concurrency exceeds 500/sec
+        flock($fp, LOCK_EX);
         if ($is_new) {
             fputcsv($fp, ['timestamp', 'type', 'name', 'email', 'phone', 'detail1', 'detail2', 'ip']);
         }
+        $sanitize = function($v) {
+            return trim(preg_replace('/\s+/', ' ', (string)($v ?? '')));
+        };
         $row = [
             date('Y-m-d H:i:s'),
             $type,
-            $data['name'] ?? '',
-            $data['email'] ?? '',
-            $data['phone'] ?? '',
-            $data['detail1'] ?? '',
-            $data['detail2'] ?? '',
+            $sanitize($data['name'] ?? ''),
+            $sanitize($data['email'] ?? ''),
+            $sanitize($data['phone'] ?? ''),
+            $sanitize($data['detail1'] ?? ''),
+            $sanitize($data['detail2'] ?? ''),
             $_SERVER['REMOTE_ADDR'] ?? ''
         ];
         fputcsv($fp, $row);
+        flock($fp, LOCK_UN);
         fclose($fp);
     }
 }

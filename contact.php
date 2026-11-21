@@ -7,44 +7,52 @@ require_once __DIR__ . '/includes/header.php';
 
 $feedback = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_inquiry') {
+    // Spam protection: honeypot & submission velocity check
+    $honeypot = trim($_POST['website_url'] ?? '');
+    $form_time = (int)($_POST['form_time'] ?? 0);
+    $is_bot = !empty($honeypot) || ($form_time > 0 && (time() - $form_time) < 2);
+
     $sender_name = trim($_POST['name'] ?? '');
     $sender_email = trim($_POST['email'] ?? '');
     $sender_phone = trim($_POST['phone'] ?? '');
     $sender_msg = trim($_POST['message'] ?? '');
-
-    record_quizwiz_lead('general_inquiry', [
-        'name' => $sender_name,
-        'email' => $sender_email,
-        'phone' => $sender_phone,
-        'detail1' => mb_substr($sender_msg, 0, 150),
-        'detail2' => ''
-    ]);
-
     $safe_sender = htmlspecialchars($sender_name, ENT_QUOTES, 'UTF-8');
 
-    // 1. Alert internal support team
-    $internalMsg = "<h3 style='color:#1B2559;'>New Contact Inquiry</h3>"
-        . "<p><strong>Name:</strong> {$safe_sender}</p>"
-        . "<p><strong>Email:</strong> " . htmlspecialchars($sender_email) . "</p>"
-        . "<p><strong>Phone:</strong> " . htmlspecialchars($sender_phone) . "</p>"
-        . "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($sender_msg)) . "</p>"
-        . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/contact on " . date('d M Y, h:i A') . "</p>";
-    send_quizwiz_mail(EMAIL_SUPPORT, "New Contact Inquiry from {$sender_name}", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Helpdesk');
+    if ($is_bot) {
+        $feedback = "Thank you, {$safe_sender}. Your message has been received!";
+    } else {
+        record_quizwiz_lead('general_inquiry', [
+            'name' => $sender_name,
+            'email' => $sender_email,
+            'phone' => $sender_phone,
+            'detail1' => mb_substr($sender_msg, 0, 150),
+            'detail2' => ''
+        ]);
 
-    // 2. Auto-reply confirmation to sender from support@quizwiz.co.in
-    if (!empty($sender_email) && filter_var($sender_email, FILTER_VALIDATE_EMAIL)) {
-        $replyMsg = "<h2 style='color:#1B2559;margin-top:0;'>We Received Your Message, {$safe_sender}!</h2>"
-            . "<p>Thank you for reaching out to QuizWiz. Our support team has successfully received your inquiry.</p>"
-            . "<p>A support coordinator is looking into your message and will respond to you shortly via email or phone/WhatsApp (<strong>" . htmlspecialchars($sender_phone) . "</strong>).</p>"
-            . "<div style='background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 16px;border-radius:6px;margin:16px 0;font-size:13px;'>"
-            . "<strong>Summary of your message:</strong><br>" . nl2br(htmlspecialchars($sender_msg))
-            . "</div>"
-            . "<p>If you need urgent assistance, you can also reach us directly on WhatsApp at +91 98015 06511.</p>"
-            . "<p>Warm regards,<br><strong>QuizWiz Support Team</strong><br><a href='mailto:support@quizwiz.co.in'>support@quizwiz.co.in</a></p>";
-        send_quizwiz_mail($sender_email, 'We have received your message | QuizWiz Support', $replyMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+        // 1. Alert internal support team
+        $internalMsg = "<h3 style='color:#1B2559;'>New Contact Inquiry</h3>"
+            . "<p><strong>Name:</strong> {$safe_sender}</p>"
+            . "<p><strong>Email:</strong> " . htmlspecialchars($sender_email) . "</p>"
+            . "<p><strong>Phone:</strong> " . htmlspecialchars($sender_phone) . "</p>"
+            . "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($sender_msg)) . "</p>"
+            . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/contact on " . date('d M Y, h:i A') . "</p>";
+        send_quizwiz_mail(EMAIL_SUPPORT, "New Contact Inquiry from {$sender_name}", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Helpdesk');
+
+        // 2. Auto-reply confirmation to sender from support@quizwiz.co.in
+        if (!empty($sender_email) && filter_var($sender_email, FILTER_VALIDATE_EMAIL)) {
+            $replyMsg = "<h2 style='color:#1B2559;margin-top:0;'>We Received Your Message, {$safe_sender}!</h2>"
+                . "<p>Thank you for reaching out to QuizWiz. Our support team has successfully received your inquiry.</p>"
+                . "<p>A support coordinator is looking into your message and will respond to you shortly via email or phone/WhatsApp (<strong>" . htmlspecialchars($sender_phone) . "</strong>).</p>"
+                . "<div style='background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 16px;border-radius:6px;margin:16px 0;font-size:13px;'>"
+                . "<strong>Summary of your message:</strong><br>" . nl2br(htmlspecialchars($sender_msg))
+                . "</div>"
+                . "<p>If you need urgent assistance, you can also reach us directly on WhatsApp at +91 98015 06511.</p>"
+                . "<p>Warm regards,<br><strong>QuizWiz Support Team</strong><br><a href='mailto:support@quizwiz.co.in'>support@quizwiz.co.in</a></p>";
+            send_quizwiz_mail($sender_email, 'We have received your message | QuizWiz Support', $replyMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+        }
+
+        $feedback = "Thank you, {$safe_sender}. Your message has been received and a confirmation has been sent to your email. Our support coordinator will get in touch with you shortly!";
     }
-
-    $feedback = "Thank you, {$safe_sender}. Your message has been received and a confirmation has been sent to your email. Our support coordinator will get in touch with you shortly!";
 }
 ?>
 
@@ -137,6 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <form action="/contact" method="POST">
                         <input type="hidden" name="action" value="send_inquiry">
+                        <input type="hidden" name="form_time" value="<?php echo time(); ?>">
+                        <input type="text" name="website_url" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
 
                         <div class="form-group">
                             <label class="form-label" for="c_name">Full Name <span class="text-orange">*</span></label>

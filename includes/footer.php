@@ -153,6 +153,6 @@ require_once __DIR__ . '/config.php';
     <script>
         window.quizWizCategoryQuestions = <?php echo json_encode($category_questions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     </script>
-    <script src="/assets/js/main.js?v=2.6"></script>
+    <script src="/assets/js/main.js?v=2.7"></script>
 </body>
 </html>

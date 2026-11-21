@@ -34,22 +34,30 @@ require_once __DIR__ . '/data/quizzes.php';
 <!-- ========================================== -->
 <section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0 10px;">
     <div class="container" style="display: flex; justify-content: center;">
-        <div class="banner-carousel-wrapper" id="homeBannerCarousel">
-            <div class="banner-carousel-track" id="bannerTrack">
+        <div class="banner-carousel-wrapper" id="homeBannerCarousel" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08); background: #0F172A;">
+            <div class="banner-carousel-track" id="bannerTrack" style="display: flex; width: 200%; height: 100%; transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform;">
                 <!-- Slide 1: All India Quiz Championship -->
-                <div class="banner-carousel-item">
-                    <a href="/enroll" title="Enroll in All India Quiz Championship">
-                        <img src="/assets/images/Banner.jpeg" alt="All India Quiz Championship - Compete. Learn. Win!" loading="eager" width="1280" height="720">
+                <div class="banner-carousel-item" style="width: 50%; height: 100%; flex-shrink: 0;">
+                    <a href="/enroll" title="Enroll in All India Quiz Championship" style="display: block; width: 100%; height: 100%;">
+                        <img src="/assets/images/Banner.jpeg" alt="All India Quiz Championship - Compete. Learn. Win!" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="eager" width="1280" height="720">
                     </a>
                 </div>
 
                 <!-- Slide 2: Har Student. Har Sapna. Har Exam. -->
-                <div class="banner-carousel-item">
-                    <a href="/quizzes" title="Explore Practice Quizzes for All Exams">
-                        <img src="/assets/images/banner-exams.jpg" alt="QuizWiz - Har Student. Har Sapna. Har Exam." loading="lazy" width="1024" height="576">
+                <div class="banner-carousel-item" style="width: 50%; height: 100%; flex-shrink: 0;">
+                    <a href="/quizzes" title="Explore Practice Quizzes for All Exams" style="display: block; width: 100%; height: 100%;">
+                        <img src="/assets/images/banner-exams.jpg" alt="QuizWiz - Har Student. Har Sapna. Har Exam." style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy" width="1024" height="576">
                     </a>
                 </div>
             </div>
+
+            <!-- Side Navigation Arrows (No Dot Overlay) -->
+            <button class="banner-carousel-arrow prev" id="bannerPrevBtn" type="button" onclick="quizWizPrevSlide(event)" aria-label="Previous Banner" style="position: absolute; top: 50%; left: 16px; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 23, 42, 0.65); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s ease;">
+                <i class="fa-solid fa-chevron-left" style="font-size: 1rem; pointer-events: none;"></i>
+            </button>
+            <button class="banner-carousel-arrow next" id="bannerNextBtn" type="button" onclick="quizWizNextSlide(event)" aria-label="Next Banner" style="position: absolute; top: 50%; right: 16px; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 23, 42, 0.65); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s ease;">
+                <i class="fa-solid fa-chevron-right" style="font-size: 1rem; pointer-events: none;"></i>
+            </button>
         </div>
     </div>
 </section>
@@ -65,10 +73,29 @@ require_once __DIR__ . '/data/quizzes.php';
         track.style.transform = 'translateX(-' + (currentIdx * 50) + '%)';
     }
 
+    window.quizWizNextSlide = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        scrollSlide(currentIdx + 1);
+        resetTimer();
+    };
+
+    window.quizWizPrevSlide = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        scrollSlide(currentIdx - 1);
+        resetTimer();
+    };
+
     // Auto-scroll every 5 seconds
     let timer = setInterval(function() {
         scrollSlide(currentIdx + 1);
     }, 5000);
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function() {
+            scrollSlide(currentIdx + 1);
+        }, 5000);
+    }
 
     // Touch swipe support for mobile
     let touchStartX = 0;
@@ -78,11 +105,11 @@ require_once __DIR__ . '/data/quizzes.php';
     carousel.addEventListener('touchend', function(e) {
         const diff = e.changedTouches[0].screenX - touchStartX;
         if (Math.abs(diff) > 40) {
-            scrollSlide(diff < 0 ? currentIdx + 1 : currentIdx - 1);
-            clearInterval(timer);
-            timer = setInterval(function() {
-                scrollSlide(currentIdx + 1);
-            }, 5000);
+            if (diff < 0) {
+                window.quizWizNextSlide();
+            } else {
+                window.quizWizPrevSlide();
+            }
         }
     }, { passive: true });
 })();

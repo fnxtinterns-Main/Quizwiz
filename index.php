@@ -30,37 +30,25 @@ require_once __DIR__ . '/data/quizzes.php';
 </div>
 
 <!-- ========================================== -->
-<!-- PROMO BANNER CAROUSEL (5s Auto-Rotation) -->
+<!-- PROMO BANNER: AUTO-SCROLLING SLIDER (5s) -->
 <!-- ========================================== -->
 <section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0 10px;">
     <div class="container" style="display: flex; justify-content: center;">
         <div class="banner-carousel-wrapper" id="homeBannerCarousel">
-            <!-- Slide 1: All India Quiz Championship -->
-            <div class="banner-carousel-slide active" data-slide="0">
-                <a href="/enroll" title="Enroll in All India Quiz Championship">
-                    <img src="/assets/images/Banner.jpeg" alt="All India Quiz Championship - Compete. Learn. Win!" loading="eager" width="1280" height="720">
-                </a>
-            </div>
+            <div class="banner-carousel-track" id="bannerTrack">
+                <!-- Slide 1: All India Quiz Championship -->
+                <div class="banner-carousel-item">
+                    <a href="/enroll" title="Enroll in All India Quiz Championship">
+                        <img src="/assets/images/Banner.jpeg" alt="All India Quiz Championship - Compete. Learn. Win!" loading="eager" width="1280" height="720">
+                    </a>
+                </div>
 
-            <!-- Slide 2: Har Student. Har Sapna. Har Exam. -->
-            <div class="banner-carousel-slide" data-slide="1">
-                <a href="/quizzes" title="Explore Practice Quizzes for All Exams">
-                    <img src="/assets/images/banner-exams.jpg" alt="QuizWiz - Har Student. Har Sapna. Har Exam." loading="lazy" width="1024" height="576">
-                </a>
-            </div>
-
-            <!-- Carousel Controls -->
-            <button class="banner-carousel-arrow prev" id="bannerPrevBtn" type="button" onclick="quizWizPrevSlide(event)" aria-label="Previous Slide">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <button class="banner-carousel-arrow next" id="bannerNextBtn" type="button" onclick="quizWizNextSlide(event)" aria-label="Next Slide">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
-
-            <!-- Carousel Indicators -->
-            <div class="banner-carousel-dots" id="bannerDots">
-                <button class="banner-carousel-dot active" data-index="0" type="button" onclick="quizWizGoToSlide(0, event)" aria-label="Slide 1"></button>
-                <button class="banner-carousel-dot" data-index="1" type="button" onclick="quizWizGoToSlide(1, event)" aria-label="Slide 2"></button>
+                <!-- Slide 2: Har Student. Har Sapna. Har Exam. -->
+                <div class="banner-carousel-item">
+                    <a href="/quizzes" title="Explore Practice Quizzes for All Exams">
+                        <img src="/assets/images/banner-exams.jpg" alt="QuizWiz - Har Student. Har Sapna. Har Exam." loading="lazy" width="1024" height="576">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -68,68 +56,19 @@ require_once __DIR__ . '/data/quizzes.php';
 <script>
 (function() {
     let currentIdx = 0;
+    const track = document.getElementById('bannerTrack');
     const carousel = document.getElementById('homeBannerCarousel');
-    if (!carousel) return;
-    const slides = carousel.querySelectorAll('.banner-carousel-slide');
-    const dots = carousel.querySelectorAll('.banner-carousel-dot');
+    if (!track || !carousel) return;
 
-    function updateCarousel(idx) {
-        if (!slides.length) return;
-        currentIdx = (idx + slides.length) % slides.length;
-        slides.forEach(function(s, i) {
-            if (i === currentIdx) {
-                s.style.opacity = '1';
-                s.style.visibility = 'visible';
-                s.style.pointerEvents = 'auto';
-                s.classList.add('active');
-            } else {
-                s.style.opacity = '0';
-                s.style.visibility = 'hidden';
-                s.style.pointerEvents = 'none';
-                s.classList.remove('active');
-            }
-        });
-        dots.forEach(function(d, i) {
-            if (i === currentIdx) {
-                d.classList.add('active');
-                d.style.background = '#FF6B00';
-                d.style.width = '26px';
-            } else {
-                d.classList.remove('active');
-                d.style.background = 'rgba(255, 255, 255, 0.55)';
-                d.style.width = '10px';
-            }
-        });
+    function scrollSlide(idx) {
+        currentIdx = (idx % 2 + 2) % 2;
+        track.style.transform = 'translateX(-' + (currentIdx * 50) + '%)';
     }
 
-    window.quizWizNextSlide = function(e) {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
-        updateCarousel(currentIdx + 1);
-        resetTimer();
-    };
-
-    window.quizWizPrevSlide = function(e) {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
-        updateCarousel(currentIdx - 1);
-        resetTimer();
-    };
-
-    window.quizWizGoToSlide = function(idx, e) {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
-        updateCarousel(idx);
-        resetTimer();
-    };
-
+    // Auto-scroll every 5 seconds
     let timer = setInterval(function() {
-        updateCarousel(currentIdx + 1);
+        scrollSlide(currentIdx + 1);
     }, 5000);
-
-    function resetTimer() {
-        clearInterval(timer);
-        timer = setInterval(function() {
-            updateCarousel(currentIdx + 1);
-        }, 5000);
-    }
 
     // Touch swipe support for mobile
     let touchStartX = 0;
@@ -139,11 +78,11 @@ require_once __DIR__ . '/data/quizzes.php';
     carousel.addEventListener('touchend', function(e) {
         const diff = e.changedTouches[0].screenX - touchStartX;
         if (Math.abs(diff) > 40) {
-            if (diff < 0) {
-                window.quizWizNextSlide();
-            } else {
-                window.quizWizPrevSlide();
-            }
+            scrollSlide(diff < 0 ? currentIdx + 1 : currentIdx - 1);
+            clearInterval(timer);
+            timer = setInterval(function() {
+                scrollSlide(currentIdx + 1);
+            }, 5000);
         }
     }, { passive: true });
 })();

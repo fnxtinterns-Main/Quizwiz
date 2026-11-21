@@ -21,7 +21,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     ]);
 
     $safe_sender = htmlspecialchars($sender_name, ENT_QUOTES, 'UTF-8');
-    $feedback = "Thank you, {$safe_sender}. Your message has been received! Our support coordinator will get in touch with you shortly on WhatsApp/Phone.";
+
+    // 1. Alert internal support team
+    $internalMsg = "<h3 style='color:#1B2559;'>New Contact Inquiry</h3>"
+        . "<p><strong>Name:</strong> {$safe_sender}</p>"
+        . "<p><strong>Email:</strong> " . htmlspecialchars($sender_email) . "</p>"
+        . "<p><strong>Phone:</strong> " . htmlspecialchars($sender_phone) . "</p>"
+        . "<p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($sender_msg)) . "</p>"
+        . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/contact on " . date('d M Y, h:i A') . "</p>";
+    send_quizwiz_mail(EMAIL_SUPPORT, "New Contact Inquiry from {$sender_name}", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Helpdesk');
+
+    // 2. Auto-reply confirmation to sender from support@quizwiz.co.in
+    if (!empty($sender_email) && filter_var($sender_email, FILTER_VALIDATE_EMAIL)) {
+        $replyMsg = "<h2 style='color:#1B2559;margin-top:0;'>We Received Your Message, {$safe_sender}!</h2>"
+            . "<p>Thank you for reaching out to QuizWiz. Our support team has successfully received your inquiry.</p>"
+            . "<p>A support coordinator is looking into your message and will respond to you shortly via email or phone/WhatsApp (<strong>" . htmlspecialchars($sender_phone) . "</strong>).</p>"
+            . "<div style='background:#F8FAFC;border:1px solid #E2E8F0;padding:12px 16px;border-radius:6px;margin:16px 0;font-size:13px;'>"
+            . "<strong>Summary of your message:</strong><br>" . nl2br(htmlspecialchars($sender_msg))
+            . "</div>"
+            . "<p>If you need urgent assistance, you can also reach us directly on WhatsApp at +91 98015 06511.</p>"
+            . "<p>Warm regards,<br><strong>QuizWiz Support Team</strong><br><a href='mailto:support@quizwiz.co.in'>support@quizwiz.co.in</a></p>";
+        send_quizwiz_mail($sender_email, 'We have received your message | QuizWiz Support', $replyMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+    }
+
+    $feedback = "Thank you, {$safe_sender}. Your message has been received and a confirmation has been sent to your email. Our support coordinator will get in touch with you shortly!";
 }
 ?>
 
@@ -68,13 +91,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             <i class="fa-regular fa-envelope"></i>
                         </div>
                         <div>
-                            <h4 style="margin: 0 0 4px 0;">Direct Email</h4>
-                            <p style="margin: 0 0 4px 0; font-size: 0.95rem; color: var(--text-secondary);">
-                                For administrative inquiries, partnerships, and technical support:
-                            </p>
-                            <a href="mailto:<?php echo EMAIL_CONTACT; ?>" style="color: var(--secondary); font-weight: 600;">
-                                <?php echo EMAIL_CONTACT; ?>
-                            </a>
+                            <h4 style="margin: 0 0 6px 0;">Official Emails</h4>
+                            <div style="font-size: 0.92rem; margin-bottom: 6px;">
+                                <strong>General &amp; Student Support:</strong><br>
+                                <a href="mailto:<?php echo EMAIL_SUPPORT; ?>" style="color: var(--secondary); font-weight: 600;">
+                                    <?php echo EMAIL_SUPPORT; ?>
+                                </a>
+                            </div>
+                            <div style="font-size: 0.92rem;">
+                                <strong>Ambassadors &amp; Partnerships:</strong><br>
+                                <a href="mailto:<?php echo EMAIL_CONNECT; ?>" style="color: var(--secondary); font-weight: 600;">
+                                    <?php echo EMAIL_CONNECT; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
 

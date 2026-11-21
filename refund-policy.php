@@ -47,7 +47,7 @@ require_once __DIR__ . '/includes/header.php';
             </p>
             <ul style="padding-left: 20px; margin-bottom: 24px;">
                 <li><strong>WhatsApp Helpline:</strong> <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" style="color: #25D366; font-weight: 700;">+91 98015 06511</a></li>
-                <li><strong>Email:</strong> <a href="mailto:info@quizwiz.co.in" style="color: var(--secondary); font-weight: 600;">info@quizwiz.co.in</a></li>
+                <li><strong>Email:</strong> <a href="mailto:support@quizwiz.co.in" style="color: var(--secondary); font-weight: 600;">support@quizwiz.co.in</a></li>
             </ul>
             <p>
                 Approved refunds are credited directly back to the original source method (UPI, Debit/Credit Card, Net Banking) within 5–7 business days.

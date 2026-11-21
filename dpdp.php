@@ -128,7 +128,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 0.95rem;">
                     <div><strong>Entity:</strong> QuizWiz (Operated by Futurenxt)</div>
                     <div><strong>Officer Designation:</strong> Grievance Redressal Officer &amp; Compliance Lead</div>
-                    <div><strong>Grievance Email:</strong> <a href="mailto:grievance@quizwiz.co.in" style="color: var(--secondary); font-weight: 600;">grievance@quizwiz.co.in</a> / <a href="mailto:info@quizwiz.co.in" style="color: var(--secondary); font-weight: 600;">info@quizwiz.co.in</a></div>
+                    <div><strong>Grievance Email:</strong> <a href="mailto:grievance@quizwiz.co.in" style="color: var(--secondary); font-weight: 600;">grievance@quizwiz.co.in</a> / <a href="mailto:support@quizwiz.co.in" style="color: var(--secondary); font-weight: 600;">support@quizwiz.co.in</a></div>
                     <div><strong>Helpline &amp; WhatsApp:</strong> <a href="https://wa.me/919801506511" target="_blank" rel="noopener noreferrer" style="color: #10B981; font-weight: 600;">+91 98015 06511</a></div>
                     <div><strong>Statutory Response Time:</strong> Acknowledged within 48 hours; resolved within a maximum of 30 days.</div>
                 </div>

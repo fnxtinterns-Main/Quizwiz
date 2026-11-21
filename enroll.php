@@ -35,7 +35,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $safe_name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
         $safe_group = htmlspecialchars($group, ENT_QUOTES, 'UTF-8');
         $safe_phone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
-        $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$safe_phone}.";
+
+        // 1. Alert internal support team
+        $internalMsg = "<h3 style='color:#1B2559;'>New Student Championship Enrollment</h3>"
+            . "<p><strong>Student Name:</strong> {$safe_name}</p>"
+            . "<p><strong>Class:</strong> " . htmlspecialchars($class) . "</p>"
+            . "<p><strong>Competition Group:</strong> {$safe_group}</p>"
+            . "<p><strong>School / Institution:</strong> " . htmlspecialchars($school) . "</p>"
+            . "<p><strong>WhatsApp Phone:</strong> {$safe_phone}</p>"
+            . "<p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>"
+            . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/enroll on " . date('d M Y, h:i A') . "</p>";
+        send_quizwiz_mail(EMAIL_SUPPORT, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
+
+        // 2. Confirmation to student/parent from support@quizwiz.co.in
+        $studentMsg = "<h2 style='color:#1B2559;margin-top:0;'>Enrollment Confirmed, {$safe_name}!</h2>"
+            . "<p>Thank you for enrolling in the <strong>All India Quiz Championships</strong> representing <strong>" . htmlspecialchars($school) . "</strong> in <strong>{$safe_group}</strong>.</p>"
+            . "<p>Your registration has been successfully received by our academic desk.</p>"
+            . "<p>Our academic support team will dispatch the preliminary test dates, syllabus outline, and preparation materials directly to your WhatsApp number (<strong>{$safe_phone}</strong>) and email.</p>"
+            . "<div style='background:#EFF6FF;border-left:4px solid #3B82F6;padding:12px 16px;margin:20px 0;border-radius:4px;font-size:14px;'>"
+            . "<strong>Championship Support:</strong><br>If you need any syllabus clarification or schedule change, email <a href='mailto:support@quizwiz.co.in' style='color:#1D4ED8;font-weight:700;'>support@quizwiz.co.in</a> or message WhatsApp: +91 98015 06511."
+            . "</div>"
+            . "<p>Best wishes for your championship journey!</p>"
+            . "<p>Warm regards,<br><strong>Academic Support Desk</strong><br>QuizWiz India</p>";
+        send_quizwiz_mail($email, 'Enrollment Confirmed: All India Quiz Championships', $studentMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+
+        $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. A confirmation email has been sent to {$email}. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$safe_phone}.";
     }
 }
 

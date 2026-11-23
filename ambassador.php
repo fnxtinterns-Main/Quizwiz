@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
             <a href="#applyForm" class="btn btn-primary btn-lg pulse-glow">
-                <i class="fa-solid fa-paper-plane"></i> Apply for Ambassador ()
+                <i class="fa-solid fa-paper-plane"></i> Apply for Ambassador
             </a>
             <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
                 <i class="fa-brands fa-whatsapp"></i> Chat with Program Lead
@@ -47,12 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <span style="display: inline-flex; align-items: center; gap: 8px; color: #E2E8F0; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: var(--radius-full);">
                 <i class="fa-solid fa-gift text-orange"></i> Ambassador Hoodie &amp; Swag Kit
             </span>
-            <span style="display: inline-flex; align-items: center; gap: 8px; color: #E2E8F0; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: var(--radius-full);">
-                <i class="fa-solid fa-graduation-cap text-orange"></i>  Access to All Quiz Papers
-            </span>
         </div>
     </div>
 </section>
+
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
 
 <!-- SECTION 1: THE 4 MEGA REWARDS -->
 <section class="section">
@@ -310,5 +309,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         </div>
     </div>
 </section>
+
+<!-- APP CTA & HELPLINE -->
+<section class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="app-banner">
+            <div>
+                <div class="section-eyebrow" style="background: rgba(255,255,255,0.15); color: #FFFFFF; border-color: rgba(255,255,255,0.25);">
+                    <i class="fa-solid fa-mobile-screen"></i> Practice Anywhere
+                </div>
+                <h2>Download the QuizWiz Mobile App</h2>
+                <p>
+                    Get instant access to daily live quiz rounds, offline practice modes, instant solution explanations, and personalized performance analytics on your phone.
+                </p>
+                <div class="app-store-badges">
+                    <a href="<?php echo PLAYSTORE_URL; ?>" target="_blank" rel="noopener noreferrer" class="playstore-btn">
+                        <i class="fa-brands fa-google-play" style="font-size: 2rem; color: #00E676;"></i>
+                        <div style="text-align: left;">
+                            <div style="font-size: 0.7rem; text-transform: uppercase; opacity: 0.8;">Get it on</div>
+                            <div style="font-size: 1.15rem; font-weight: 700; line-height: 1.1;">Google Play</div>
+                        </div>
+                    </a>
+                    <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
+                        <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-xl); padding: 24px 20px; backdrop-filter: blur(10px); max-width: 320px; margin: 0 auto;">
+                    <div style="font-size: 2.8rem; margin-bottom: 8px;">📱</div>
+                    <h3 style="color: #FFFFFF; font-size: 1.15rem; margin-bottom: 6px;">Android App Live</h3>
+                    <p style="font-size: 0.85rem; color: #CBD5E1; margin-bottom: 16px;">
+                        Access 250+ timed papers, national rankings &amp; instant answer solutions.
+                    </p>
+                    <a href="<?php echo PLAYSTORE_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="width: 100%;">
+                        <i class="fa-solid fa-arrow-down-to-bracket"></i> Install from Play Store
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

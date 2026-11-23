@@ -1,7 +1,7 @@
 <?php
 $current_page = 'home';
 $page_title = 'Online Quiz Competition | All India Championships';
-$page_desc = 'QuizWiz conducts premier online quiz championships and  daily quizzes for school students in India. Compete, sharpen your intellect, and win laptops, tablets, and scholarships.';
+$page_desc = 'QuizWiz conducts premier online quiz championships and daily quizzes for school students in India. Compete, sharpen your intellect, and win laptops, tablets, and scholarships.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';
@@ -447,6 +447,8 @@ require_once __DIR__ . '/data/quizzes.php';
         </div>
     </div>
 </section>
+
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
 
 <!-- HERO MINI-QUIZ JAVASCRIPT HANDLER -->
 <script>

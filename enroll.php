@@ -45,6 +45,8 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
     </div>
 </section>
 
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
+
 <section class="section">
     <div class="container">
         <div class="hero-grid" style="align-items: start;">
@@ -192,5 +194,7 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
         </div>
     </div>
 </section>
+
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

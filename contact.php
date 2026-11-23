@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 </section>
 
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
+
 <section class="section">
     <div class="container">
         <div class="hero-grid" style="align-items: start;">
@@ -125,5 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         </div>
     </div>
 </section>
+
+<?php require __DIR__ . '/includes/app-download-qr.php'; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

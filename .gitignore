@@ -6,3 +6,7 @@ Thumbs.db
 DUMP/
 QUIZWIZ/
 QUIZWIZ.zip
+remote_clone/
+data/leads.csv
+.env
+.env.local

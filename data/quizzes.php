@@ -67,9 +67,9 @@ $top_champions = [
 $championship_prizes = [
     [
         'title' => '1st National Rank',
-        'reward' => 'Brand New Laptop + ₹50,000 Scholarship',
+        'reward' => 'Sony PlayStation 5 (PS5) with GTA 6 + ₹50,000 Scholarship',
         'tier' => 'National 1st Prize',
-        'icon' => 'fa-laptop',
+        'icon' => 'fa-gamepad',
         'color' => '#F59E0B'
     ],
     [

@@ -30,13 +30,90 @@ require_once __DIR__ . '/data/quizzes.php';
 </div>
 
 <!-- ========================================== -->
-<!-- NEW SECTION: PROMO BANNER -->
+<!-- PROMO BANNER: AUTO-SCROLLING SLIDER (5s) -->
 <!-- ========================================== -->
-<section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0;">
+<section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0 10px;">
     <div class="container" style="display: flex; justify-content: center;">
-        <img src="assets/images/Banner.jpeg" alt="QuizWiz Championship Banner" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" loading="lazy">
+        <div class="banner-carousel-wrapper" id="homeBannerCarousel" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08); background: #0F172A;">
+            <div class="banner-carousel-track" id="bannerTrack" style="display: flex; width: 200%; height: 100%; transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform;">
+                <!-- Slide 1: All India Quiz Championship -->
+                <div class="banner-carousel-item" style="width: 50%; height: 100%; flex-shrink: 0;">
+                    <a href="/enroll" title="Enroll in All India Quiz Championship" style="display: block; width: 100%; height: 100%;">
+                        <img src="/assets/images/Banner.jpeg" alt="All India Quiz Championship - Compete. Learn. Win!" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="eager" width="1280" height="720">
+                    </a>
+                </div>
+
+                <!-- Slide 2: Har Student. Har Sapna. Har Exam. -->
+                <div class="banner-carousel-item" style="width: 50%; height: 100%; flex-shrink: 0;">
+                    <a href="/quizzes" title="Explore Practice Quizzes for All Exams" style="display: block; width: 100%; height: 100%;">
+                        <img src="/assets/images/banner-exams.jpg" alt="QuizWiz - Har Student. Har Sapna. Har Exam." style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy" width="1024" height="576">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Side Navigation Arrows (No Dot Overlay) -->
+            <button class="banner-carousel-arrow prev" id="bannerPrevBtn" type="button" onclick="quizWizPrevSlide(event)" aria-label="Previous Banner" style="position: absolute; top: 50%; left: 16px; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 23, 42, 0.65); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s ease;">
+                <i class="fa-solid fa-chevron-left" style="font-size: 1rem; pointer-events: none;"></i>
+            </button>
+            <button class="banner-carousel-arrow next" id="bannerNextBtn" type="button" onclick="quizWizNextSlide(event)" aria-label="Next Banner" style="position: absolute; top: 50%; right: 16px; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(15, 23, 42, 0.65); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20; backdrop-filter: blur(4px); transition: all 0.2s ease;">
+                <i class="fa-solid fa-chevron-right" style="font-size: 1rem; pointer-events: none;"></i>
+            </button>
+        </div>
     </div>
 </section>
+<script>
+(function() {
+    let currentIdx = 0;
+    const track = document.getElementById('bannerTrack');
+    const carousel = document.getElementById('homeBannerCarousel');
+    if (!track || !carousel) return;
+
+    function scrollSlide(idx) {
+        currentIdx = (idx % 2 + 2) % 2;
+        track.style.transform = 'translateX(-' + (currentIdx * 50) + '%)';
+    }
+
+    window.quizWizNextSlide = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        scrollSlide(currentIdx + 1);
+        resetTimer();
+    };
+
+    window.quizWizPrevSlide = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        scrollSlide(currentIdx - 1);
+        resetTimer();
+    };
+
+    // Auto-scroll every 5 seconds
+    let timer = setInterval(function() {
+        scrollSlide(currentIdx + 1);
+    }, 5000);
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function() {
+            scrollSlide(currentIdx + 1);
+        }, 5000);
+    }
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    carousel.addEventListener('touchend', function(e) {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 40) {
+            if (diff < 0) {
+                window.quizWizNextSlide();
+            } else {
+                window.quizWizPrevSlide();
+            }
+        }
+    }, { passive: true });
+})();
+</script>
 <!-- ========================================== -->
 
 <!-- 2. HIGH-ACTION HERO SECTION -->
@@ -51,13 +128,13 @@ require_once __DIR__ . '/data/quizzes.php';
                     Learn Daily. <span class="highlight">Win Big.</span> Rule the Quiz Arena.
                 </h1>
                 <p class="hero-subtext">
-                    Join over 7,200+ school students from Classes 1 to 12. Take <strong> daily quizzes</strong> across Science, Math, G.K., and History, boost your academic speed, and compete for <strong>laptops, tablets, and national scholarships</strong>.
+                    Join over 7,200+ school students from Classes 1 to 12. Take <strong>daily practice quizzes</strong> across Science, Math, G.K., and History, boost your academic speed, and compete for <strong>Sony PS5 with GTA 6, laptops, tablets, and national scholarships</strong>.
                 </p>
 
                 <!-- Dual CTA Action Group -->
                 <div class="hero-cta-group">
                     <a href="/daily-quiz" class="btn btn-primary btn-lg pulse-glow">
-                        <i class="fa-solid fa-play"></i> Play Today's  Quiz
+                        <i class="fa-solid fa-play"></i> Play Today's Quiz
                     </a>
                     <a href="/enroll" class="btn btn-outline-navy btn-lg">
                         <i class="fa-solid fa-trophy"></i> Enroll for Championship
@@ -68,7 +145,7 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="hero-trust">
                     <div class="trust-item">
                         <i class="fa-solid fa-circle-check"></i>
-                        <span>100%  Daily Practice</span>
+                        <span>100% Verified Daily Practice</span>
                     </div>
                     <div class="trust-item">
                         <i class="fa-solid fa-circle-check"></i>
@@ -84,11 +161,11 @@ require_once __DIR__ . '/data/quizzes.php';
             <!-- Hero Interactive Mini-Quiz Teaser -->
             <div class="hero-visual">
                 <!-- Top National Prize Pill (Positioned completely at top of the block, moves on hover) -->
-                <div class="hero-badge-float hero-badge-top" title="Compete for Top National Prize: HP Laptop + ₹50,000 Scholarship">
-                    <span style="font-size: 1.35rem;">💻</span>
+                <div class="hero-badge-float hero-badge-top" title="Compete for Top National Prize: Sony PS5 with GTA 6 + ₹50,000 Scholarship">
+                    <span style="font-size: 1.35rem;">🎮</span>
                     <div>
                         <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Top National Prize</div>
-                        <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">HP Laptop + ₹50,000</div>
+                        <div style="color: var(--primary); font-weight: 700; font-size: 0.85rem;">Sony PS5 with GTA 6 + ₹50,000</div>
                     </div>
                 </div>
 
@@ -98,7 +175,7 @@ require_once __DIR__ . '/data/quizzes.php';
                             <i class="fa-solid fa-bolt"></i> Quick Brain Sprint
                         </span>
                         <span style="font-size: 0.8rem; font-weight: 700; color: #10B981; background: #ECFDF5; padding: 2px 8px; border-radius: 4px;">
-                             Practice
+                            Practice Quiz
                         </span>
                     </div>
 
@@ -178,13 +255,13 @@ require_once __DIR__ . '/data/quizzes.php';
                 <div class="section-eyebrow" style="background: rgba(255, 107, 0, 0.25); color: #FFA366; border-color: rgba(255, 107, 0, 0.4);">
                     <i class="fa-solid fa-fire text-orange"></i> Fresh Every 24 Hours
                 </div>
-                <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 12px;">Daily  Quizzes: Sharpen Your Mind Every Day!</h2>
+                <h2 style="color: #FFFFFF; font-size: 2rem; margin-bottom: 12px;">Daily Quizzes: Sharpen Your Mind Every Day!</h2>
                 <p style="color: #CBD5E1; font-size: 1.05rem; margin-bottom: 24px;">
-                    We upload brand new quiz questions every single morning across Science, Space, Indian History, Mental Math, and General Knowledge. Completely , no credit card or account needed!
+                    We upload brand new quiz questions every single morning across Science, Space, Indian History, Mental Math, and General Knowledge. Completely open access, no credit card or account needed!
                 </p>
                 <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
                     <a href="/daily-quiz" class="btn btn-primary btn-lg">
-                        <i class="fa-solid fa-bolt"></i> Play Today's  Quiz
+                        <i class="fa-solid fa-bolt"></i> Play Today's Quiz
                     </a>
                     <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-lg">
                         <i class="fa-brands fa-whatsapp"></i> Get Daily Quiz on WhatsApp

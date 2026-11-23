@@ -51,8 +51,12 @@
 </IfModule>
 
 # ----------------------------------------------------------------------
-# 4. Clean Pretty URLs (.htaccess)
+# 4. Clean Pretty URLs & Data Protection (.htaccess)
 # ----------------------------------------------------------------------
+<FilesMatch "^\.env|(\.(csv|json|log|env))$">
+    Require all denied
+</FilesMatch>
+
 Options -MultiViews
 RewriteEngine On
 

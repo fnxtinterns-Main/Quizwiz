@@ -10,6 +10,11 @@ $error_message = '';
 
 // Handle Enrollment Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'enroll_student') {
+    // Spam protection: honeypot & submission velocity check
+    $honeypot = trim($_POST['website_url'] ?? '');
+    $form_time = (int)($_POST['form_time'] ?? 0);
+    $is_bot = !empty($honeypot) || ($form_time > 0 && (time() - $form_time) < 2);
+
     $name = trim($_POST['student_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
@@ -18,13 +23,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $group = trim($_POST['competition_group'] ?? '');
 
     // Validation
-    if (empty($name) || empty($email) || empty($phone) || empty($school) || empty($class) || empty($group)) {
+    if ($is_bot) {
+        // Silently accept bot to prevent repeated retry attacks
+        $success_message = "Thank you, " . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . "! Your registration has been received.";
+    } elseif (empty($name) || empty($email) || empty($phone) || empty($school) || empty($class) || empty($group)) {
         $error_message = 'Please fill in all mandatory fields before submitting.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = 'Please provide a valid email address.';
     } else {
-        // Success handling
-        $success_message = "Thank you, {$name}! Your enrollment for {$group} has been successfully recorded. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$phone}.";
+        // Record lead securely
+        record_quizwiz_lead('championship_enrollment', [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'detail1' => $school,
+            'detail2' => "Class: {$class} | Group: {$group}"
+        ]);
+
+        $safe_name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+        $safe_group = htmlspecialchars($group, ENT_QUOTES, 'UTF-8');
+        $safe_phone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
+
+        // 1. Alert internal support team
+        $internalMsg = "<h3 style='color:#1B2559;'>New Student Championship Enrollment</h3>"
+            . "<p><strong>Student Name:</strong> {$safe_name}</p>"
+            . "<p><strong>Class:</strong> " . htmlspecialchars($class) . "</p>"
+            . "<p><strong>Competition Group:</strong> {$safe_group}</p>"
+            . "<p><strong>School / Institution:</strong> " . htmlspecialchars($school) . "</p>"
+            . "<p><strong>WhatsApp Phone:</strong> {$safe_phone}</p>"
+            . "<p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>"
+            . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/enroll on " . date('d M Y, h:i A') . "</p>";
+        send_quizwiz_mail(EMAIL_SUPPORT, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
+
+        // 2. Confirmation to student/parent from support@quizwiz.co.in
+        $studentMsg = "<h2 style='color:#1B2559;margin-top:0;'>Enrollment Confirmed, {$safe_name}!</h2>"
+            . "<p>Thank you for enrolling in the <strong>All India Quiz Championships</strong> representing <strong>" . htmlspecialchars($school) . "</strong> in <strong>{$safe_group}</strong>.</p>"
+            . "<p>Your registration has been successfully received by our academic desk.</p>"
+            . "<p>Our academic support team will dispatch the preliminary test dates, syllabus outline, and preparation materials directly to your WhatsApp number (<strong>{$safe_phone}</strong>) and email.</p>"
+            . "<div style='background:#EFF6FF;border-left:4px solid #3B82F6;padding:12px 16px;margin:20px 0;border-radius:4px;font-size:14px;'>"
+            . "<strong>Championship Support:</strong><br>If you need any syllabus clarification or schedule change, email <a href='mailto:support@quizwiz.co.in' style='color:#1D4ED8;font-weight:700;'>support@quizwiz.co.in</a> or message WhatsApp: +91 98015 06511."
+            . "</div>"
+            . "<p>Best wishes for your championship journey!</p>"
+            . "<p>Warm regards,<br><strong>Academic Support Desk</strong><br>QuizWiz India</p>";
+        send_quizwiz_mail($email, 'Enrollment Confirmed: All India Quiz Championships', $studentMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+
+        $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. A confirmation email has been sent to {$email}. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$safe_phone}.";
     }
 }
 
@@ -74,6 +117,8 @@ $preselected_group = isset($_GET['group']) ? $_GET['group'] : '';
 
                     <form action="/enroll" method="POST">
                         <input type="hidden" name="action" value="enroll_student">
+                        <input type="hidden" name="form_time" value="<?php echo time(); ?>">
+                        <input type="text" name="website_url" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
 
                         <div class="form-group">
                             <label class="form-label" for="student_name">Student Full Name <span class="text-orange">*</span></label>

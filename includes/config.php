@@ -149,6 +149,80 @@ function send_quizwiz_mail($to, $subject, $messageHtml, $fromEmail = EMAIL_SUPPO
     return @mail($to, $subject, $wrappedHtml, implode("\r\n", $fallbackHeaders));
 }
 
+function claim_quizwiz_form_submission($formKey, $token) {
+    if (!is_string($formKey) || !is_string($token)
+        || !preg_match('/\A[a-z0-9_-]+\z/i', $formKey)
+        || !preg_match('/\A[a-f0-9]{64}\z/i', $token)) {
+        return 'invalid';
+    }
+
+    $claimsPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+        . 'quizwiz-submission-claims-' . substr(hash('sha256', __DIR__), 0, 16) . '.json';
+    $claimsFile = @fopen($claimsPath, 'c+');
+    if ($claimsFile === false) {
+        error_log('QuizWiz could not open the form submission claim store.');
+        return 'error';
+    }
+
+    // Serialize claims so concurrent requests using the same token cannot both send mail.
+    if (!flock($claimsFile, LOCK_EX)) {
+        fclose($claimsFile);
+        error_log('QuizWiz could not lock the form submission claim store.');
+        return 'error';
+    }
+
+    rewind($claimsFile);
+    $contents = stream_get_contents($claimsFile);
+    if ($contents === false) {
+        flock($claimsFile, LOCK_UN);
+        fclose($claimsFile);
+        error_log('QuizWiz could not read the form submission claim store.');
+        return 'error';
+    }
+
+    $claims = [];
+    if (trim($contents) !== '') {
+        $decodedClaims = json_decode($contents, true);
+        if (!is_array($decodedClaims)) {
+            flock($claimsFile, LOCK_UN);
+            fclose($claimsFile);
+            error_log('QuizWiz form submission claim store contains invalid JSON.');
+            return 'error';
+        }
+        $claims = $decodedClaims;
+    }
+
+    $now = time();
+    foreach ($claims as $claim => $claimedAt) {
+        if (!is_numeric($claimedAt) || (int)$claimedAt < $now - 30 * 24 * 60 * 60) {
+            unset($claims[$claim]);
+        }
+    }
+
+    $claimKey = hash('sha256', $formKey . ':' . $token);
+    $result = isset($claims[$claimKey]) ? 'duplicate' : 'claimed';
+    if ($result === 'claimed') {
+        $claims[$claimKey] = $now;
+    }
+
+    $encodedClaims = json_encode($claims);
+    $writeSucceeded = is_string($encodedClaims)
+        && rewind($claimsFile)
+        && ftruncate($claimsFile, 0)
+        && fwrite($claimsFile, $encodedClaims) === strlen($encodedClaims)
+        && fflush($claimsFile);
+
+    flock($claimsFile, LOCK_UN);
+    fclose($claimsFile);
+
+    if (!$writeSucceeded) {
+        error_log('QuizWiz could not save the form submission claim.');
+        return 'error';
+    }
+
+    return $result;
+}
+
 // Secure lightweight lead recorder (guarantees student registrations & inquiries are never lost)
 function record_quizwiz_lead($type, array $data) {
     $dir = __DIR__ . '/../data';

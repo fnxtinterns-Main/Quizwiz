@@ -36,12 +36,18 @@ require_once __DIR__ . '/data/quizzes.php';
     <div class="container" style="max-width: 800px;">
         <div class="form-card" style="box-shadow: var(--shadow-lg); border: 1.5px solid rgba(27, 37, 89, 0.12); padding: 32px;">
             <!-- Division Selector Tabs -->
-            <div style="display: flex; gap: 12px; margin-bottom: 28px; border-bottom: 1.5px solid var(--border-light); padding-bottom: 16px;">
-                <button id="groupABtn" onclick="switchDailyGroup('a')" class="btn btn-primary" style="flex: 1;">
-                    <i class="fa-solid fa-shapes"></i> Group A (Class 1–6)
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 28px; border-bottom: 1.5px solid var(--border-light); padding-bottom: 16px;">
+                <button id="groupABtn" onclick="switchDailyGroup('a')" class="btn btn-primary" aria-pressed="true" style="width: 100%; min-width: 0; height: 76px; min-height: 76px; padding: 6px; display: flex; flex-direction: column; gap: 3px; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(0.65rem, 1.5vw, 0.875rem); line-height: 1.15; box-sizing: border-box;">
+                    <i class="fa-solid fa-shapes" aria-hidden="true"></i>
+                    <span>Group A (Class 1–6)</span>
                 </button>
-                <button id="groupBBtn" onclick="switchDailyGroup('b')" class="btn btn-outline-navy" style="flex: 1;">
-                    <i class="fa-solid fa-graduation-cap"></i> Group B (Class 7–12)
+                <button id="groupBBtn" onclick="switchDailyGroup('b')" class="btn btn-outline-navy" aria-pressed="false" style="width: 100%; min-width: 0; height: 76px; min-height: 76px; padding: 6px; display: flex; flex-direction: column; gap: 3px; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(0.65rem, 1.5vw, 0.875rem); line-height: 1.15; box-sizing: border-box;">
+                    <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                    <span>Group B (Class 7–12)</span>
+                </button>
+                <button id="groupCBtn" onclick="switchDailyGroup('c')" class="btn btn-outline-navy" aria-pressed="false" title="Graduates and Aspirants Track: UPSC, PSC, SSC, and Defence" style="width: 100%; min-width: 0; height: 76px; min-height: 76px; padding: 6px; display: flex; flex-direction: column; gap: 3px; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(0.65rem, 1.5vw, 0.875rem); line-height: 1.15; box-sizing: border-box;">
+                    <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
+                    <span>Group C (Graduates &amp; Aspirants)</span>
                 </button>
             </div>
 
@@ -137,22 +143,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    const groupCQuestions = [
+        {
+            q: "Which economic term describes a sustained rise in the general price level of goods and services?",
+            options: ["Deflation", "Inflation", "Recession", "Depreciation"],
+            correct: 1,
+            exp: "Inflation is a sustained increase in the general price level of goods and services."
+        },
+        {
+            q: "Which instrument is used to measure atmospheric pressure?",
+            options: ["Thermometer", "Hygrometer", "Barometer", "Anemometer"],
+            correct: 2,
+            exp: "A barometer measures atmospheric pressure."
+        },
+        {
+            q: "Which data structure follows the First In, First Out (FIFO) principle?",
+            options: ["Queue", "Stack", "Tree", "Graph"],
+            correct: 0,
+            exp: "A queue processes items in the order they were added: first in, first out."
+        },
+        {
+            q: "What does the letter 'D' stand for in Gross Domestic Product (GDP)?",
+            options: ["Development", "Domestic", "Demand", "Distribution"],
+            correct: 1,
+            exp: "In GDP, 'Domestic' refers to production within a country's borders."
+        }
+    ];
+
+    const questionSets = {
+        a: groupAQuestions,
+        b: groupBQuestions,
+        c: groupCQuestions
+    };
+
     window.switchDailyGroup = function(grp) {
+        if (!Object.prototype.hasOwnProperty.call(questionSets, grp)) {
+            throw new Error('Unsupported daily quiz group: ' + grp);
+        }
+
         currentGroup = grp;
         currentIndex = 0;
         score = 0;
-        const btnA = document.getElementById('groupABtn');
-        const btnB = document.getElementById('groupBBtn');
+        const groupButtons = {
+            a: document.getElementById('groupABtn'),
+            b: document.getElementById('groupBBtn'),
+            c: document.getElementById('groupCBtn')
+        };
         const badge = document.getElementById('dailyCategoryBadge');
+        const groupLabels = {
+            a: 'Junior Division (Class 1–6)',
+            b: 'Senior Division (Class 7–12)',
+            c: 'Graduates & Aspirants Track (UPSC, PSC, SSC & Defence)'
+        };
 
-        if (grp === 'a') {
-            btnA.className = 'btn btn-primary';
-            btnB.className = 'btn btn-outline-navy';
-            badge.textContent = 'Junior Division (Class 1–6)';
-        } else {
-            btnB.className = 'btn btn-primary';
-            btnA.className = 'btn btn-outline-navy';
-            badge.textContent = 'Senior Division (Class 7–12)';
+        Object.keys(groupButtons).forEach(key => {
+            const selected = key === grp;
+            groupButtons[key].className = selected ? 'btn btn-primary' : 'btn btn-outline-navy';
+            groupButtons[key].setAttribute('aria-pressed', selected ? 'true' : 'false');
+        });
+        if (badge) {
+            badge.textContent = groupLabels[grp];
         }
         loadQuestion();
     };
@@ -184,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadQuestion() {
         startTimer();
         const area = document.getElementById('dailyQuestionArea');
-        const dataset = (currentGroup === 'a') ? groupAQuestions : groupBQuestions;
+        const dataset = questionSets[currentGroup];
 
         if (currentIndex >= dataset.length) {
             clearInterval(timerInterval);

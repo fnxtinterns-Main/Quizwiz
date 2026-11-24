@@ -6,6 +6,7 @@ $page_desc = 'Contact QuizWiz for championship inquiries, student support, and s
 require_once __DIR__ . '/includes/header.php';
 
 $feedback = '';
+$form_error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_inquiry') {
     // Spam protection: honeypot & submission velocity check
     $honeypot = trim($_POST['website_url'] ?? '');
@@ -20,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     if ($is_bot) {
         $feedback = "Thank you, {$safe_sender}. Your message has been received!";
+    } elseif (!filter_var($sender_email, FILTER_VALIDATE_EMAIL)) {
+        $form_error = 'Please enter a valid email address so we can respond to your message.';
     } else {
         record_quizwiz_lead('general_inquiry', [
             'name' => $sender_name,
@@ -48,10 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "</div>"
                 . "<p>If you need urgent assistance, you can also reach us directly on WhatsApp at +91 98015 06511.</p>"
                 . "<p>Warm regards,<br><strong>QuizWiz Support Team</strong><br><a href='mailto:support@quizwiz.co.in'>support@quizwiz.co.in</a></p>";
-            send_quizwiz_mail($sender_email, 'We have received your message | QuizWiz Support', $replyMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+            $confirmation_sent = send_quizwiz_mail($sender_email, 'We have received your message | QuizWiz Support', $replyMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+        } else {
+            $confirmation_sent = false;
         }
 
-        $feedback = "Thank you, {$safe_sender}. Your message has been received and a confirmation has been sent to your email. Our support coordinator will get in touch with you shortly!";
+        $feedback = "Thank you, {$safe_sender}. Your message has been received. ";
+        $feedback .= $confirmation_sent
+            ? "A confirmation has been sent to {$sender_email}. "
+            : "We could not send a confirmation to {$sender_email}; our team will still respond to your inquiry. ";
+        $feedback .= "Our support coordinator will get in touch with you shortly!";
     }
 }
 ?>
@@ -145,6 +154,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                     <?php endif; ?>
 
+                    <?php if (!empty($form_error)): ?>
+                        <div style="background: #FEF2F2; border: 1.5px solid #EF4444; color: #991B1B; padding: 16px; border-radius: var(--radius-md); margin-bottom: 20px;">
+                            <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.2rem; margin-right: 8px;"></i>
+                            <?php echo htmlspecialchars($form_error, ENT_QUOTES, 'UTF-8'); ?>
+                        </div>
+                    <?php endif; ?>
+
                     <form action="/contact" method="POST">
                         <input type="hidden" name="action" value="send_inquiry">
                         <input type="hidden" name="form_time" value="<?php echo time(); ?>">
@@ -157,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                         <div class="form-group">
                             <label class="form-label" for="c_email">Email Address <span class="text-orange">*</span></label>
-                            <input type="email" id="c_email" name="email" class="form-control" placeholder="yourname@example.com" required>
+                            <input type="email" id="c_email" name="email" class="form-control" placeholder="yourname@example.com" autocomplete="email" required>
                         </div>
 
                         <div class="form-group">

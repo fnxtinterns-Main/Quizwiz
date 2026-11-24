@@ -21,30 +21,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $raw_name = trim($_POST['full_name'] ?? '');
     $raw_school = trim($_POST['school_name'] ?? '');
     $raw_phone = trim($_POST['whatsapp_num'] ?? '');
+    if ($raw_phone === '') {
+        $raw_phone = trim($_POST['phone'] ?? '');
+    }
     $raw_email = trim($_POST['email'] ?? '');
     $raw_class = trim($_POST['student_class'] ?? '');
+    $raw_paid_program = trim($_POST['paid_program'] ?? '');
+    $raw_enrollment_id = trim($_POST['enrollment_id'] ?? '');
+    $eligibility_confirmed = isset($_POST['eligibility_confirmed']) && $_POST['eligibility_confirmed'] === '1';
 
     if ($is_bot) {
         $applicant_name = htmlspecialchars($raw_name, ENT_QUOTES, 'UTF-8');
         $school_name = htmlspecialchars($raw_school, ENT_QUOTES, 'UTF-8');
         $submitted = true;
     } else {
-        $claim_status = claim_quizwiz_form_submission('ambassador', $_POST['submission_token'] ?? '');
-        if ($claim_status === 'duplicate') {
+        if (!filter_var($raw_email, FILTER_VALIDATE_EMAIL)) {
+            $submission_error = 'Please enter a valid email address so we can send your application acknowledgment.';
+        } elseif (!$eligibility_confirmed || $raw_paid_program === '' || $raw_enrollment_id === '') {
+            $submission_error = 'Ambassador applications require an active paid-program enrollment. Please select your paid program and enter your enrollment or registration ID.';
+        } else {
+            $claim_status = claim_quizwiz_form_submission('ambassador', $_POST['submission_token'] ?? '');
+            if ($claim_status === 'duplicate') {
             $applicant_name = htmlspecialchars($raw_name, ENT_QUOTES, 'UTF-8');
             $school_name = htmlspecialchars($raw_school, ENT_QUOTES, 'UTF-8');
             $duplicate_submission = true;
             $submitted = true;
-        } elseif ($claim_status !== 'claimed') {
-            $submission_error = 'We could not verify this submission. Please refresh the page and submit the form again.';
-        } else {
+            } elseif ($claim_status !== 'claimed') {
+                $submission_error = 'We could not verify this submission. Please refresh the page and submit the form again.';
+            } else {
             // 1. Permanently record lead in local secure registry
             record_quizwiz_lead('campus_ambassador', [
                 'name' => $raw_name,
                 'email' => $raw_email,
                 'phone' => $raw_phone,
                 'detail1' => $raw_school,
-                'detail2' => "Class: {$raw_class}"
+                'detail2' => "Class: {$raw_class}; Paid Program: {$raw_paid_program}; Enrollment ID: {$raw_enrollment_id}"
             ]);
 
             // 2. Dispatch internal alert to connect@quizwiz.co.in
@@ -54,10 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>Class / Grade:</strong> " . htmlspecialchars($raw_class) . "</p>"
                 . "<p><strong>WhatsApp Mobile:</strong> " . htmlspecialchars($raw_phone) . "</p>"
                 . "<p><strong>Email Address:</strong> " . htmlspecialchars($raw_email) . "</p>"
+                . "<p><strong>Paid Program:</strong> " . htmlspecialchars($raw_paid_program) . "</p>"
+                . "<p><strong>Enrollment / Registration ID:</strong> " . htmlspecialchars($raw_enrollment_id) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/ambassador on " . date('d M Y, h:i A') . "</p>";
             send_quizwiz_mail(EMAIL_CONNECT, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
 
             // 3. Generic auto-reply confirmation to applicant from connect@quizwiz.co.in
+            $confirmation_sent = false;
             if (!empty($raw_email) && filter_var($raw_email, FILTER_VALIDATE_EMAIL)) {
                 $autoReplyMsg = "<h2 style='color:#1B2559;margin-top:0;'>We Received Your Application, " . htmlspecialchars($raw_name) . "!</h2>"
                     . "<p>Thank you for applying to become an official <strong>QuizWiz Campus Ambassador &amp; School Quiz Master</strong> representing <strong>" . htmlspecialchars($raw_school) . "</strong>.</p>"
@@ -68,12 +82,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     . "</div>"
                     . "<p>Keep inspiring your campus!</p>"
                     . "<p>Warm regards,<br><strong>Campus Ambassador Team</strong><br>QuizWiz India<br><a href='mailto:connect@quizwiz.co.in' style='color:#1B2559;'>connect@quizwiz.co.in</a></p>";
-                send_quizwiz_mail($raw_email, 'We have received your QuizWiz Campus Ambassador application!', $autoReplyMsg, EMAIL_CONNECT, 'QuizWiz Ambassador Team');
+                $confirmation_sent = send_quizwiz_mail($raw_email, 'We have received your QuizWiz Campus Ambassador application!', $autoReplyMsg, EMAIL_CONNECT, 'QuizWiz Ambassador Team');
             }
 
             $applicant_name = htmlspecialchars($raw_name, ENT_QUOTES, 'UTF-8');
             $school_name = htmlspecialchars($raw_school, ENT_QUOTES, 'UTF-8');
+            if (!$confirmation_sent) {
+                $submission_error = 'Your application was received, but we could not send the acknowledgment email. Please contact ' . EMAIL_CONNECT . ' to confirm.';
+            }
             $submitted = true;
+            }
         }
     }
 }
@@ -91,6 +109,9 @@ $submission_token = bin2hex(random_bytes(32));
         </h1>
         <p style="color: #CBD5E1; max-width: 760px; margin: 0 auto 32px; font-size: 1.15rem; line-height: 1.6;">
             Lead India's most exciting student knowledge movement right inside your campus. Inspire your classmates, run electrifying trivia battles, earn an official <strong>Leadership Certificate &amp; LOR</strong>, and unlock exclusive rewards.
+        </p>
+        <p style="color: #FDE68A; max-width: 760px; margin: -16px auto 32px; font-size: 0.98rem; font-weight: 700;">
+            Eligibility: Applicants must already be enrolled in one of QuizWiz's paid programs.
         </p>
 
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
@@ -234,7 +255,13 @@ $submission_token = bin2hex(random_bytes(32));
                         <?php if ($duplicate_submission): ?>
                             Your application has already been received. No duplicate emails were sent.
                         <?php else: ?>
-                        Thank you for applying to represent <strong><?php echo $school_name; ?></strong> as a QuizWiz Campus Ambassador. A confirmation email has been sent to your inbox from <strong>connect@quizwiz.co.in</strong>. Our National Coordinator will review your details and reach out on WhatsApp within 24–48 hours!
+                        Thank you for applying to represent <strong><?php echo $school_name; ?></strong> as a QuizWiz Campus Ambassador.
+                        <?php if (isset($confirmation_sent) && $confirmation_sent): ?>
+                            An acknowledgment has been sent to your email address.
+                        <?php elseif (isset($confirmation_sent)): ?>
+                            We could not send an acknowledgment email. Please contact <strong><?php echo htmlspecialchars(EMAIL_CONNECT, ENT_QUOTES, 'UTF-8'); ?></strong> to confirm your application.
+                        <?php endif; ?>
+                        Our National Coordinator will review your details and reach out on WhatsApp within 24–48 hours!
                         <?php endif; ?>
                     </p>
 
@@ -261,7 +288,7 @@ $submission_token = bin2hex(random_bytes(32));
                         Campus Ambassador Application
                     </h2>
                     <p style="color: var(--text-secondary); max-width: 560px; margin: 0 auto;">
-                        Take 2 minutes to tell us about yourself. No registration fee required.
+                        Take 2 minutes to tell us about yourself. Your paid-program enrollment will be verified before approval.
                     </p>
                 </div>
 
@@ -316,8 +343,35 @@ $submission_token = bin2hex(random_bytes(32));
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="email">Email Address <span class="text-orange">*</span></label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" required>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" autocomplete="email" required>
                         </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-group">
+                            <label class="form-label" for="paid_program">Paid Program Enrolled In <span class="text-orange">*</span></label>
+                            <select id="paid_program" name="paid_program" class="form-control" required>
+                                <option value="">Select your paid program</option>
+                                <option value="All India Quiz Championship - Group A">All India Quiz Championship - Group A</option>
+                                <option value="All India Quiz Championship - Group B">All India Quiz Championship - Group B</option>
+                                <option value="All India Quiz Championship - Group C">All India Quiz Championship - Group C</option>
+                                <option value="Another QuizWiz Paid Program">Another QuizWiz Paid Program</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="enrollment_id">Enrollment / Registration ID <span class="text-orange">*</span></label>
+                            <input type="text" id="enrollment_id" name="enrollment_id" class="form-control" placeholder="Enter your QuizWiz enrollment ID" required>
+                            <span class="form-text">This will be matched with our enrollment records.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="background: #FFF7ED; border: 1.5px solid #FDBA74; padding: 14px 16px; border-radius: var(--radius-md); margin-top: 14px;">
+                        <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; line-height: 1.5;">
+                            <input type="checkbox" name="eligibility_confirmed" value="1" required style="margin-top: 4px; accent-color: var(--secondary);">
+                            <span>
+                                <strong>Paid Enrollment Requirement:</strong> I confirm that I am already enrolled in a paid QuizWiz program and understand that ambassador eligibility is subject to enrollment verification.
+                            </span>
+                        </label>
                     </div>
 
                     <div class="form-group">
@@ -370,10 +424,10 @@ $submission_token = bin2hex(random_bytes(32));
 
             <div class="form-card">
                 <h4 style="color: var(--primary); font-size: 1.05rem; margin-bottom: 6px;">
-                    Is there any application fee or registration charge?
+                    Who is eligible to apply for the Ambassador Program?
                 </h4>
                 <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0; line-height: 1.6;">
-                    No. Applying and serving as a QuizWiz Campus Ambassador is <strong>100% </strong>. You will never be asked for any payment.
+                    Only students currently enrolled in a paid QuizWiz program are eligible. You must provide your paid-program name and enrollment or registration ID for verification before approval.
                 </p>
             </div>
 

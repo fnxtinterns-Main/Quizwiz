@@ -7,6 +7,8 @@ require_once __DIR__ . '/includes/header.php';
 
 $success_message = '';
 $error_message = '';
+$email = '';
+$email_confirmation = '';
 
 // Handle Enrollment Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'enroll_student') {
@@ -17,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     $name = trim($_POST['student_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    $email_confirmation = trim($_POST['email_confirmation'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $school = trim($_POST['school'] ?? '');
     $class = trim($_POST['student_class'] ?? '');
@@ -30,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $error_message = 'Please fill in all mandatory fields before submitting.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = 'Please provide a valid email address.';
+    } elseif (strcasecmp($email, $email_confirmation) !== 0) {
+        $error_message = 'The email addresses do not match. Please confirm the email address you want to use for enrollment.';
     } else {
         $claim_status = claim_quizwiz_form_submission('enrollment', $_POST['submission_token'] ?? '');
         if ($claim_status === 'duplicate') {
@@ -62,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             send_quizwiz_mail(EMAIL_SUPPORT, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
 
             // 2. Confirmation to student/parent from support@quizwiz.co.in
-            $studentMsg = "<h2 style='color:#1B2559;margin-top:0;'>Enrollment Confirmed, {$safe_name}!</h2>"
+            $studentMsg = "<h2 style='color:#1B2559;margin-top:0;'>Enrollment Received, {$safe_name}!</h2>"
                 . "<p>Thank you for enrolling in the <strong>All India Quiz Championships</strong> representing <strong>" . htmlspecialchars($school) . "</strong> in <strong>{$safe_group}</strong>.</p>"
                 . "<p>Your registration has been successfully received by our academic desk.</p>"
                 . "<p>Our academic support team will dispatch the preliminary test dates, syllabus outline, and preparation materials directly to your WhatsApp number (<strong>{$safe_phone}</strong>) and email.</p>"
@@ -71,9 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "</div>"
                 . "<p>Best wishes for your championship journey!</p>"
                 . "<p>Warm regards,<br><strong>Academic Support Desk</strong><br>QuizWiz India</p>";
-            send_quizwiz_mail($email, 'Enrollment Confirmed: All India Quiz Championships', $studentMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+            $confirmation_sent = send_quizwiz_mail($email, 'We received your enrollment | All India Quiz Championships', $studentMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
 
-            $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. A confirmation email has been sent to {$email}. Our academic team will WhatsApp the preparation syllabus and exam schedule to {$safe_phone}.";
+            $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. ";
+            $success_message .= $confirmation_sent
+                ? "A confirmation email has been sent to {$email}. "
+                : "We could not send a confirmation email to {$email}. Please contact " . EMAIL_SUPPORT . " to confirm your enrollment. ";
+            $success_message .= "Our academic team will WhatsApp the preparation syllabus and exam schedule to {$safe_phone}.";
         }
     }
 }
@@ -137,7 +146,12 @@ $submission_token = bin2hex(random_bytes(32));
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                             <div class="form-group">
                                 <label class="form-label" for="email">Parent / Student Email <span class="text-orange">*</span></label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="parent@example.com" required>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="parent@example.com" autocomplete="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="email_confirmation">Confirm Email Address <span class="text-orange">*</span></label>
+                                <input type="email" id="email_confirmation" name="email_confirmation" class="form-control" placeholder="Re-enter the same email address" autocomplete="off" value="<?php echo htmlspecialchars($email_confirmation, ENT_QUOTES, 'UTF-8'); ?>" required>
+                                <span class="form-text">Your enrollment acknowledgment will be sent to this address.</span>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="phone">WhatsApp Mobile No. <span class="text-orange">*</span></label>

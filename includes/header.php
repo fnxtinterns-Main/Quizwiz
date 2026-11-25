@@ -50,7 +50,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     
-    <link rel="preload" href="/assets/css/style.css?v=2.8" as="style">
+    <link rel="preload" href="/assets/css/style.css?v=2.9" as="style">
     <link rel="preload" href="/assets/images/logo.png" as="image">
 
     <!-- Fonts -->
@@ -61,7 +61,7 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- QuizWiz Modern Design System -->
-    <link rel="stylesheet" href="/assets/css/style.css?v=2.8">
+    <link rel="stylesheet" href="/assets/css/style.css?v=2.9">
 </head>
 <body>
 

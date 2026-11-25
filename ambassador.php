@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>Paid Program:</strong> " . htmlspecialchars($raw_paid_program) . "</p>"
                 . "<p><strong>Enrollment / Registration ID:</strong> " . htmlspecialchars($raw_enrollment_id) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/ambassador on " . date('d M Y, h:i A') . "</p>";
-            $admin_notification_sent = send_quizwiz_mail(EMAIL_ADMIN, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
+            $admin_notification_sent = send_quizwiz_mail(EMAIL_SUPPORT, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
             if (!$admin_notification_sent) {
-                error_log("QuizWiz: Could not send ambassador notification to admin at " . EMAIL_ADMIN);
+                error_log("QuizWiz: Could not send ambassador notification to admin at " . EMAIL_SUPPORT);
             }
 
             // 3. Generic auto-reply confirmation to applicant from connect@quizwiz.co.in

@@ -64,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>WhatsApp Phone:</strong> {$safe_phone}</p>"
                 . "<p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/enroll on " . date('d M Y, h:i A') . "</p>";
-            $admin_notification_sent = send_quizwiz_mail(EMAIL_ADMIN, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
+            $admin_notification_sent = send_quizwiz_mail(EMAIL_SUPPORT, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
             if (!$admin_notification_sent) {
-                error_log("QuizWiz: Could not send enrollment notification to admin at " . EMAIL_ADMIN);
+                error_log("QuizWiz: Could not send enrollment notification to admin at " . EMAIL_SUPPORT);
             }
 
             // 2. Confirmation to student/parent from support@quizwiz.co.in

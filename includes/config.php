@@ -36,7 +36,6 @@ define('WHATSAPP_URL', 'https://wa.me/919801506511?text=' . urlencode('Hello Qui
 define('EMAIL_CONNECT', getenv('SMTP_USER_CONNECT') ?: ($_ENV['SMTP_USER_CONNECT'] ?? 'connect@quizwiz.co.in'));
 define('EMAIL_SUPPORT', getenv('SMTP_USER_SUPPORT') ?: ($_ENV['SMTP_USER_SUPPORT'] ?? 'support@quizwiz.co.in'));
 define('EMAIL_CONTACT', EMAIL_SUPPORT);
-define('EMAIL_ADMIN', getenv('ADMIN_EMAIL') ?: ($_ENV['ADMIN_EMAIL'] ?? EMAIL_SUPPORT));
 
 // Hostinger Authenticated SMTP Settings (Loaded securely from .env)
 define('SMTP_HOST', getenv('SMTP_HOST') ?: ($_ENV['SMTP_HOST'] ?? 'smtp.hostinger.com'));

@@ -23,7 +23,7 @@ if (file_exists($envFile)) {
 // Site identity
 define('SITE_NAME', 'QuizWiz');
 define('SITE_TAGLINE', 'All India Online Quiz Championship for School Students');
-define('SITE_ORIGIN', 'https://quizwiz.co.in');
+const SITE_ORIGIN = 'https://quizwiz.co.in';
 define('SITE_URL', '/');
 
 // Contact Info (Official)

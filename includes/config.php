@@ -35,6 +35,7 @@ define('WHATSAPP_URL', 'https://wa.me/919801506511?text=' . urlencode('Hello Qui
 define('EMAIL_CONNECT', getenv('SMTP_USER_CONNECT') ?: ($_ENV['SMTP_USER_CONNECT'] ?? 'connect@quizwiz.co.in'));
 define('EMAIL_SUPPORT', getenv('SMTP_USER_SUPPORT') ?: ($_ENV['SMTP_USER_SUPPORT'] ?? 'support@quizwiz.co.in'));
 define('EMAIL_CONTACT', EMAIL_SUPPORT);
+define('EMAIL_ADMIN', getenv('ADMIN_EMAIL') ?: ($_ENV['ADMIN_EMAIL'] ?? EMAIL_SUPPORT));
 
 // Hostinger Authenticated SMTP Settings (Loaded securely from .env)
 define('SMTP_HOST', getenv('SMTP_HOST') ?: ($_ENV['SMTP_HOST'] ?? 'smtp.hostinger.com'));
@@ -50,19 +51,19 @@ define('ADMIN_EXPORT_KEY', getenv('ADMIN_EXPORT_KEY') ?: ($_ENV['ADMIN_EXPORT_KE
 
 // Social Links
 $social_links = [
-    'facebook' => 'https://www.facebook.com/Quizwiz24/',
-    'instagram' => 'https://www.instagram.com/quizwiz_24/',
+    'facebook' => 'https://www.facebook.com/quizwiz.in/',
+    'instagram' => 'https://www.instagram.com/quizw.iz?dmpr=MTh0aDdkdXU5bzIwMA%3D%3D',
     'linkedin' => 'https://www.linkedin.com/company/quiz-wiz/',
     'whatsapp' => WHATSAPP_URL
 ];
 
 // Helper to determine active navigation item
-function is_active_page($page_name, $current_page) {
+function is_active_page(string $page_name, string $current_page): string {
     return ($page_name === $current_page) ? 'active' : '';
 }
 
 // Authenticated SMTP mail dispatcher via Hostinger (with native fallback)
-function send_quizwiz_mail($to, $subject, $messageHtml, $fromEmail = EMAIL_SUPPORT, $fromName = 'QuizWiz') {
+function send_quizwiz_mail(string $to, string $subject, string $messageHtml, string $fromEmail = EMAIL_SUPPORT, string $fromName = 'QuizWiz'): bool {
     if (empty($to) || !filter_var($to, FILTER_VALIDATE_EMAIL)) {
         return false;
     }
@@ -149,7 +150,7 @@ function send_quizwiz_mail($to, $subject, $messageHtml, $fromEmail = EMAIL_SUPPO
     return @mail($to, $subject, $wrappedHtml, implode("\r\n", $fallbackHeaders));
 }
 
-function claim_quizwiz_form_submission($formKey, $token) {
+function claim_quizwiz_form_submission(mixed $formKey, mixed $token): string {
     if (!is_string($formKey) || !is_string($token)
         || !preg_match('/\A[a-z0-9_-]+\z/i', $formKey)
         || !preg_match('/\A[a-f0-9]{64}\z/i', $token)) {
@@ -224,7 +225,7 @@ function claim_quizwiz_form_submission($formKey, $token) {
 }
 
 // Secure lightweight lead recorder (guarantees student registrations & inquiries are never lost)
-function record_quizwiz_lead($type, array $data) {
+function record_quizwiz_lead(string $type, array $data): void {
     $dir = __DIR__ . '/../data';
     if (!is_dir($dir)) {
         @mkdir($dir, 0755, true);

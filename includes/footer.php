@@ -125,6 +125,25 @@ require_once __DIR__ . '/config.php';
                         <a href="/terms" style="color: #94A3B8; text-decoration: underline;">Terms &amp; Conditions</a> &bull; 
                         <a href="/refund-policy" style="color: #94A3B8; text-decoration: underline;">Refund Policy</a>
                     </div>
+                    <div class="footer-partner-credit">
+                        <span class="footer-partner-label">Powered by</span>
+                        <div class="footer-partner-logos">
+                            <div class="footer-partner-badge">
+                                <img src="/assets/images/agentsofchange-logo.webp" alt="" loading="lazy" decoding="async">
+                                <span>Agents of Change</span>
+                            </div>
+                            <span class="footer-partner-and" aria-hidden="true">&amp;</span>
+                            <a class="footer-partner-badge footer-partner-badge--wide" href="https://futurenxt.online" target="_blank" rel="noopener noreferrer">
+                                <img src="/assets/images/Futurenxt.jpeg" alt="" loading="lazy" decoding="async">
+                                <span>FutureNXT</span>
+                            </a>
+                        </div>
+                        <p class="footer-design-credit">Design by</p>
+                        <a class="footer-partner-badge footer-partner-badge--wide" href="https://technxtai.com" target="_blank" rel="noopener noreferrer" aria-label="TechnxtAI website">
+                            <img src="/assets/images/TechnxtAI.jpeg" alt="TechnxtAI" loading="lazy" decoding="async">
+                            <span>TechnxtAI</span>
+                        </a>
+                    </div>
                 </div>
                 <div class="footer-social-icons">
                     <a href="<?php echo $social_links['facebook']; ?>" target="_blank" rel="noopener noreferrer" class="social-circle-btn" style="background-color: #1877F2;" aria-label="Facebook">

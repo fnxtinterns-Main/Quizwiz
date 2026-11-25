@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $safe_group = htmlspecialchars($group, ENT_QUOTES, 'UTF-8');
             $safe_phone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
 
-            // 1. Alert internal support team
+            // 1. Alert the administrator
             $internalMsg = "<h3 style='color:#1B2559;'>New Student Championship Enrollment</h3>"
                 . "<p><strong>Student Name:</strong> {$safe_name}</p>"
                 . "<p><strong>Class:</strong> " . htmlspecialchars($class) . "</p>"
@@ -64,7 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>WhatsApp Phone:</strong> {$safe_phone}</p>"
                 . "<p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/enroll on " . date('d M Y, h:i A') . "</p>";
-            send_quizwiz_mail(EMAIL_SUPPORT, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
+            $admin_notification_sent = send_quizwiz_mail(EMAIL_ADMIN, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
+            if (!$admin_notification_sent) {
+                error_log("QuizWiz: Could not send enrollment notification to admin at " . EMAIL_ADMIN);
+            }
 
             // 2. Confirmation to student/parent from support@quizwiz.co.in
             $studentMsg = "<h2 style='color:#1B2559;margin-top:0;'>Enrollment Received, {$safe_name}!</h2>"

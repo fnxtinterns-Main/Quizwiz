@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 'detail2' => "Class: {$raw_class}; Paid Program: {$raw_paid_program}; Enrollment ID: {$raw_enrollment_id}"
             ]);
 
-            // 2. Dispatch internal alert to connect@quizwiz.co.in
+            // 2. Dispatch internal alert to the configured administrator
             $internalMsg = "<h3 style='color:#1B2559;'>New Campus Ambassador Application</h3>"
                 . "<p><strong>Applicant Name:</strong> " . htmlspecialchars($raw_name) . "</p>"
                 . "<p><strong>School / Institution:</strong> " . htmlspecialchars($raw_school) . "</p>"
@@ -68,7 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>Paid Program:</strong> " . htmlspecialchars($raw_paid_program) . "</p>"
                 . "<p><strong>Enrollment / Registration ID:</strong> " . htmlspecialchars($raw_enrollment_id) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/ambassador on " . date('d M Y, h:i A') . "</p>";
-            send_quizwiz_mail(EMAIL_CONNECT, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
+            $admin_notification_sent = send_quizwiz_mail(EMAIL_ADMIN, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
+            if (!$admin_notification_sent) {
+                error_log("QuizWiz: Could not send ambassador notification to admin at " . EMAIL_ADMIN);
+            }
 
             // 3. Generic auto-reply confirmation to applicant from connect@quizwiz.co.in
             $confirmation_sent = false;

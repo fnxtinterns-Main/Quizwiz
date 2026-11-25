@@ -28,6 +28,9 @@
 QUIZWIZ/
 ├── .htaccess                 # Apache / LiteSpeed clean URL rewrite rules (for Hostinger)
 ├── router.php                # Clean URL router for local PHP development server
+├── robots.txt                # Crawler access rules and sitemap location
+├── sitemap.xml               # Canonical public pages for search engines
+├── llms.txt                   # Concise site guide for AI crawlers
 ├── index.php                 # Homepage (Hero, Live Mini-Quiz, Stats, Prizes, Leaderboard, Testimonials)
 ├── about.php                 # About Us & Championship Divisions breakdown
 ├── quizzes.php               # Quiz categories with interactive difficulty filter tabs
@@ -39,7 +42,7 @@ QUIZWIZ/
 ├── terms.php                 # Official championship competition rules & fair-play terms
 ├── includes/
 │   ├── config.php            # Site constants (phone numbers, WhatsApp URL, site name)
-│   ├── header.php            # SEO tags, sticky navbar, mobile drawer
+│   ├── header.php            # SEO metadata, canonicals, structured data, sticky navbar
 │   └── footer.php            # 4-column footer, floating WhatsApp button, interactive quiz modal
 ├── data/
 │   └── quizzes.php           # Curated question banks, category descriptors, leaderboard data

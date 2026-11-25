@@ -1,0 +1,24 @@
+# QuizWiz
+
+> QuizWiz offers online practice quizzes and quiz championship programs for students in India.
+
+## About QuizWiz
+
+- [About QuizWiz](https://quizwiz.co.in/about): Mission, competition divisions, and program information.
+- [Online quizzes](https://quizwiz.co.in/quizzes): Quiz categories and practice activities.
+- [Daily quiz](https://quizwiz.co.in/daily-quiz): Daily quiz information.
+- [Brain puzzles](https://quizwiz.co.in/puzzles): Logic and reasoning puzzles.
+- [Prizes and rewards](https://quizwiz.co.in/rewards): Published competition prizes and rewards.
+
+## Participation
+
+- [Student enrollment](https://quizwiz.co.in/enroll): Championship enrollment details.
+- [Campus ambassador program](https://quizwiz.co.in/ambassador): Ambassador program details and application.
+- [Contact QuizWiz](https://quizwiz.co.in/contact): Support and contact information.
+
+## Policies
+
+- [Privacy policy](https://quizwiz.co.in/privacy-policy)
+- [DPDP compliance](https://quizwiz.co.in/dpdp)
+- [Terms and conditions](https://quizwiz.co.in/terms)
+- [Refund policy](https://quizwiz.co.in/refund-policy)

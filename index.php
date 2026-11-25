@@ -1,7 +1,7 @@
 <?php
 $current_page = 'home';
 $page_title = 'Online Quiz Competition | All India Championships';
-$page_desc = 'QuizWiz conducts premier online quiz championships and daily quizzes for school students in India. Compete, sharpen your intellect, and win laptops, tablets, and scholarships.';
+$page_desc = 'Explore QuizWiz daily quizzes and online championships for students in India. Practice science, math, general knowledge, history, and reasoning.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';

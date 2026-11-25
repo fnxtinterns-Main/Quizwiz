@@ -2,9 +2,75 @@
 require_once __DIR__ . '/config.php';
 
 // Default page metadata if not defined
-$page_title = isset($page_title) ? $page_title . ' | ' . SITE_NAME : SITE_NAME . ' | ' . SITE_TAGLINE;
-$page_desc = isset($page_desc) ? $page_desc : 'Join QuizWiz, India\'s premier online quiz competition for school students (Classes 1–12).  daily quizzes, live championships, and national scholarships.';
+$page_title = isset($page_title) ? trim($page_title) : SITE_TAGLINE;
+$title_suffix = ' | ' . SITE_NAME;
+if (strcasecmp(substr($page_title, -strlen($title_suffix)), $title_suffix) !== 0) {
+    $page_title .= $title_suffix;
+}
+$page_desc = isset($page_desc) ? trim($page_desc) : 'QuizWiz offers daily online quizzes and championship programs for students across India.';
 $current_page = isset($current_page) ? $current_page : 'home';
+
+$canonical_path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+if (!is_string($canonical_path) || $canonical_path === '') {
+    $canonical_path = '/';
+}
+$canonical_path = '/' . trim($canonical_path, '/');
+if ($canonical_path !== '/') {
+    $canonical_path = preg_replace('/\.php$/i', '', $canonical_path) ?? '/';
+}
+$canonical_aliases = [
+    '/index' => '/',
+    '/dpdp-compliance' => '/dpdp',
+    '/campus-ambassador' => '/ambassador',
+];
+$canonical_path = $canonical_aliases[strtolower($canonical_path)] ?? $canonical_path;
+$canonical_url = SITE_ORIGIN . $canonical_path;
+
+$structured_data = [
+    '@context' => 'https://schema.org',
+    '@graph' => [
+        [
+            '@type' => 'Organization',
+            '@id' => SITE_ORIGIN . '/#organization',
+            'name' => SITE_NAME,
+            'url' => SITE_ORIGIN . '/',
+            'logo' => [
+                '@type' => 'ImageObject',
+                'url' => SITE_ORIGIN . '/assets/images/logo.png',
+            ],
+            'sameAs' => array_values(array_filter([
+                $social_links['facebook'] ?? '',
+                $social_links['instagram'] ?? '',
+                $social_links['linkedin'] ?? '',
+            ])),
+            'contactPoint' => [
+                '@type' => 'ContactPoint',
+                'contactType' => 'customer support',
+                'telephone' => PHONE_RAW,
+                'email' => EMAIL_CONTACT,
+                'areaServed' => 'IN',
+            ],
+        ],
+        [
+            '@type' => 'WebSite',
+            '@id' => SITE_ORIGIN . '/#website',
+            'url' => SITE_ORIGIN . '/',
+            'name' => SITE_NAME,
+            'publisher' => ['@id' => SITE_ORIGIN . '/#organization'],
+            'inLanguage' => 'en-IN',
+        ],
+        [
+            '@type' => 'WebPage',
+            '@id' => $canonical_url . '#webpage',
+            'url' => $canonical_url,
+            'name' => $page_title,
+            'description' => $page_desc,
+            'isPartOf' => ['@id' => SITE_ORIGIN . '/#website'],
+            'publisher' => ['@id' => SITE_ORIGIN . '/#organization'],
+            'inLanguage' => 'en-IN',
+        ],
+    ],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,15 +79,18 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title><?php echo htmlspecialchars($page_title); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($page_desc); ?>">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="<?php echo htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8'); ?>">
     
     <!-- Open Graph / WhatsApp Social Sharing Meta -->
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_IN">
     <meta property="og:site_name" content="QuizWiz">
     <meta property="og:title" content="<?php echo htmlspecialchars($page_title); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($page_desc); ?>">
-    <meta property="og:url" content="https://quizwiz.co.in<?php echo htmlspecialchars($_SERVER['REQUEST_URI'] ?? '/'); ?>">
-    <meta property="og:image" content="https://quizwiz.co.in/assets/images/Banner.jpeg">
-    <meta property="og:image:secure_url" content="https://quizwiz.co.in/assets/images/Banner.jpeg">
+    <meta property="og:url" content="<?php echo htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image" content="<?php echo SITE_ORIGIN; ?>/assets/images/Banner.jpeg">
+    <meta property="og:image:secure_url" content="<?php echo SITE_ORIGIN; ?>/assets/images/Banner.jpeg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1280">
     <meta property="og:image:height" content="720">
@@ -30,7 +99,8 @@ $current_page = isset($current_page) ? $current_page : 'home';
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($page_title); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($page_desc); ?>">
-    <meta name="twitter:image" content="https://quizwiz.co.in/assets/images/Banner.jpeg">
+    <meta name="twitter:image" content="<?php echo SITE_ORIGIN; ?>/assets/images/Banner.jpeg">
+    <script type="application/ld+json"><?php echo json_encode($structured_data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES); ?></script>
 
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
 

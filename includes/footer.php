@@ -13,7 +13,7 @@ require_once __DIR__ . '/config.php';
                         <img src="/assets/images/logo.png" alt="QuizWiz Logo" loading="lazy" decoding="async" style="height: 38px; width: auto; object-fit: contain;">
                     </div>
                     <p>
-                        QuizWiz is India's leading online quiz championship platform designed to nurture curiosity, foster intellectual agility, and celebrate young academic achievers across the country.
+                        QuizWiz offers online practice quizzes and championship programs for students across India, encouraging curiosity and academic achievement.
                     </p>
                     <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
                         <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.825rem; color: #E2E8F0; background: rgba(255,255,255,0.06); padding: 6px 12px; border-radius: 6px;">

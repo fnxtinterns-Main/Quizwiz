@@ -1,7 +1,7 @@
 <?php
 $current_page = 'rewards';
-$page_title = 'Prizes, Scholarships & National Honors | All India Quiz Championship';
-$page_desc = 'Win a Sony PlayStation 5 (PS5) with GTA 6, HP Laptops, Apple iPads, scholarships up to ₹50,000, and verified national merit certificates in the QuizWiz Championships.';
+$page_title = 'Quiz Championship Prizes & Scholarships';
+$page_desc = 'See QuizWiz championship prize details, including scholarships up to ₹50,000, gadgets, and merit certificates for qualifying participants.';
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/data/quizzes.php';

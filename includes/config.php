@@ -157,19 +157,22 @@ function claim_quizwiz_form_submission(mixed $formKey, mixed $token): string {
         return 'invalid';
     }
 
-    $claimsPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR
-        . 'quizwiz-submission-claims-' . substr(hash('sha256', __DIR__), 0, 16) . '.json';
+    $claimsDir = __DIR__ . '/../data';
+    if (!is_dir($claimsDir)) {
+        @mkdir($claimsDir, 0755, true);
+    }
+    $claimsPath = $claimsDir . '/claims.json';
     $claimsFile = @fopen($claimsPath, 'c+');
     if ($claimsFile === false) {
-        error_log('QuizWiz could not open the form submission claim store.');
-        return 'error';
+        error_log('QuizWiz could not open the form submission claim store. Failing open to preserve lead.');
+        return 'claimed';
     }
 
     // Serialize claims so concurrent requests using the same token cannot both send mail.
     if (!flock($claimsFile, LOCK_EX)) {
         fclose($claimsFile);
-        error_log('QuizWiz could not lock the form submission claim store.');
-        return 'error';
+        error_log('QuizWiz could not lock the form submission claim store. Failing open to preserve lead.');
+        return 'claimed';
     }
 
     rewind($claimsFile);
@@ -177,20 +180,19 @@ function claim_quizwiz_form_submission(mixed $formKey, mixed $token): string {
     if ($contents === false) {
         flock($claimsFile, LOCK_UN);
         fclose($claimsFile);
-        error_log('QuizWiz could not read the form submission claim store.');
-        return 'error';
+        error_log('QuizWiz could not read the form submission claim store. Failing open to preserve lead.');
+        return 'claimed';
     }
 
     $claims = [];
     if (trim($contents) !== '') {
         $decodedClaims = json_decode($contents, true);
         if (!is_array($decodedClaims)) {
-            flock($claimsFile, LOCK_UN);
-            fclose($claimsFile);
-            error_log('QuizWiz form submission claim store contains invalid JSON.');
-            return 'error';
+            // Reset corrupted JSON rather than failing the student
+            $claims = [];
+        } else {
+            $claims = $decodedClaims;
         }
-        $claims = $decodedClaims;
     }
 
     $now = time();
@@ -217,8 +219,8 @@ function claim_quizwiz_form_submission(mixed $formKey, mixed $token): string {
     fclose($claimsFile);
 
     if (!$writeSucceeded) {
-        error_log('QuizWiz could not save the form submission claim.');
-        return 'error';
+        error_log('QuizWiz could not save the form submission claim. Failing open.');
+        return 'claimed';
     }
 
     return $result;
@@ -232,24 +234,47 @@ function record_quizwiz_lead(string $type, array $data): void {
     }
     $file = $dir . '/leads.csv';
     $is_new = !file_exists($file);
-    $fp = @fopen($file, 'a');
+    $fp = @fopen($file, 'a+');
     if ($fp) {
-        // shortcut: file-based queue, upgrade to SQLite/MySQL if write concurrency exceeds 500/sec
         flock($fp, LOCK_EX);
-        if ($is_new) {
-            fputcsv($fp, ['timestamp', 'type', 'name', 'email', 'phone', 'detail1', 'detail2', 'ip']);
+        $headers = [
+            'timestamp', 'type', 'name', 'email', 'phone',
+            'school', 'class', 'group_or_program', 'enrollment_id',
+            'message_or_statement', 'past_roles', 'ip'
+        ];
+        if ($is_new || filesize($file) === 0) {
+            fputcsv($fp, $headers);
+        } else {
+            rewind($fp);
+            $firstLine = fgets($fp);
+            if ($firstLine && strpos($firstLine, 'detail1') !== false) {
+                // If the CSV only contains the legacy header line, replace it cleanly
+                $secondLine = fgets($fp);
+                if ($secondLine === false || trim($secondLine) === '') {
+                    ftruncate($fp, 0);
+                    rewind($fp);
+                    fputcsv($fp, $headers);
+                }
+            }
+            fseek($fp, 0, SEEK_END);
         }
+
         $sanitize = function($v) {
             return trim(preg_replace('/\s+/', ' ', (string)($v ?? '')));
         };
+
         $row = [
             date('Y-m-d H:i:s'),
             $type,
             $sanitize($data['name'] ?? ''),
             $sanitize($data['email'] ?? ''),
             $sanitize($data['phone'] ?? ''),
-            $sanitize($data['detail1'] ?? ''),
-            $sanitize($data['detail2'] ?? ''),
+            $sanitize($data['school'] ?? ($data['detail1'] ?? '')),
+            $sanitize($data['class'] ?? ''),
+            $sanitize($data['group_or_program'] ?? ''),
+            $sanitize($data['enrollment_id'] ?? ''),
+            $sanitize($data['message_or_statement'] ?? ($data['detail2'] ?? '')),
+            $sanitize($data['past_roles'] ?? ''),
             $_SERVER['REMOTE_ADDR'] ?? ''
         ];
         fputcsv($fp, $row);

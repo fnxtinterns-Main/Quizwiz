@@ -30,6 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $raw_enrollment_id = trim($_POST['enrollment_id'] ?? '');
     $eligibility_confirmed = isset($_POST['eligibility_confirmed']) && $_POST['eligibility_confirmed'] === '1';
 
+    $raw_statement = trim($_POST['statement'] ?? '');
+    $raw_past_roles = trim($_POST['past_roles'] ?? '');
+
     if ($is_bot) {
         $applicant_name = htmlspecialchars($raw_name, ENT_QUOTES, 'UTF-8');
         $school_name = htmlspecialchars($raw_school, ENT_QUOTES, 'UTF-8');
@@ -37,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         if (!filter_var($raw_email, FILTER_VALIDATE_EMAIL)) {
             $submission_error = 'Please enter a valid email address so we can send your application acknowledgment.';
-        } elseif (!$eligibility_confirmed || $raw_paid_program === '' || $raw_enrollment_id === '') {
-            $submission_error = 'Ambassador applications require an active paid-program enrollment. Please select your paid program and enter your enrollment or registration ID.';
+        } elseif (!$eligibility_confirmed || $raw_paid_program === '') {
+            $submission_error = 'Please confirm your program selection and eligibility acknowledgment before submitting.';
         } else {
             $claim_status = claim_quizwiz_form_submission('ambassador', $_POST['submission_token'] ?? '');
             if ($claim_status === 'duplicate') {
@@ -49,13 +52,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             } elseif ($claim_status !== 'claimed') {
                 $submission_error = 'We could not verify this submission. Please refresh the page and submit the form again.';
             } else {
-            // 1. Permanently record lead in local secure registry
+            // 1. Permanently record lead in local secure registry with all fields
             record_quizwiz_lead('campus_ambassador', [
                 'name' => $raw_name,
                 'email' => $raw_email,
                 'phone' => $raw_phone,
-                'detail1' => $raw_school,
-                'detail2' => "Class: {$raw_class}; Paid Program: {$raw_paid_program}; Enrollment ID: {$raw_enrollment_id}"
+                'school' => $raw_school,
+                'class' => $raw_class,
+                'group_or_program' => $raw_paid_program,
+                'enrollment_id' => $raw_enrollment_id,
+                'message_or_statement' => $raw_statement,
+                'past_roles' => $raw_past_roles
             ]);
 
             // 2. Dispatch internal alert to the configured administrator
@@ -67,6 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>Email Address:</strong> " . htmlspecialchars($raw_email) . "</p>"
                 . "<p><strong>Paid Program:</strong> " . htmlspecialchars($raw_paid_program) . "</p>"
                 . "<p><strong>Enrollment / Registration ID:</strong> " . htmlspecialchars($raw_enrollment_id) . "</p>"
+                . "<p><strong>Why Ambassador (Statement):</strong><br>" . nl2br(htmlspecialchars($raw_statement)) . "</p>"
+                . "<p><strong>Past Roles / Leadership:</strong> " . htmlspecialchars($raw_past_roles) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/ambassador on " . date('d M Y, h:i A') . "</p>";
             $admin_notification_sent = send_quizwiz_mail(EMAIL_SUPPORT, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
             if (!$admin_notification_sent) {
@@ -352,19 +361,20 @@ $submission_token = bin2hex(random_bytes(32));
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                         <div class="form-group">
-                            <label class="form-label" for="paid_program">Paid Program Enrolled In <span class="text-orange">*</span></label>
+                            <label class="form-label" for="paid_program">Program Track / Enrollment <span class="text-orange">*</span></label>
                             <select id="paid_program" name="paid_program" class="form-control" required>
-                                <option value="">Select your paid program</option>
-                                <option value="All India Quiz Championship - Group A">All India Quiz Championship - Group A</option>
-                                <option value="All India Quiz Championship - Group B">All India Quiz Championship - Group B</option>
-                                <option value="All India Quiz Championship - Group C">All India Quiz Championship - Group C</option>
+                                <option value="">Select your track</option>
+                                <option value="All India Quiz Championship - Group A">All India Quiz Championship - Group A (Class 1-6)</option>
+                                <option value="All India Quiz Championship - Group B">All India Quiz Championship - Group B (Class 7-12)</option>
+                                <option value="All India Quiz Championship - Group C">All India Quiz Championship - Group C (Graduates &amp; Aspirants)</option>
                                 <option value="Another QuizWiz Paid Program">Another QuizWiz Paid Program</option>
+                                <option value="Prospective Student Leader / Open Application">Prospective Student Leader / Open Application (Not enrolled yet)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="enrollment_id">Enrollment / Registration ID <span class="text-orange">*</span></label>
-                            <input type="text" id="enrollment_id" name="enrollment_id" class="form-control" placeholder="Enter your QuizWiz enrollment ID" required>
-                            <span class="form-text">This will be matched with our enrollment records.</span>
+                            <label class="form-label" for="enrollment_id">Enrollment ID <span style="font-size:0.8rem; color:var(--text-muted);">(Optional for open applicants)</span></label>
+                            <input type="text" id="enrollment_id" name="enrollment_id" class="form-control" placeholder="e.g. QW-2026-XXXX (or leave blank if applying)">
+                            <span class="form-text">If enrolled, provide your ID for priority leader onboarding.</span>
                         </div>
                     </div>
 
@@ -372,7 +382,7 @@ $submission_token = bin2hex(random_bytes(32));
                         <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; line-height: 1.5;">
                             <input type="checkbox" name="eligibility_confirmed" value="1" required style="margin-top: 4px; accent-color: var(--secondary);">
                             <span>
-                                <strong>Paid Enrollment Requirement:</strong> I confirm that I am already enrolled in a paid QuizWiz program and understand that ambassador eligibility is subject to enrollment verification.
+                                <strong>Ambassador Eligibility:</strong> I confirm that I want to represent QuizWiz at my school/college and agree to undergo orientation and ambassador verification before receiving official kits and incentives.
                             </span>
                         </label>
                     </div>

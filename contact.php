@@ -28,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             'name' => $sender_name,
             'email' => $sender_email,
             'phone' => $sender_phone,
-            'detail1' => mb_substr($sender_msg, 0, 150),
-            'detail2' => ''
+            'message_or_statement' => $sender_msg
         ]);
 
         // 1. Alert internal support team

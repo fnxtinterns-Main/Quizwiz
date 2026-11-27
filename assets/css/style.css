@@ -73,6 +73,23 @@
   --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.quiz-group-toggle-btn {
+  width: 100%;
+  min-width: 0;
+  height: 76px;
+  min-height: 76px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font-size: clamp(0.65rem, 1.5vw, 0.875rem);
+  line-height: 1.15;
+  box-sizing: border-box;
+}
+
 /* Reset & Box Sizing */
 *, *::before, *::after {
   box-sizing: border-box;

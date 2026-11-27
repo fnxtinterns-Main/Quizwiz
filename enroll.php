@@ -42,13 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         } elseif ($claim_status !== 'claimed') {
             $error_message = 'We could not verify this submission. Please refresh the page and submit the form again.';
         } else {
-            // Record lead securely
+            // Record lead securely with all student registration fields
             record_quizwiz_lead('championship_enrollment', [
                 'name' => $name,
                 'email' => $email,
                 'phone' => $phone,
-                'detail1' => $school,
-                'detail2' => "Class: {$class} | Group: {$group}"
+                'school' => $school,
+                'class' => $class,
+                'group_or_program' => $group
             ]);
 
             $safe_name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
@@ -156,16 +157,12 @@ $submission_token = bin2hex(random_bytes(32));
                                 <input type="email" id="email_confirmation" name="email_confirmation" class="form-control" placeholder="Re-enter the same email address" autocomplete="off" value="<?php echo htmlspecialchars($email_confirmation, ENT_QUOTES, 'UTF-8'); ?>" required>
                                 <span class="form-text">Your enrollment acknowledgment will be sent to this address.</span>
                             </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                             <div class="form-group">
                                 <label class="form-label" for="phone">WhatsApp Mobile No. <span class="text-orange">*</span></label>
                                 <input type="tel" id="phone" name="phone" class="form-control" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
-                            </div>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 16px;">
-                            <div class="form-group">
-                                <label class="form-label" for="school">School / College / Institution Name &amp; City <span class="text-orange">*</span></label>
-                                <input type="text" id="school" name="school" class="form-control" placeholder="e.g. Delhi Public School / St. Xavier's College" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="student_class">Class / Academic Level <span class="text-orange">*</span></label>
@@ -178,6 +175,11 @@ $submission_token = bin2hex(random_bytes(32));
                                     <option value="Graduate / Competitive Aspirant">Graduate / Civil Services Aspirant</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="school">School / College / Institution Name &amp; City <span class="text-orange">*</span></label>
+                            <input type="text" id="school" name="school" class="form-control" placeholder="e.g. Delhi Public School / St. Xavier's College" required>
                         </div>
 
                         <div class="form-group">

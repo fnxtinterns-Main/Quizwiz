@@ -37,15 +37,15 @@ require_once __DIR__ . '/data/quizzes.php';
         <div class="form-card" style="box-shadow: var(--shadow-lg); border: 1.5px solid rgba(27, 37, 89, 0.12); padding: 32px;">
             <!-- Division Selector Tabs -->
             <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 28px; border-bottom: 1.5px solid var(--border-light); padding-bottom: 16px;">
-                <button id="groupABtn" onclick="switchDailyGroup('a')" class="btn btn-primary" aria-pressed="true" style="width: 100%; min-width: 0; height: 76px; min-height: 76px; padding: 6px; display: flex; flex-direction: column; gap: 3px; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(0.65rem, 1.5vw, 0.875rem); line-height: 1.15; box-sizing: border-box;">
+                <button id="groupABtn" onclick="switchDailyGroup('a')" class="btn btn-primary quiz-group-toggle-btn" aria-pressed="true">
                     <i class="fa-solid fa-shapes" aria-hidden="true"></i>
                     <span>Group A (Class 1–6)</span>
                 </button>
-                <button id="groupBBtn" onclick="switchDailyGroup('b')" class="btn btn-outline-navy" aria-pressed="false" style="width: 100%; min-width: 0; height: 76px; min-height: 76px; padding: 6px; display: flex; flex-direction: column; gap: 3px; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(0.65rem, 1.5vw, 0.875rem); line-height: 1.15; box-sizing: border-box;">
+                <button id="groupBBtn" onclick="switchDailyGroup('b')" class="btn btn-outline-navy quiz-group-toggle-btn" aria-pressed="false">
                     <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
                     <span>Group B (Class 7–12)</span>
                 </button>
-                <button id="groupCBtn" onclick="switchDailyGroup('c')" class="btn btn-outline-navy" aria-pressed="false" title="Graduates and Aspirants Track: UPSC, PSC, SSC, and Defence" style="width: 100%; min-width: 0; height: 76px; min-height: 76px; padding: 6px; display: flex; flex-direction: column; gap: 3px; white-space: normal; overflow-wrap: anywhere; text-align: center; font-size: clamp(0.65rem, 1.5vw, 0.875rem); line-height: 1.15; box-sizing: border-box;">
+                <button id="groupCBtn" onclick="switchDailyGroup('c')" class="btn btn-outline-navy quiz-group-toggle-btn" aria-pressed="false" title="Graduates and Aspirants Track: UPSC, PSC, SSC, and Defence">
                     <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
                     <span>Group C (Graduates &amp; Aspirants)</span>
                 </button>

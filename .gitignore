@@ -8,5 +8,7 @@ QUIZWIZ/
 QUIZWIZ.zip
 remote_clone/
 data/leads.csv
+data/claims.json
+*.py
 .env
 .env.local

@@ -150,6 +150,103 @@ function send_quizwiz_mail(string $to, string $subject, string $messageHtml, str
     return @mail($to, $subject, $wrappedHtml, implode("\r\n", $fallbackHeaders));
 }
 
+/**
+ * Send multiple emails over a single SMTP socket handshake
+ * Drastically cuts user wait time on forms sending both admin alert and student confirmation.
+ */
+function send_quizwiz_batch_mail(array $messages): array {
+    $results = [];
+    if (empty($messages)) return $results;
+
+    $host = 'ssl://' . SMTP_HOST . ':' . SMTP_PORT;
+    $socket = @stream_socket_client($host, $errno, $errstr, 4);
+
+    if ($socket) {
+        stream_set_timeout($socket, 4);
+        $read = function() use ($socket) {
+            $data = '';
+            while ($line = fgets($socket)) {
+                $data .= $line;
+                if (substr($line, 3, 1) === ' ') break;
+            }
+            return $data;
+        };
+        $send = function($cmd) use ($socket) {
+            fputs($socket, $cmd . "\r\n");
+        };
+
+        $read();
+        $send("EHLO " . SMTP_HOST);
+        $read();
+        $send("AUTH LOGIN");
+        $read();
+        $firstFrom = $messages[0]['fromEmail'] ?? EMAIL_SUPPORT;
+        $send(base64_encode($firstFrom));
+        $read();
+        $send(base64_encode(SMTP_PASS));
+        $authRes = $read();
+
+        if (strpos($authRes, '235') !== false) {
+            foreach ($messages as $idx => $msg) {
+                $to = $msg['to'];
+                $subject = $msg['subject'];
+                $fromEmail = $msg['fromEmail'] ?? $firstFrom;
+                $fromName = $msg['fromName'] ?? SITE_NAME;
+                
+                $wrappedHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>' . htmlspecialchars($subject) . '</title></head>'
+                    . '<body style="margin:0;padding:24px;background:#F8FAFC;font-family:Arial,Helvetica,sans-serif;color:#1E293B;">'
+                    . '<div style="max-width:600px;margin:0 auto;background:#FFFFFF;border-radius:12px;border:1px solid #E2E8F0;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.05);">'
+                    . '<div style="background:#1B2559;padding:20px;text-align:center;">'
+                    . '<img src="https://quizwiz.co.in/assets/images/logo.png" alt="QuizWiz Logo" style="height:36px;width:auto;display:inline-block;">'
+                    . '</div>'
+                    . '<div style="padding:28px 24px;line-height:1.6;font-size:15px;">' . ($msg['messageHtml'] ?? '') . '</div>'
+                    . '<div style="background:#F1F5F9;padding:16px 24px;text-align:center;font-size:12px;color:#64748B;border-top:1px solid #E2E8F0;">'
+                    . 'QuizWiz — All India Quiz Championships<br>Helpline: +91 98015 06511 | Ranchi, Jharkhand, India'
+                    . '</div></div></body></html>';
+
+                $send("RSET");
+                $read();
+                $send("MAIL FROM:<{$fromEmail}>");
+                $read();
+                $send("RCPT TO:<{$to}>");
+                $read();
+                $send("DATA");
+                $read();
+
+                $headers = "MIME-Version: 1.0\r\n"
+                         . "Content-Type: text/html; charset=UTF-8\r\n"
+                         . "From: =?UTF-8?B?" . base64_encode($fromName) . "?= <{$fromEmail}>\r\n"
+                         . "To: <{$to}>\r\n"
+                         . "Reply-To: <{$fromEmail}>\r\n"
+                         . "Subject: =?UTF-8?B?" . base64_encode($subject) . "?=\r\n"
+                         . "Date: " . date('r') . "\r\n"
+                         . "X-Mailer: QuizWiz-SMTP/1.0\r\n";
+
+                $send($headers . "\r\n" . $wrappedHtml . "\r\n.");
+                $dataRes = $read();
+                $results[$idx] = (strpos($dataRes, '250') !== false);
+            }
+            $send("QUIT");
+            fclose($socket);
+            return $results;
+        } else {
+            fclose($socket);
+        }
+    }
+
+    // Fallback: send individually using existing function
+    foreach ($messages as $idx => $msg) {
+        $results[$idx] = send_quizwiz_mail(
+            $msg['to'],
+            $msg['subject'],
+            $msg['messageHtml'],
+            $msg['fromEmail'] ?? EMAIL_SUPPORT,
+            $msg['fromName'] ?? SITE_NAME
+        );
+    }
+    return $results;
+}
+
 function claim_quizwiz_form_submission(mixed $formKey, mixed $token): string {
     if (!is_string($formKey) || !is_string($token)
         || !preg_match('/\A[a-z0-9_-]+\z/i', $formKey)

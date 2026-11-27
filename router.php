@@ -12,6 +12,13 @@ $uri = urldecode($uri);
 // Requested file path on disk
 $requested = __DIR__ . $uri;
 
+// 0. Protect sensitive folders and data from direct access
+if (preg_match('#^/(data|\.env|includes)/#i', $uri) || preg_match('/\.(csv|json|log|env)$/i', $uri)) {
+    http_response_code(403);
+    echo "<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body style='font-family:sans-serif;text-align:center;padding:50px;'><h1>403 - Forbidden</h1><p>Direct access to this resource is prohibited.</p></body></html>";
+    return true;
+}
+
 // 1. If static file exists (css, js, images, etc.), let the server serve it directly
 if ($uri !== '/' && file_exists($requested) && !is_dir($requested)) {
     return false;

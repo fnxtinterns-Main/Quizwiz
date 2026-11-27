@@ -5,6 +5,8 @@
  */
 require_once __DIR__ . '/includes/config.php';
 
+header('X-Robots-Tag: noindex, nofollow', true);
+
 $secretKey = defined('ADMIN_EXPORT_KEY') ? ADMIN_EXPORT_KEY : 'QuizwizAdmin2026';
 $reqKey = trim($_GET['key'] ?? '');
 

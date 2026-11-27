@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $safe_group = htmlspecialchars($group, ENT_QUOTES, 'UTF-8');
             $safe_phone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
 
-            // 1. Alert the administrator
+            // 1 & 2: Dispatch admin notification and student confirmation in single SMTP session
             $internalMsg = "<h3 style='color:#1B2559;'>New Student Championship Enrollment</h3>"
                 . "<p><strong>Student Name:</strong> {$safe_name}</p>"
                 . "<p><strong>Class:</strong> " . htmlspecialchars($class) . "</p>"
@@ -65,12 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>WhatsApp Phone:</strong> {$safe_phone}</p>"
                 . "<p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/enroll on " . date('d M Y, h:i A') . "</p>";
-            $admin_notification_sent = send_quizwiz_mail(EMAIL_SUPPORT, "New Championship Enrollment: {$name} ({$group})", $internalMsg, EMAIL_SUPPORT, 'QuizWiz Enrollments');
-            if (!$admin_notification_sent) {
-                error_log("QuizWiz: Could not send enrollment notification to admin at " . EMAIL_SUPPORT);
-            }
 
-            // 2. Confirmation to student/parent from support@quizwiz.co.in
             $studentMsg = "<h2 style='color:#1B2559;margin-top:0;'>Enrollment Received, {$safe_name}!</h2>"
                 . "<p>Thank you for enrolling in the <strong>All India Quiz Championships</strong> representing <strong>" . htmlspecialchars($school) . "</strong> in <strong>{$safe_group}</strong>.</p>"
                 . "<p>Your registration has been successfully received by our academic desk.</p>"
@@ -80,7 +75,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "</div>"
                 . "<p>Best wishes for your championship journey!</p>"
                 . "<p>Warm regards,<br><strong>Academic Support Desk</strong><br>QuizWiz India</p>";
-            $confirmation_sent = send_quizwiz_mail($email, 'We received your enrollment | All India Quiz Championships', $studentMsg, EMAIL_SUPPORT, 'QuizWiz Support Team');
+
+            $mailBatch = [
+                [
+                    'to' => EMAIL_SUPPORT,
+                    'subject' => "New Championship Enrollment: {$name} ({$group})",
+                    'messageHtml' => $internalMsg,
+                    'fromEmail' => EMAIL_SUPPORT,
+                    'fromName' => 'QuizWiz Enrollments'
+                ],
+                [
+                    'to' => $email,
+                    'subject' => 'We received your enrollment | All India Quiz Championships',
+                    'messageHtml' => $studentMsg,
+                    'fromEmail' => EMAIL_SUPPORT,
+                    'fromName' => 'QuizWiz Support Team'
+                ]
+            ];
+            $mailResults = send_quizwiz_batch_mail($mailBatch);
+            $confirmation_sent = !empty($mailResults[1]);
 
             $success_message = "Thank you, {$safe_name}! Your enrollment for {$safe_group} has been successfully recorded. ";
             $success_message .= $confirmation_sent

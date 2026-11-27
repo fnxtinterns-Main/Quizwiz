@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 'past_roles' => $raw_past_roles
             ]);
 
-            // 2. Dispatch internal alert to the configured administrator
+            // 2 & 3: Dispatch internal alert and student confirmation in single SMTP session
             $internalMsg = "<h3 style='color:#1B2559;'>New Campus Ambassador Application</h3>"
                 . "<p><strong>Applicant Name:</strong> " . htmlspecialchars($raw_name) . "</p>"
                 . "<p><strong>School / Institution:</strong> " . htmlspecialchars($raw_school) . "</p>"
@@ -77,25 +77,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 . "<p><strong>Why Ambassador (Statement):</strong><br>" . nl2br(htmlspecialchars($raw_statement)) . "</p>"
                 . "<p><strong>Past Roles / Leadership:</strong> " . htmlspecialchars($raw_past_roles) . "</p>"
                 . "<p style='font-size:12px;color:#64748B;'>Submitted via quizwiz.co.in/ambassador on " . date('d M Y, h:i A') . "</p>";
-            $admin_notification_sent = send_quizwiz_mail(EMAIL_SUPPORT, "New Ambassador Application: {$raw_name} ({$raw_school})", $internalMsg, EMAIL_CONNECT, 'QuizWiz Ambassador System');
-            if (!$admin_notification_sent) {
-                error_log("QuizWiz: Could not send ambassador notification to admin at " . EMAIL_SUPPORT);
-            }
 
-            // 3. Generic auto-reply confirmation to applicant from connect@quizwiz.co.in
-            $confirmation_sent = false;
+            $autoReplyMsg = "<h2 style='color:#1B2559;margin-top:0;'>We Received Your Application, " . htmlspecialchars($raw_name) . "!</h2>"
+                . "<p>Thank you for applying to become an official <strong>QuizWiz Campus Ambassador &amp; School Quiz Master</strong> representing <strong>" . htmlspecialchars($raw_school) . "</strong>.</p>"
+                . "<p>We have successfully received your application, and our student leadership team is currently reviewing your details.</p>"
+                . "<p>Our National Coordinator will reach out to you directly on WhatsApp / Phone (<strong>" . htmlspecialchars($raw_phone) . "</strong>) within <strong>24 to 48 hours</strong> to discuss your onboarding, official Quiz Master credentials, and swag kit.</p>"
+                . "<div style='background:#FFF7ED;border-left:4px solid #FF6B00;padding:12px 16px;margin:20px 0;border-radius:4px;font-size:14px;'>"
+                . "<strong>Need quick onboarding or have questions?</strong><br>Reply directly to this email or chat with our team on WhatsApp: <a href='https://wa.me/919801506511' style='color:#FF6B00;font-weight:700;'>+91 98015 06511</a>"
+                . "</div>"
+                . "<p>Keep inspiring your campus!</p>"
+                . "<p>Warm regards,<br><strong>Campus Ambassador Team</strong><br>QuizWiz India<br><a href='mailto:connect@quizwiz.co.in' style='color:#1B2559;'>connect@quizwiz.co.in</a></p>";
+
+            $mailBatch = [
+                [
+                    'to' => EMAIL_SUPPORT,
+                    'subject' => "New Ambassador Application: {$raw_name} ({$raw_school})",
+                    'messageHtml' => $internalMsg,
+                    'fromEmail' => EMAIL_CONNECT,
+                    'fromName' => 'QuizWiz Ambassador System'
+                ]
+            ];
             if (!empty($raw_email) && filter_var($raw_email, FILTER_VALIDATE_EMAIL)) {
-                $autoReplyMsg = "<h2 style='color:#1B2559;margin-top:0;'>We Received Your Application, " . htmlspecialchars($raw_name) . "!</h2>"
-                    . "<p>Thank you for applying to become an official <strong>QuizWiz Campus Ambassador &amp; School Quiz Master</strong> representing <strong>" . htmlspecialchars($raw_school) . "</strong>.</p>"
-                    . "<p>We have successfully received your application, and our student leadership team is currently reviewing your details.</p>"
-                    . "<p>Our National Coordinator will reach out to you directly on WhatsApp / Phone (<strong>" . htmlspecialchars($raw_phone) . "</strong>) within <strong>24 to 48 hours</strong> to discuss your onboarding, official Quiz Master credentials, and swag kit.</p>"
-                    . "<div style='background:#FFF7ED;border-left:4px solid #FF6B00;padding:12px 16px;margin:20px 0;border-radius:4px;font-size:14px;'>"
-                    . "<strong>Need quick onboarding or have questions?</strong><br>Reply directly to this email or chat with our team on WhatsApp: <a href='https://wa.me/919801506511' style='color:#FF6B00;font-weight:700;'>+91 98015 06511</a>"
-                    . "</div>"
-                    . "<p>Keep inspiring your campus!</p>"
-                    . "<p>Warm regards,<br><strong>Campus Ambassador Team</strong><br>QuizWiz India<br><a href='mailto:connect@quizwiz.co.in' style='color:#1B2559;'>connect@quizwiz.co.in</a></p>";
-                $confirmation_sent = send_quizwiz_mail($raw_email, 'We have received your QuizWiz Campus Ambassador application!', $autoReplyMsg, EMAIL_CONNECT, 'QuizWiz Ambassador Team');
+                $mailBatch[] = [
+                    'to' => $raw_email,
+                    'subject' => 'We have received your QuizWiz Campus Ambassador application!',
+                    'messageHtml' => $autoReplyMsg,
+                    'fromEmail' => EMAIL_CONNECT,
+                    'fromName' => 'QuizWiz Ambassador Team'
+                ];
             }
+            $mailResults = send_quizwiz_batch_mail($mailBatch);
+            $confirmation_sent = !empty($mailResults[1]);
 
             $applicant_name = htmlspecialchars($raw_name, ENT_QUOTES, 'UTF-8');
             $school_name = htmlspecialchars($raw_school, ENT_QUOTES, 'UTF-8');

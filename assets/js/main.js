@@ -144,30 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
         userScore = 0;
 
         const qBank = window.quizWizCategoryQuestions || {};
+        const availableKeys = Object.keys(qBank);
         if (qBank[categoryKey] && Array.isArray(qBank[categoryKey]) && qBank[categoryKey].length > 0) {
             activeQuestions = qBank[categoryKey];
+        } else if (availableKeys.length > 0 && Array.isArray(qBank[availableKeys[0]])) {
+            activeQuestions = qBank[availableKeys[0]];
         } else {
-            // Fallback general questions
-            activeQuestions = [
-                {
-                    q: "Which is the highest civilian award in India?",
-                    options: ["Padma Vibhushan", "Bharat Ratna", "Param Vir Chakra", "Padma Bhushan"],
-                    correct: 1,
-                    exp: "Bharat Ratna is the highest civilian award of the Republic of India."
-                },
-                {
-                    q: "Which planet is known as the 'Red Planet'?",
-                    options: ["Venus", "Jupiter", "Mars", "Mercury"],
-                    correct: 2,
-                    exp: "Mars is known as the Red Planet due to iron oxide on its surface."
-                },
-                {
-                    q: "What is the sum of interior angles in any triangle?",
-                    options: ["90°", "180°", "270°", "360°"],
-                    correct: 1,
-                    exp: "The interior angles of any triangle always equal 180°."
-                }
-            ];
+            activeQuestions = [];
         }
 
         const titleEl = document.getElementById('modalQuizTitle');

@@ -32,7 +32,7 @@ require_once __DIR__ . '/data/quizzes.php';
 <!-- ========================================== -->
 <!-- PROMO BANNER: AUTO-SCROLLING SLIDER (5s) -->
 <!-- ========================================== -->
-<section class="banner-promo" style="width: 100%; display: flex; justify-content: center; background: #f8fafc; padding: 20px 0 10px;">
+<section class="banner-promo section-fullscreen" style="display: flex; justify-content: center; background: #f8fafc; padding: 1.25rem 0 0.625rem; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0;">
     <div class="container" style="display: flex; justify-content: center;">
         <div class="banner-carousel-wrapper" id="homeBannerCarousel" style="position: relative; width: 100%; max-width: 1200px; margin: 0 auto; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08); background: #0F172A;">
             <div class="banner-carousel-track" id="bannerTrack" style="display: flex; width: 200%; height: 100%; transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform;">

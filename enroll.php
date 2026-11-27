@@ -147,7 +147,7 @@ $submission_token = bin2hex(random_bytes(32));
                             <input type="text" id="student_name" name="student_name" class="form-control" placeholder="e.g. Aarav Sharma" required>
                         </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-row-grid">
                             <div class="form-group">
                                 <label class="form-label" for="email">Parent / Student Email <span class="text-orange">*</span></label>
                                 <input type="email" id="email" name="email" class="form-control" placeholder="parent@example.com" autocomplete="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES, 'UTF-8'); ?>" required>
@@ -159,7 +159,7 @@ $submission_token = bin2hex(random_bytes(32));
                             </div>
                         </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-row-grid">
                             <div class="form-group">
                                 <label class="form-label" for="phone">WhatsApp Mobile No. <span class="text-orange">*</span></label>
                                 <input type="tel" id="phone" name="phone" class="form-control" placeholder="10-digit mobile" pattern="[0-9]{10}" required>

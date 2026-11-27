@@ -316,7 +316,7 @@ $submission_token = bin2hex(random_bytes(32));
                     <input type="hidden" name="form_time" value="<?php echo time(); ?>">
                     <input type="text" name="website_url" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-row-grid">
                         <div class="form-group">
                             <label class="form-label" for="full_name">Your Full Name <span class="text-orange">*</span></label>
                             <input type="text" id="full_name" name="full_name" class="form-control" placeholder="e.g. Aryan Malhotra" required>
@@ -336,7 +336,7 @@ $submission_token = bin2hex(random_bytes(32));
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px;">
+                    <div class="form-row-grid form-row-grid-asym">
                         <div class="form-group">
                             <label class="form-label" for="school_name">School Full Name &amp; City <span class="text-orange">*</span></label>
                             <input type="text" id="school_name" name="school_name" class="form-control" placeholder="e.g. Modern School, Barakhamba Road, New Delhi" required>
@@ -347,7 +347,7 @@ $submission_token = bin2hex(random_bytes(32));
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-row-grid">
                         <div class="form-group">
                             <label class="form-label" for="phone">Student / Parent WhatsApp No. <span class="text-orange">*</span></label>
                             <input type="tel" id="phone" name="phone" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
@@ -359,7 +359,7 @@ $submission_token = bin2hex(random_bytes(32));
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-row-grid">
                         <div class="form-group">
                             <label class="form-label" for="paid_program">Program Track / Enrollment <span class="text-orange">*</span></label>
                             <select id="paid_program" name="paid_program" class="form-control" required>

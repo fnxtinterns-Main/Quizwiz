@@ -120,7 +120,7 @@ $structured_data = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     
-    <link rel="preload" href="/assets/css/style.css?v=2.9" as="style">
+    <link rel="preload" href="/assets/css/style.css?v=3.0" as="style">
     <link rel="preload" href="/assets/images/logo.png" as="image">
 
     <!-- Fonts -->
@@ -131,7 +131,7 @@ $structured_data = [
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <!-- QuizWiz Modern Design System -->
-    <link rel="stylesheet" href="/assets/css/style.css?v=2.9">
+    <link rel="stylesheet" href="/assets/css/style.css?v=3.0">
 </head>
 <body>
 

@@ -1190,8 +1190,29 @@ p.lead {
   background: #FFFFFF;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
-  padding: var(--space-8);
+  padding: clamp(1.25rem, 3vw, 2rem);
   box-shadow: var(--shadow-lg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-row-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-row-grid-asym {
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+}
+
+@media (max-width: 640px) {
+  .form-row-grid,
+  .form-row-grid-asym {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }
 
 .form-group {
@@ -1757,7 +1778,85 @@ p.lead {
   align-items: center;
 }
 
+/* Fullscreen Section System */
+.section-fullscreen {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
+}
+
 @media (max-width: 768px) {
+  /* Mobile-first base typography using rem */
+  html {
+    font-size: 15px;
+  }
+  
+  body {
+    font-size: 1rem;
+    overflow-x: hidden;
+  }
+
+  /* Full-width responsive layout containers using % */
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 4.5% !important;
+    padding-right: 4.5% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Banner carousel mobile layout */
+  .banner-carousel-wrapper {
+    width: 100% !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--border-light);
+  }
+
+  /* Fullscreen promo banners on mobile */
+  .banner-promo {
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Division selector tabs on daily-quiz */
+  .quiz-group-toggle-btn {
+    height: auto !important;
+    min-height: 3.8rem !important;
+    padding: 0.4rem 0.25rem !important;
+    font-size: 0.72rem !important;
+    border: 1px solid var(--border-light) !important;
+  }
+
+  /* Hero visual mobile scaling */
+  .hero-visual {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Form control responsive sizing */
+  .form-control {
+    font-size: 1rem !important; /* Prevents auto-zoom on iOS Safari */
+    width: 100% !important;
+    border: 1px solid var(--border-light);
+  }
+
+  /* Step cards and grid cards on mobile */
+  .step-card,
+  .feature-card,
+  .exam-card,
+  .quiz-card {
+    width: 100% !important;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+  }
+}
   /* 1. Sleek, clean topbar with no horizontal overflow */
   .topbar {
     padding: 6px 0;
